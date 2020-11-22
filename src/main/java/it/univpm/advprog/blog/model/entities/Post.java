@@ -9,14 +9,18 @@ import java.util.Set;
 @Entity
 @Table(name = "posts")
 @NamedQueries({
-//        @NamedQuery(
-//                name = "getPostById",
-//                query = "SELECT p FROM Post p WHERE p.id = :id"
-//        ),
-//        @NamedQuery(
-//                name = "getPostByTitle",
-//                query = "SELECT p FROM Post p WHERE p.title = :title"
-//        )
+        @NamedQuery(
+                name = "getPostByTitle",
+                query = "SELECT p FROM Post p WHERE p.title = :title"
+        ),
+        @NamedQuery(
+                name = "getPostsByArchive",
+                query = "SELECT p FROM Post p WHERE p.archive_name = :archive"
+        ),
+        @NamedQuery(
+                name = "getPostsByAuthor",
+                query = "SELECT p FROM Post p WHERE p.author = :author"
+        )
 })
 
 public class Post implements Serializable {
@@ -235,7 +239,7 @@ public class Post implements Serializable {
      *
      * @param attachment allegato da aggiungere
      */
-    public void addTag(Attachment attachment) {
+    public void addAttachment(Attachment attachment) {
         attachment.addPost(this);
         this.attachments.add(attachment);
     }

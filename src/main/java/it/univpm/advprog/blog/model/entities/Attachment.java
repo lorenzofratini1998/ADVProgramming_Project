@@ -107,7 +107,7 @@ public abstract class Attachment {
 	 * @param post: post da aggiungere
 	 */
 	public void addPost(Post post) {
-		post.addTag(this);
+		post.addAttachment(this);
 		this.posts.add(post);
     }
 }
