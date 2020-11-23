@@ -15,10 +15,20 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name="attachments")
+@NamedQueries({
+	@NamedQuery(
+			name="getAttachmentsByPost",
+			query="SELECT a FROM Attachment a JOIN Post p ON a.id=p.id WHERE p.id= :id"
+			)
+})
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Attachment {
     
