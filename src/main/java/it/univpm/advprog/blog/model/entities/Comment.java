@@ -15,7 +15,7 @@ public class Comment {
 
 	private long id;
 	private User author;
-	private long post_id;
+	private Post post;
 	private String title;
 	private String description;
 	
@@ -53,13 +53,13 @@ public class Comment {
 	
 	@ManyToOne //Di default fetch di tipo EAGER
 	@JoinColumn(name = "post_id" , nullable = false)
-	public long getPostId() {
-		return this.post_id;
+	public Post getPost() {
+		return this.post;
 	}
 	
 	
-	public void setPostId(Post post) {
-		this.post_id = post.getId();
+	public void setPost(Post post) {
+		this.post = post;
 	}
 	
 	
