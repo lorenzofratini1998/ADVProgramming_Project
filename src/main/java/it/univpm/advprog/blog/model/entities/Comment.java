@@ -7,10 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "comments")
+@NamedQueries({
+	@NamedQuery(
+			name = "getCommentsFromPost",
+			query = "SELECT c FROM Comment c WHERE c.post = :post"
+			)
+})
 public class Comment {
 
 	private long id;
