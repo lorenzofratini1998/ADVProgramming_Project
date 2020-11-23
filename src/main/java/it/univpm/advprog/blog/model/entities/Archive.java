@@ -7,6 +7,13 @@ import java.util.Set;
 
 	@Entity
 	@Table (name="archives")
+	@NamedQueries({
+			@NamedQuery(
+            name = "getArchiveByName",
+            query = "SELECT a FROM Archive a WHERE a.name = :name"
+    )
+		
+	})
 	public class Archive implements Serializable {
 	    
 		private String name;
@@ -19,7 +26,6 @@ import java.util.Set;
 	 */
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="name",nullable=false, length= 20)
 	public String getName() {
 		return name;
@@ -36,7 +42,7 @@ import java.util.Set;
 	
 	/**
 	 * relazione uno a molti tra archives e posts
-	 * @return
+	 * 
 	 */
 	
 	@OneToMany(mappedBy="archive")

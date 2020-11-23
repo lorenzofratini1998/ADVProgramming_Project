@@ -11,6 +11,12 @@ import java.util.Set;
 	
 	@Entity
 	@Table(name="tags")
+	@NamedQueries({
+        @NamedQuery(
+                name = "getTagByName",
+                query = "SELECT t FROM Tag t WHERE t.name = :name"
+        ),
+	})
 	public class Tag implements Serializable {
 		
 		private String name;
@@ -22,7 +28,6 @@ import java.util.Set;
 		 * return name del tag
 		 */
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@Column(name="name",nullable=false, length=20)
 	public String getName() {
 		return name;
