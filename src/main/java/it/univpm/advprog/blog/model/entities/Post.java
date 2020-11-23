@@ -15,7 +15,7 @@ import java.util.Set;
         ),
         @NamedQuery(
                 name = "getPostsByArchive",
-                query = "SELECT p FROM Post p WHERE p.archive_name = :archive"
+                query = "SELECT p FROM Post p WHERE p.archive = :archive"
         ),
         @NamedQuery(
                 name = "getPostsByAuthor",
@@ -33,8 +33,8 @@ public class Post implements Serializable {
     private String image;
     private Set<Tag> tags = new HashSet<>();
     private Set<Attachment> attachments = new HashSet<>();
+    private Set<Comment> comments = new HashSet<>();
     private Archive archive;
-
 
     /**
      * Getter per la proprietà id del post.
@@ -202,7 +202,7 @@ public class Post implements Serializable {
     }
 
     /**
-     * Metodo per aggungere un tag al post.
+     * Metodo per aggiungere un tag al post.
      *
      * @param tag tag da aggiungere
      */
@@ -235,13 +235,42 @@ public class Post implements Serializable {
     }
 
     /**
-     * Metodo per aggungere un allegato al post.
+     * Metodo per aggiungere un allegato al post.
      *
      * @param attachment allegato da aggiungere
      */
     public void addAttachment(Attachment attachment) {
         attachment.addPost(this);
         this.attachments.add(attachment);
+    }
+
+    /**
+     * Getter per la proprietà comments.
+     *
+     * @return commenti del post
+     */
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    /**
+     * Setter per la proprietà comments.
+     *
+     * @param comments commenti del post da settare
+     */
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    /**
+     * Metodo per aggiungere un commento al post.
+     *
+     * @param comment commento da aggiungere
+     */
+    public void addComment(Comment comment) {
+        comment.setPost(this);
+        this.comments.add(comment);
     }
 }
 
