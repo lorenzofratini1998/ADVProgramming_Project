@@ -43,23 +43,41 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 		return (List<Attachment>) getSession().createNamedQuery("getAttachmentByPost", Attachment.class);
 	}
 
+	/**
+	 * Metodo per creare un nuovo allegato
+	 * @param id: id dell'allegato da creare
+	 * @param description: descrizione dell'allegato
+	 * @param hide: visibilità dell'allegato
+	 * @param posts: post a cui l'allegato appartiene
+	 * 
+	 * @return nuovo allegato creato
+	 */
 	@Override
-	public Attachment create(long id, String description, Set<Post> posts) {
-		// TODO Auto-generated method stub
-		return null;
+	public Attachment create(long id, String description, boolean hide, Set<Post> posts) {
+		return this.create(id, description, hide, posts);
 	}
-
+	
+	/**
+	 * Metodo per aggiornare un post
+	 * @param attachment: allegato da aggiornare
+	 * 
+	 * @return allegato aggiornato
+	 */
 	@Override
 	public Attachment update(Attachment attachment) {
-		// TODO Auto-generated method stub
-		return null;
+		return (Attachment)this.getSession().merge(attachment);
 	}
 
+	/**
+	 * Metodo per eliminare un allegato
+	 * @param attachment: allegato da eliminare
+	 * 
+	 * @return allegato eliminato
+	 */
 	@Override
 	public void delete(Attachment attachment) {
-		// TODO Auto-generated method stub
+		this.getSession().delete(attachment);
 
 	}
-
 
 }

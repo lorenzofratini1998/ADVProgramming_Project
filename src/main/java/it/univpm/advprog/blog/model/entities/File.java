@@ -4,11 +4,23 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="files")
+@NamedQueries({
+	@NamedQuery(
+			name="getFileByName",
+			query="SELECT f FROM File f WHERE f.name= :name"
+			),
+	@NamedQuery(
+			name="getByDownloadble",
+			query="SELECT f FROM File f WHERE f.noDownloadble= :downloadble"
+			)
+})
 @PrimaryKeyJoinColumn(name="attachment_id")
 public class File extends Attachment implements Serializable{
 	private String name;
