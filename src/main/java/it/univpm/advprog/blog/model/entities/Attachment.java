@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,12 +24,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="attachments")
-@NamedQueries({
+/*@NamedQueries({
 	@NamedQuery(
 			name="getAttachmentsByPost",
 			query="SELECT a FROM Attachment a JOIN Post p ON a.id=p.id WHERE p.id= :id"
 			)
-})
+})*/
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Attachment {
     

@@ -38,10 +38,10 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	 * @param post: post specificato
 	 * @return lista degli allegati associati ad un certo post
 	 */
-	@Override
+	/*@Override
 	public List<Attachment> getByPost(Post post) {
 		return (List<Attachment>) getSession().createNamedQuery("getAttachmentByPost", Attachment.class);
-	}
+	}*/
 
 	/**
 	 * Metodo per creare un nuovo allegato

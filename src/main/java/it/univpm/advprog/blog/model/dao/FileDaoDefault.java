@@ -1,9 +1,11 @@
 package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.File;
+import it.univpm.advprog.blog.model.entities.Post;
 
 public class FileDaoDefault extends DefaultDao implements FileDao  {
 
@@ -14,7 +16,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	@Override
 	public List<File> getAll() {
 		 return getSession().
-	                createQuery("from File p", File.class).
+	                createQuery("from File f", File.class).
 	                getResultList();
 	}
 	
@@ -48,11 +50,16 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		return (List<File>) getSession().createNamedQuery("getFileByDownloadble", File.class);
 	}
 
-	
+	/**
+	 * Metodo per creare un nuovo file
+	 * @param id: id del file da creare
+	 * @param name: nome del file 
+	 * @param downloadble: flag per indicare se il file è scaricabile o meno
+	 * @return file creato
+	 */
 	@Override
-	public File create(String name, boolean downloadle) {
-		// TODO Auto-generated method stub
-		return null;
+	public File create(long id, String name, boolean downloadble) {
+		return this.create(id, name, downloadble);
 	}
 
 	/**

@@ -9,16 +9,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="links")
+@Table(name="link")
 @NamedQueries({
 	@NamedQuery(
 			name="getLinkByLink",
-			query="SELECT l FROM Link l WHERE l.link= :link"
+			query="SELECT l FROM File l WHERE l.link= :link"
 			)
 })
 @PrimaryKeyJoinColumn(name="attachment_id")
 public class Link extends Attachment implements Serializable {
+	
 	private String link;
 
 	/**

@@ -37,10 +37,15 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 		return (Link) this.getSession().createNamedQuery("getLinkByLink",Link.class);
 	}
 
+	/**
+	 * Metodo per creare un nuovo link
+	 * @param id: id del link da creare
+	 * @param link: nome del link
+	 * @return link creato 
+	 */
 	@Override
-	public Link create(String name, boolean downloadle) {
-		// TODO Auto-generated method stub
-		return null;
+	public Link create(long id, String link) {
+		return this.create(id, link);
 	}
 
 	/**

@@ -12,7 +12,7 @@ public interface LinkDao {
 	
 	Link getByLink(String link);
 	
-	Link create(String name, boolean downloadle);
+	Link create(long id, String link);
 	
 	Link update(Link link);
 	

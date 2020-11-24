@@ -10,7 +10,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="files")
+@Table(name="file")
 @NamedQueries({
 	@NamedQuery(
 			name="getFileByName",
@@ -23,6 +23,7 @@ import javax.persistence.Table;
 })
 @PrimaryKeyJoinColumn(name="attachment_id")
 public class File extends Attachment implements Serializable{
+	
 	private String name;
 	private boolean noDownloadable=false;
 	
