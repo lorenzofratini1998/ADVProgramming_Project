@@ -76,7 +76,7 @@ public class PostServiceDefault implements PostService {
     }
 
     /**
-     * Funzione per cercare tutti i post appartenenti ad un tag specificato.
+     * Funzione per cercare tutti i post appartenenti ad un tag specifico.
      *
      * @param tag tag specificato
      * @return lista contenente i post che soddisfano i criteri di ricerca
@@ -91,7 +91,7 @@ public class PostServiceDefault implements PostService {
     }
 
     /**
-     * Funzione per cercare tutti i post appartenenti ad un insieme di tag specificato.
+     * Funzione per cercare tutti i post appartenenti ad un insieme di tag specifico.
      *
      * @param tags insieme di tag specificato
      * @return lista contenente i post che soddisfano i criteri di ricerca
@@ -99,7 +99,48 @@ public class PostServiceDefault implements PostService {
     @Transactional(readOnly = true)
     @Override
     public List<Post> getByTags(Set<Tag> tags) {
-        return null; //TODO
+        List<Post> posts = this.postRepository.getAll();
+        for (Post post : posts) {
+            Set<Tag> tagsPost = post.getTags();
+            if (!tagsPost.containsAll(tags)) {
+                posts.remove(post);
+            }
+        }
+        return posts;
+    }
+
+    /**
+     * Funzione per cercare tutti i post che utilizzano un allegato specifico.
+     *
+     * @param attachment allegato specificato
+     * @return lista contenente i post che soddisfano i criteri di ricerca
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getByAttachment(Attachment attachment) {
+        Set<Attachment> attachments = new HashSet<>();
+        attachments.add(attachment);
+
+        return this.getByAttachments(attachments);
+    }
+
+    /**
+     * Funzione per cercare tutti i post che utilizzano un insieme di allegati specifico.
+     *
+     * @param attachments insieme di allegati specificato
+     * @return lista contenente i post che soddisfano i criteri di ricerca
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getByAttachments(Set<Attachment> attachments) {
+        List<Post> posts = this.postRepository.getAll();
+        for (Post post : posts) {
+            Set<Attachment> attachmentsPost = post.getAttachments();
+            if (!attachmentsPost.containsAll(attachments)) {
+                posts.remove(post);
+            }
+        }
+        return posts;
     }
 
     /**

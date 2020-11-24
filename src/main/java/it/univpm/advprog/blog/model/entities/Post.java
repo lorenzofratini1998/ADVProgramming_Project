@@ -216,11 +216,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "posts_attachments",
-            joinColumns = @JoinColumn(name = "post_id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "attachment_id", nullable = false)
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "posts")
     public Set<Attachment> getAttachments() {
         return attachments;
     }

@@ -20,6 +20,10 @@ public interface PostService {
 
     List<Post> getByTags(Set<Tag> tags);
 
+    List<Post> getByAttachment(Attachment attachment);
+
+    List<Post> getByAttachments(Set<Attachment> attachments);
+
     Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                 Archive archive);
 
