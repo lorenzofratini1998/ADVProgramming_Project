@@ -3,8 +3,9 @@ package it.univpm.advprog.blog.model.dao;
 import java.util.List;
 
 import it.univpm.advprog.blog.model.entities.*;
+import org.springframework.stereotype.Repository;
 
-
+@Repository("tagDao")
 public class TagDaoDefault extends DefaultDao implements TagDao {
 	
 	/**

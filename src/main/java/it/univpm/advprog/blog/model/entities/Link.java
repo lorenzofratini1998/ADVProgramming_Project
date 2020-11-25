@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="link")
+@Table(name="links")
 @NamedQueries({
 	@NamedQuery(
 			name="getLinkByLink",
@@ -27,7 +27,7 @@ public class Link extends Attachment implements Serializable {
 	 * Getter per la proprietà link
 	 * @return link 
 	 */
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false, unique=true, length = 300)
 	public String getLink() {
 		return link;
 	}

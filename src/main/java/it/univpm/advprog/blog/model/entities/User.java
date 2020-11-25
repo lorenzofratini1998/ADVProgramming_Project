@@ -38,7 +38,7 @@ public class User {
 	//Getter per la proprietà username dell'User
 
 	@Id
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", nullable = false, length = 20)
 	public String getUsername() {
 		return this.username;
 	}
@@ -52,7 +52,7 @@ public class User {
 	
 	//Getter per la proprietà firstname dell'User
 	
-	@Column(name = "firstname" , nullable = false)
+	@Column(name = "firstname" , nullable = false, length = 100)
 	public String getFirstName() {
 		return this.firstname;
 	}
@@ -68,7 +68,7 @@ public class User {
 	//Getter per la proprietà lastname dell'User
 	
 	
-	@Column(name = "lastname" , nullable = false) 
+	@Column(name = "lastname" , nullable = false, length = 100)
 	public String getLastName() {
 		return this.lastname;
 	}
@@ -83,7 +83,7 @@ public class User {
 	
 	//Getter per la proprietà password dell'User
 	
-	@Column(name = "password" , nullable = false)
+	@Column(name = "password" , nullable = false, length = 100)
 	public String getPassword() {
 		return this.password;
 	}
@@ -98,7 +98,7 @@ public class User {
 	
 	//Getter per la proprietà imageProfile dell'User
 	
-	@Column(name = "imageProfile" , nullable = true)
+	@Column(name = "imageProfile" , nullable = true, length = 100)
 	public String getImageProfile() {
 		return this.imageProfile;
 	}

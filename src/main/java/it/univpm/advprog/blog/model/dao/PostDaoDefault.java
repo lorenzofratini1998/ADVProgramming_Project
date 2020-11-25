@@ -86,8 +86,7 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                        Archive archive) {
-        return this.create(title, author, shortDescription, longDescription, tags, archive, null,
-                null);
+        return this.create(title, author, shortDescription, longDescription, tags, archive, null);
     }
 
     /**
@@ -99,13 +98,12 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
      * @param archive          archivio del post
-     * @param image            immagine di copertina del post
      * @param attachments      allegati del post
      * @return nuovo post creato
      */
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                       Archive archive, String image, Set<Attachment> attachments) {
+                       Archive archive, Set<Attachment> attachments) {
         // create a new post
         Post post = new Post();
         // set params
@@ -115,7 +113,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         post.setLongDescription(longDescription);
         post.setTags(tags);
         post.setArchive(archive);
-        post.setImage(image);
         post.setAttachments(attachments);
         // save the new post
         this.getSession().save(post);

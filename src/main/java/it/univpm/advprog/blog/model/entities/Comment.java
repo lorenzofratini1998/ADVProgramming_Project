@@ -73,7 +73,7 @@ public class Comment {
 	
 	//Proprietà title
 	
-	@Column(name = "title" , nullable = false)
+	@Column(name = "title" , nullable = false, length = 100)
 	public String getTitle() {
 		return this.title;
 	}
@@ -86,7 +86,7 @@ public class Comment {
 	
 	//Proprietà description
 	
-	@Column(name = "description" , nullable = false)
+	@Column(name = "description" , nullable = false, length = 300)
 	public String getDescription() {
 		return this.description;
 	}
