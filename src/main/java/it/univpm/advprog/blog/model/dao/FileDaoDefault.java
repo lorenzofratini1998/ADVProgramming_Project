@@ -3,10 +3,13 @@ package it.univpm.advprog.blog.model.dao;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Repository;
+
 import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.File;
 import it.univpm.advprog.blog.model.entities.Post;
 
+@Repository("fileDao")
 public class FileDaoDefault extends DefaultDao implements FileDao  {
 
 	/**
@@ -46,8 +49,8 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @return lista dei file scaricabili o meno
 	 */
 	@Override
-	public List<File> getByDownloadble(boolean downloadble) {
-		return (List<File>) getSession().createNamedQuery("getFileByDownloadble", File.class);
+	public List<File> getByDownloadble(boolean downloadable) {
+		return (List<File>) getSession().createNamedQuery("getFileByDownloadable", File.class);
 	}
 
 	/**
@@ -58,8 +61,13 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @return file creato
 	 */
 	@Override
-	public File create(long id, String name, boolean downloadble) {
-		return this.create(id, name, downloadble);
+	public File create(long id, String name, boolean downloadable) {
+		File file=new File();
+		file.setId(id);
+		file.setName(name);
+		file.setNoDownloadable(downloadable);
+		this.getSession().save(file);
+		return file;
 	}
 
 	/**

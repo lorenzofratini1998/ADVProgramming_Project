@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(
 			name="getLinkByLink",
-			query="SELECT l FROM File l WHERE l.link= :link"
+			query="SELECT l FROM Link l WHERE l.link= :link"
 			)
 })
 @PrimaryKeyJoinColumn(name="attachment_id")

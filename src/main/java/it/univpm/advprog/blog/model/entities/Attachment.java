@@ -31,7 +31,7 @@ import javax.persistence.Table;
 			)
 })*/
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Attachment {
+public class Attachment {
     
 	private long id;
 	private String description;

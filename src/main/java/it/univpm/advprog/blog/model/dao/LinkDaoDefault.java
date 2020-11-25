@@ -2,8 +2,11 @@ package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import it.univpm.advprog.blog.model.entities.Link;
 
+@Repository("linkDao")
 public class LinkDaoDefault extends DefaultDao implements LinkDao {
 
 	/**
@@ -45,7 +48,12 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 	 */
 	@Override
 	public Link create(long id, String link) {
-		return this.create(id, link);
+		Link newLink =new Link();
+		newLink.setId(id);
+		newLink.setLink(link);
+		this.getSession().save(link);
+		return newLink;
+		
 	}
 
 	/**

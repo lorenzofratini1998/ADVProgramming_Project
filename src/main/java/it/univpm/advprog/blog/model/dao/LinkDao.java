@@ -2,9 +2,14 @@ package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 import it.univpm.advprog.blog.model.entities.Link;
 
 public interface LinkDao {
+	Session getSession();
+	
+	public void setSession(Session session);
 	
 	List<Link> getAll();
 	

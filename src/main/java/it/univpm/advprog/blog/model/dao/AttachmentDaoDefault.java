@@ -42,6 +42,18 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	public List<Attachment> getByPost(Post post) {
 		return (List<Attachment>) getSession().createNamedQuery("getAttachmentByPost", Attachment.class);
 	}*/
+	
+	/**
+	 * Metodo per creare un nuovo allegato
+	 * @param id: id dell'allegato da creare
+	 * @param description: descrizione dell'allegato da creare
+	 * @param hide: visibilità dell'allegato
+	 * @return nuovo allegato creato
+	 */
+	@Override
+	public Attachment create(long id, String description, boolean hide) {
+		return this.create(id, description, hide,null);
+	}
 
 	/**
 	 * Metodo per creare un nuovo allegato
@@ -54,7 +66,14 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	 */
 	@Override
 	public Attachment create(long id, String description, boolean hide, Set<Post> posts) {
-		return this.create(id, description, hide, posts);
+		Attachment attachment=new Attachment();
+		attachment.setId(id);
+		attachment.setDescription(description);
+		attachment.setHide(hide);
+		attachment.setPosts(posts);
+		this.getSession().save(attachment);
+		return attachment;
+		
 	}
 	
 	/**

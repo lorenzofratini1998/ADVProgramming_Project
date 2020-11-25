@@ -10,6 +10,9 @@ import it.univpm.advprog.blog.model.entities.File;
 import it.univpm.advprog.blog.model.entities.Post;
 
 public interface FileDao {
+	Session getSession();
+	
+	public void setSession(Session session);
 	
 	List<File> getAll();
 	
@@ -17,9 +20,9 @@ public interface FileDao {
 	
 	File getByName(String name);
 	
-	List<File> getByDownloadble(boolean downloadble);
+	List<File> getByDownloadble(boolean downloadable);
 	
-	File create(long id, String name, boolean downloadble);
+	File create(long id, String name, boolean downloadable);
 	
 	File update(File file);
 	

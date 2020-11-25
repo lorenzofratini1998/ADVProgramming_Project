@@ -17,8 +17,8 @@ import javax.persistence.Table;
 			query="SELECT f FROM File f WHERE f.name= :name"
 			),
 	@NamedQuery(
-			name="getByDownloadble",
-			query="SELECT f FROM File f WHERE f.noDownloadble= :downloadble"
+			name="getByDownloadable",
+			query="SELECT f FROM File f WHERE f.noDownloadable= :downloadable"
 			)
 })
 @PrimaryKeyJoinColumn(name="attachment_id")
