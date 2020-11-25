@@ -10,7 +10,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="file")
+@Table(name="files")
 @NamedQueries({
 	@NamedQuery(
 			name="getFileByName",
