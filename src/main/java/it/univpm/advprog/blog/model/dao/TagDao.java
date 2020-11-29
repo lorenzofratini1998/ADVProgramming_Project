@@ -3,9 +3,14 @@ package it.univpm.advprog.blog.model.dao;
 import java.util.List;
 
 import it.univpm.advprog.blog.model.entities.*;
+import org.hibernate.Session;
 
 public interface TagDao {
-	
+
+	Session getSession();
+
+	public void setSession(Session session);
+
 	List<Tag> getAll();
 	
 	Tag getByName(String name);

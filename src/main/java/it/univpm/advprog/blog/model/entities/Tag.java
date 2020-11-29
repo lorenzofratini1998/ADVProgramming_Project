@@ -11,12 +11,6 @@ import java.util.Set;
 	
 	@Entity
 	@Table(name="tags")
-	@NamedQueries({
-        @NamedQuery(
-                name = "getTagByName",
-                query = "SELECT t FROM Tag t WHERE t.name = :name"
-        ),
-	})
 	public class Tag implements Serializable {
 		
 		private String name;
@@ -47,7 +41,7 @@ import java.util.Set;
 	 * @return
 	 */
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy="tags")
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
 	public Set<Post> getPosts(){
 		return posts;
 	}

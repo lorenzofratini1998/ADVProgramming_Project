@@ -160,7 +160,7 @@ public class Post implements Serializable {
      *
      * @return tags del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tag_name", nullable = false)
@@ -193,7 +193,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "posts")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "posts")
     public Set<Attachment> getAttachments() {
         return attachments;
     }

@@ -7,13 +7,6 @@ import java.util.Set;
 
 	@Entity
 	@Table (name="archives")
-	@NamedQueries({
-			@NamedQuery(
-            name = "getArchiveByName",
-            query = "SELECT a FROM Archive a WHERE a.name = :name"
-    )
-		
-	})
 	public class Archive implements Serializable {
 	    
 		private String name;
@@ -45,7 +38,7 @@ import java.util.Set;
 	 * 
 	 */
 	
-	@OneToMany(mappedBy="archive")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="archive")
 	public Set<Post> getPosts(){
 		return posts;
 	}

@@ -3,6 +3,7 @@ package it.univpm.advprog.blog.model.dao;
 import it.univpm.advprog.blog.model.entities.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -70,6 +71,25 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         return (List<Post>) getSession().getNamedQuery("Post.getPostsByAuthor").
                 setParameter("author", author.getUsername()).
                 getResultList();
+    }
+
+    /**
+     * Funzione per creare un nuovo post.
+     *
+     * @param title            titolo del post
+     * @param author           autore del post
+     * @param shortDescription descrizione breve del post
+     * @param longDescription  descrizione estesa del post
+     * @param tag              tag del post
+     * @param archive          archivio del post
+     * @return nuovo post creato
+     */
+    @Override
+    public Post create(String title, User author, String shortDescription, String longDescription, Tag tag,
+                       Archive archive) {
+        Set<Tag> tags = new HashSet<>();
+        tags.add(tag);
+        return this.create(title, author, shortDescription, longDescription, tags, archive, null);
     }
 
     /**

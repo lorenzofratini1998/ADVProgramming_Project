@@ -29,8 +29,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	 * @return archivio eventualmente trovato
 	 */
 	public Archive getByName(String name) {
-        return (Archive) getSession().getNamedQuery("Archive.getArchiveByName").setParameter("name", name).
-                uniqueResult();
+        return getSession().find(Archive.class, name);
     }
 	
 	/**
