@@ -43,8 +43,8 @@ public class CommentServiceDefault implements CommentService {
 	
 	@Transactional
 	@Override
-	public Comment create(long id, User author, Post post, String title, String description) {
-		return this.commentRepository.create(id, author, post, title, description);
+	public Comment create(User author, Post post, String title, String description) {
+		return this.commentRepository.create(author, post, title, description);
 	}
 	
 	//Funzione per aggiornare un commento

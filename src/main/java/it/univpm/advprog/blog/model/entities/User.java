@@ -36,7 +36,7 @@ public class User {
 	private String password;
 	private String imageProfile;
 	private Set<Comment> comments = new HashSet<Comment>();
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<Post>();
 	
 	
 	//Getter per la proprietà username dell'User
@@ -120,7 +120,7 @@ public class User {
 	
 	//Mapping della relazione con l'entità Comment (getter della proprietà comments)
 	
-	@OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "author", cascade=CascadeType.ALL, orphanRemoval = true)
 	public Set<Comment> getComments() {
 		return this.comments;
 	}
@@ -143,7 +143,7 @@ public class User {
 	//Mapping della relazione con l'entità Post (Getter per la proprietà posts)
 	
 	
-	@OneToMany(mappedBy = "author" , cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "author" , cascade=CascadeType.REMOVE, orphanRemoval = true)
 	public Set<Post> getPosts() {
 		return this.posts;
 	}
