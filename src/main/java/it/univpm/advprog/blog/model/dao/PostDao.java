@@ -21,11 +21,14 @@ public interface PostDao {
 
     List<Post> getByAuthor(User author);
 
+    Post create(String title, User author, String shortDescription, String longDescription, Tag tag,
+                Archive archive);
+
     Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                 Archive archive);
 
     Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                Archive archive, String image, Set<Attachment> attachments);
+                Archive archive, Set<Attachment> attachments);
 
     Post update(Post post);
 

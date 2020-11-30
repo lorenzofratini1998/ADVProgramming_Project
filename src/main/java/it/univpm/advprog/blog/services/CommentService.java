@@ -1,22 +1,14 @@
-package it.univpm.advprog.blog.model.dao;
+package it.univpm.advprog.blog.services;
 
 import java.util.List;
-
-import org.hibernate.Session;
 
 import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
-public interface CommentDao {
+public interface CommentService {
 
-	Session getSession();
-	
-	public void setSession(Session session);
-	
-	Comment findCommentById(long id);
-	
-	
+    Comment findCommentById(long id);
 	
 	Comment create(User author, Post post, String title, String description);
 	
@@ -26,5 +18,6 @@ public interface CommentDao {
 	
 	List<Comment> getCommentsFromPost(Post post);
 	
+//	List<Comment> findCommentsByPostAndAuthor(Post post, User author);
 	
 }

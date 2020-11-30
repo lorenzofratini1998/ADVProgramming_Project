@@ -20,6 +20,10 @@ import javax.persistence.Table;
 	@NamedQuery(
 			name = "findAllUsers",
 			query = "SELECT u FROM User u"
+			),
+	@NamedQuery(
+			name = "findPostsOfUser",
+			query = "SELECT u FROM User u JOIN Post p ON u.username = p.author WHERE u.username = :username"
 			)
 	
 })
@@ -32,13 +36,13 @@ public class User {
 	private String password;
 	private String imageProfile;
 	private Set<Comment> comments = new HashSet<Comment>();
-	private Set<Post> posts;
+	private Set<Post> posts = new HashSet<Post>();
 	
 	
 	//Getter per la proprietà username dell'User
 
 	@Id
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", nullable = false, length = 20)
 	public String getUsername() {
 		return this.username;
 	}
@@ -52,7 +56,7 @@ public class User {
 	
 	//Getter per la proprietà firstname dell'User
 	
-	@Column(name = "firstname" , nullable = false)
+	@Column(name = "firstname" , nullable = false, length = 100)
 	public String getFirstName() {
 		return this.firstname;
 	}
@@ -68,7 +72,7 @@ public class User {
 	//Getter per la proprietà lastname dell'User
 	
 	
-	@Column(name = "lastname" , nullable = false) 
+	@Column(name = "lastname" , nullable = false, length = 100)
 	public String getLastName() {
 		return this.lastname;
 	}
@@ -83,7 +87,7 @@ public class User {
 	
 	//Getter per la proprietà password dell'User
 	
-	@Column(name = "password" , nullable = false)
+	@Column(name = "password" , nullable = false, length = 100)
 	public String getPassword() {
 		return this.password;
 	}
@@ -98,7 +102,7 @@ public class User {
 	
 	//Getter per la proprietà imageProfile dell'User
 	
-	@Column(name = "imageProfile" , nullable = true)
+	@Column(name = "imageProfile" , nullable = true, length = 100)
 	public String getImageProfile() {
 		return this.imageProfile;
 	}
@@ -116,7 +120,7 @@ public class User {
 	
 	//Mapping della relazione con l'entità Comment (getter della proprietà comments)
 	
-	@OneToMany(mappedBy = "author", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "author", cascade=CascadeType.ALL, orphanRemoval = true)
 	public Set<Comment> getComments() {
 		return this.comments;
 	}
@@ -139,7 +143,7 @@ public class User {
 	//Mapping della relazione con l'entità Post (Getter per la proprietà posts)
 	
 	
-	@OneToMany(mappedBy = "author" , cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "author" , cascade=CascadeType.REMOVE, orphanRemoval = true)
 	public Set<Post> getPosts() {
 		return this.posts;
 	}

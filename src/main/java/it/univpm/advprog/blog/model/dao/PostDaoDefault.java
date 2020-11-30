@@ -3,6 +3,7 @@ package it.univpm.advprog.blog.model.dao;
 import it.univpm.advprog.blog.model.entities.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -79,6 +80,25 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      * @param author           autore del post
      * @param shortDescription descrizione breve del post
      * @param longDescription  descrizione estesa del post
+     * @param tag              tag del post
+     * @param archive          archivio del post
+     * @return nuovo post creato
+     */
+    @Override
+    public Post create(String title, User author, String shortDescription, String longDescription, Tag tag,
+                       Archive archive) {
+        Set<Tag> tags = new HashSet<>();
+        tags.add(tag);
+        return this.create(title, author, shortDescription, longDescription, tags, archive, null);
+    }
+
+    /**
+     * Funzione per creare un nuovo post.
+     *
+     * @param title            titolo del post
+     * @param author           autore del post
+     * @param shortDescription descrizione breve del post
+     * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
      * @param archive          archivio del post
      * @return nuovo post creato
@@ -86,8 +106,7 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                        Archive archive) {
-        return this.create(title, author, shortDescription, longDescription, tags, archive, null,
-                null);
+        return this.create(title, author, shortDescription, longDescription, tags, archive, null);
     }
 
     /**
@@ -99,13 +118,12 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
      * @param archive          archivio del post
-     * @param image            immagine di copertina del post
      * @param attachments      allegati del post
      * @return nuovo post creato
      */
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                       Archive archive, String image, Set<Attachment> attachments) {
+                       Archive archive, Set<Attachment> attachments) {
         // create a new post
         Post post = new Post();
         // set params
@@ -115,7 +133,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         post.setLongDescription(longDescription);
         post.setTags(tags);
         post.setArchive(archive);
-        post.setImage(image);
         post.setAttachments(attachments);
         // save the new post
         this.getSession().save(post);

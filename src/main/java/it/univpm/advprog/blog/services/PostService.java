@@ -28,7 +28,7 @@ public interface PostService {
                 Archive archive);
 
     Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                Archive archive, String image, Set<Attachment> attachments);
+                Archive archive, Set<Attachment> attachments);
 
     Post update(Post post);
 

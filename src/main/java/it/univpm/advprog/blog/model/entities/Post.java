@@ -30,7 +30,6 @@ public class Post implements Serializable {
     private User author;
     private String shortDescription;
     private String longDescription;
-    private String image;
     private Set<Tag> tags = new HashSet<>();
     private Set<Attachment> attachments = new HashSet<>();
     private Set<Comment> comments = new HashSet<>();
@@ -81,17 +80,6 @@ public class Post implements Serializable {
     }
 
     /**
-     * Getter per la proprietà image del post.
-     *
-     * @return nome del file immagine del post
-     */
-    @Column(length = 100)
-    public String getImage() {
-
-        return image;
-    }
-
-    /**
      * Setter per la proprietà id.
      *
      * @param id id del post da settare
@@ -125,17 +113,6 @@ public class Post implements Serializable {
      */
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
-    }
-
-    /**
-     * Setter per la proprietà image.
-     *
-     * @param image nome del file immagine da settare
-     */
-    public void setImage(String image) {
-        //TODO: impostare il caricamento di un file immagine da qualche parte nel server ed il solo salvataggio del nome
-        // del file in questo campo "image"
-        this.image = image;
     }
 
     /**
@@ -183,7 +160,7 @@ public class Post implements Serializable {
      *
      * @return tags del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tag_name", nullable = false)
@@ -216,7 +193,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "posts")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "posts")
     public Set<Attachment> getAttachments() {
         return attachments;
     }

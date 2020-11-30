@@ -159,7 +159,7 @@ public class PostServiceDefault implements PostService {
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                        Archive archive) {
         return this.postRepository.create(title, author, shortDescription, longDescription, tags, archive,
-                null, null);
+                null);
     }
 
     /**
@@ -171,15 +171,14 @@ public class PostServiceDefault implements PostService {
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
      * @param archive          archivio del post
-     * @param image            immagine di copertina del post
      * @param attachments      allegati del post
      * @return nuovo post creato
      */
     @Transactional
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                       Archive archive, String image, Set<Attachment> attachments) {
-        return this.postRepository.create(title, author, shortDescription, longDescription, tags, archive, image,
+                       Archive archive, Set<Attachment> attachments) {
+        return this.postRepository.create(title, author, shortDescription, longDescription, tags, archive,
                 attachments);
     }
 
