@@ -62,11 +62,11 @@ public class AttachmentServiceDefault implements AttachmentService {
 	 * @param hide: visibilità dell'allegato
 	 * @return allegato creato
 	 */
-	@Transactional(readOnly = true)
+	/*@Transactional(readOnly = true)
 	@Override
 	public Attachment create(long id, String description, boolean hide, Set<Post> posts) {
 		return this.attachmentRepository.create(id, description, hide, posts);
-	}
+	}*/
 
 	/**
 	 * Metodo per aggiornare un allegato

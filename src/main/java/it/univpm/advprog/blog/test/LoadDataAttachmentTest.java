@@ -7,6 +7,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import it.univpm.advprog.blog.model.dao.AttachmentDao;
 import it.univpm.advprog.blog.model.dao.FileDao;
 import it.univpm.advprog.blog.model.dao.LinkDao;
+import it.univpm.advprog.blog.model.entities.File;
 
 public class LoadDataAttachmentTest {
 
@@ -28,7 +29,16 @@ public class LoadDataAttachmentTest {
 				
 				//fase 1: aggiunta al DB
 				session.beginTransaction();
-				attachmentDao.create(100, "Allegato di prova 1", true);
+				fileDao.create(100, "Allegato di prova 1", true, null,"File 1",true);
+				linkDao.create(101, "Allegato di prova 2", true, null, "https://www.univpm.it");
+				session.getTransaction().commit();
+				assert(fileDao.getAll().size()==1);
+				assert(linkDao.getAll().size()==1);
+				assert(attachmentDao.getAll().size()==2);
+				session.beginTransaction();
+				File file=fileDao.getById(1);
+				file.setDescription("Allegato di prova 1.1");
+				fileDao.update(file);
 				session.getTransaction().commit();
 				
 			} catch (Exception e) {

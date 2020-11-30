@@ -1,10 +1,12 @@
 package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
 import it.univpm.advprog.blog.model.entities.Link;
+import it.univpm.advprog.blog.model.entities.Post;
 
 @Repository("linkDao")
 public class LinkDaoDefault extends DefaultDao implements LinkDao {
@@ -47,11 +49,14 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 	 * @return link creato 
 	 */
 	@Override
-	public Link create(long id, String link) {
+	public Link create(long id, String description, boolean hide, Set<Post> posts, String link) {
 		Link newLink =new Link();
 		newLink.setId(id);
+		newLink.setDescription(description);
+		newLink.setHide(hide);
+		newLink.setPosts(posts);
 		newLink.setLink(link);
-		this.getSession().save(link);
+		this.getSession().save(newLink);
 		return newLink;
 		
 	}

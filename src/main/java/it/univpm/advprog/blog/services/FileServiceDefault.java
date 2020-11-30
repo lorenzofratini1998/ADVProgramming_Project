@@ -104,10 +104,10 @@ public class FileServiceDefault implements FileService {
 	 * @param name: nome del file
 	 * @param downloadble: flag per indicare se il file è scaricabile o meno
 	 */
-	@Transactional(readOnly=true)
 	@Override
-	public File create(long id, String name, boolean downloadble) {
-		return this.fileRepository.create(id, name, downloadble);
+	@Transactional(readOnly=true)
+	public File create(long id, String description, boolean hide, Set<Post> posts,String name, boolean downloadble) {
+		return this.fileRepository.create(id, description, hide, posts, name, downloadble);
 		
 	}
 

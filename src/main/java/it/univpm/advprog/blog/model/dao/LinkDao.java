@@ -1,10 +1,12 @@
 package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 
 import it.univpm.advprog.blog.model.entities.Link;
+import it.univpm.advprog.blog.model.entities.Post;
 
 public interface LinkDao {
 	Session getSession();
@@ -17,7 +19,7 @@ public interface LinkDao {
 	
 	Link getByLink(String link);
 	
-	Link create(long id, String link);
+	Link create(long id, String description, boolean hide, Set<Post> posts, String link);
 	
 	Link update(Link link);
 	

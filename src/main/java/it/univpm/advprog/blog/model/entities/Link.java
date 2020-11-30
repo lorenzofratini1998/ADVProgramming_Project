@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="link")
+@Table(name="links")
 @NamedQueries({
 	@NamedQuery(
 			name="getLinkByLink",

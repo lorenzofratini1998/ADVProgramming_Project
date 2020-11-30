@@ -50,10 +50,10 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	 * @param hide: visibilità dell'allegato
 	 * @return nuovo allegato creato
 	 */
-	@Override
+	/*@Override
 	public Attachment create(long id, String description, boolean hide) {
 		return this.create(id, description, hide,null);
-	}
+	}*/
 
 	/**
 	 * Metodo per creare un nuovo allegato
@@ -64,7 +64,7 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	 * 
 	 * @return nuovo allegato creato
 	 */
-	@Override
+	/*@Override
 	public Attachment create(long id, String description, boolean hide, Set<Post> posts) {
 		Attachment attachment=new Attachment();
 		attachment.setId(id);
@@ -74,7 +74,7 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 		this.getSession().save(attachment);
 		return attachment;
 		
-	}
+	}*/
 	
 	/**
 	 * Metodo per aggiornare un post

@@ -94,8 +94,8 @@ public class LinkServiceDefault implements LinkService {
 	 * @return link creato
 	 */
 	@Override
-	public Link create(long id, String link) {
-		return this.linkRepository.create(id, link);
+	public Link create(long id, String description, boolean hide, Set<Post> posts, String link) {
+		return this.linkRepository.create(id, description, hide, posts, link);
 	}
 
 	/**

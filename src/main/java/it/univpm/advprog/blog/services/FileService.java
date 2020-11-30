@@ -1,6 +1,7 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
+import java.util.Set;
 
 import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.File;
@@ -20,7 +21,7 @@ public interface FileService {
 	
 	List<File> getFileByPost(Post post);
 	
-	File create(long id, String name, boolean downloadble);
+	File create(long id, String description, boolean hide, Set<Post> posts, String name, boolean downloadble);
 	
 	File update(File file);
 	

@@ -1,6 +1,7 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
+import java.util.Set;
 
 import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.Link;
@@ -17,7 +18,7 @@ public interface LinkService {
 	
 	List<Link> getLinkByPost(Post post);
 	
-	Link create(long id, String link);
+	Link create(long id, String description, boolean hide, Set<Post> posts, String link);
 	
 	Link update(Link link);
 	
