@@ -22,7 +22,7 @@ public interface FileDao {
 	
 	List<File> getByDownloadble(boolean downloadable);
 	
-	File create(long id, String description, boolean hide, Set<Post> posts, String name, boolean downloadable);
+	File create(String description, boolean hide, Set<Post> posts, String name, boolean downloadable);
 	
 	File update(File file);
 	

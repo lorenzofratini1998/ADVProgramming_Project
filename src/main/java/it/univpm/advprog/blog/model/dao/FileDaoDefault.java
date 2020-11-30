@@ -61,9 +61,8 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @return file creato
 	 */
 	@Override
-	public File create(long id, String description, boolean hide, Set<Post> posts, String name, boolean downloadable) {
+	public File create(String description, boolean hide, Set<Post> posts, String name, boolean downloadable) {
 		File file=new File();
-		file.setId(id);
 		file.setDescription(description);
 		file.setHide(hide);
 		file.setPosts(posts);

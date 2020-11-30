@@ -19,7 +19,7 @@ public interface LinkDao {
 	
 	Link getByLink(String link);
 	
-	Link create(long id, String description, boolean hide, Set<Post> posts, String link);
+	Link create(String description, boolean hide, Set<Post> posts, String link);
 	
 	Link update(Link link);
 	

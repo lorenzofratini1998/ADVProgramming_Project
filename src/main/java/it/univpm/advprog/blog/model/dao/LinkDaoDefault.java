@@ -49,9 +49,8 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 	 * @return link creato 
 	 */
 	@Override
-	public Link create(long id, String description, boolean hide, Set<Post> posts, String link) {
+	public Link create(String description, boolean hide, Set<Post> posts, String link) {
 		Link newLink =new Link();
-		newLink.setId(id);
 		newLink.setDescription(description);
 		newLink.setHide(hide);
 		newLink.setPosts(posts);

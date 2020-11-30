@@ -106,8 +106,8 @@ public class FileServiceDefault implements FileService {
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public File create(long id, String description, boolean hide, Set<Post> posts,String name, boolean downloadble) {
-		return this.fileRepository.create(id, description, hide, posts, name, downloadble);
+	public File create(String description, boolean hide, Set<Post> posts,String name, boolean downloadble) {
+		return this.fileRepository.create(description, hide, posts, name, downloadble);
 		
 	}
 

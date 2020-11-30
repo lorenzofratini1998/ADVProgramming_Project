@@ -21,7 +21,7 @@ public interface FileService {
 	
 	List<File> getFileByPost(Post post);
 	
-	File create(long id, String description, boolean hide, Set<Post> posts, String name, boolean downloadble);
+	File create(String description, boolean hide, Set<Post> posts, String name, boolean downloadble);
 	
 	File update(File file);
 	

@@ -29,8 +29,8 @@ public class LoadDataAttachmentTest {
 				
 				//fase 1: aggiunta al DB
 				session.beginTransaction();
-				fileDao.create(100, "Allegato di prova 1", true, null,"File 1",true);
-				linkDao.create(101, "Allegato di prova 2", true, null, "https://www.univpm.it");
+				fileDao.create("Allegato di prova 1", true, null,"File 1",true);
+				linkDao.create("Allegato di prova 2", true, null, "https://www.univpm.it");
 				session.getTransaction().commit();
 				assert(fileDao.getAll().size()==1);
 				assert(linkDao.getAll().size()==1);

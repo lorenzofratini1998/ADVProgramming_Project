@@ -18,7 +18,7 @@ public interface LinkService {
 	
 	List<Link> getLinkByPost(Post post);
 	
-	Link create(long id, String description, boolean hide, Set<Post> posts, String link);
+	Link create(String description, boolean hide, Set<Post> posts, String link);
 	
 	Link update(Link link);
 	
