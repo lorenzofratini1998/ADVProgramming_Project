@@ -19,6 +19,8 @@ public interface LinkDao {
 
 	Link create(String description, boolean hide, Post post, String link);
 	
+	Link create(String description, Post post, String link);
+	
 	Link update(Link link);
 	
 	void delete(Link link);

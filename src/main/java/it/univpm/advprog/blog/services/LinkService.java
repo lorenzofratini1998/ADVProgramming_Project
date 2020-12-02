@@ -11,12 +11,12 @@ public interface LinkService {
 	List<Link> getAll();
 	
 	Link getById(long id);
-
-	Attachment getAttachmentByLink(Link link);
 	
 	List<Link> getLinkByPost(Post post);
 
 	Link create(String description, boolean hide, Post post, String link);
+	
+	Link create(String description, Post post, String link);
 	
 	Link update(Link link);
 	

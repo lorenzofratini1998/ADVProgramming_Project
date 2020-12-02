@@ -1,14 +1,10 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.univpm.advprog.blog.model.dao.AttachmentDao;
 import it.univpm.advprog.blog.model.dao.LinkDao;
-import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.Link;
 import it.univpm.advprog.blog.model.entities.Post;
 
@@ -17,8 +13,6 @@ import it.univpm.advprog.blog.model.entities.Post;
 public class LinkServiceDefault implements LinkService {
 
 	private LinkDao linkRepository;
-	private AttachmentDao attachmentRepository;
-	
 	/**
 	 * Metodo per ottenere tutti i link
 	 * @return lista di tutti i link
@@ -41,23 +35,6 @@ public class LinkServiceDefault implements LinkService {
 	}
 
 	/**
-	 * Metodo per ottenere le caratteristiche dell'allegato associato al link
-	 * @param link: link ricercato
-	 * @return allegato se il link esiste
-	 * @return null se il link non esiste
-	 */
-	@Transactional(readOnly=true)
-	@Override
-	public Attachment getAttachmentByLink(Link link) {
-		List<Attachment> attachments=this.attachmentRepository.getAll();
-		for(Attachment attachment : attachments) {
-			if(attachment.getId()==link.getId()) 
-				return attachment;
-			}
-		return null;
-	}
-
-	/**
 	 * Metodo per ottenere i link associati ad un certo post
 	 * @param post: post da ricercare
 	 * @return lista dei link associati al post
@@ -72,12 +49,29 @@ public class LinkServiceDefault implements LinkService {
 
 	/**
 	 * Metodo per creare un link
+	 * @param description: descrizione del link
+	 * @param hide: visibilità del link
+	 * @param post: post associato al link
 	 * @param link: link del link da creare
 	 * @return link creato
 	 */
 	@Override
+	@Transactional(readOnly=true)
 	public Link create(String description, boolean hide, Post post, String link) {
 		return this.linkRepository.create(description, hide, post, link);
+	}
+	
+	/**
+	 * Metodo per creare un link
+	 * @param description: descrizione del link
+	 * @param post: post associato al link
+	 * @param link: link del link da creare
+	 * @return link creato
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public Link create(String description, Post post, String link) {
+		return this.linkRepository.create(description, post, link);
 	}
 
 	/**
@@ -86,6 +80,7 @@ public class LinkServiceDefault implements LinkService {
 	 * @return link aggiornato
 	 */
 	@Override
+	@Transactional(readOnly=true)
 	public Link update(Link link) {
 		return this.linkRepository.update(link);
 	}
@@ -95,6 +90,7 @@ public class LinkServiceDefault implements LinkService {
 	 * @param link: link da eliminare
 	 */
 	@Override
+	@Transactional(readOnly=true)
 	public void delete(Link link) {
 		this.linkRepository.delete(link);
 

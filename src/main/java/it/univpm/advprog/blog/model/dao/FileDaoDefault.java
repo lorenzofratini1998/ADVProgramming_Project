@@ -55,6 +55,9 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 
 	/**
 	 * Metodo per creare un nuovo file
+	 * @param description: descrizione del file da creare
+	 * @param hide: visibilità del file
+	 * @param post: post a cui il file è associato
 	 * @param name: nome del file
 	 * @param downloadable: flag per indicare se il file è scaricabile o meno
 	 * @return file creato
@@ -64,6 +67,61 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		File file=new File();
 		file.setDescription(description);
 		file.setHide(hide);
+		file.setPost(post);
+		file.setName(name);
+		file.setNoDownloadable(downloadable);
+		this.getSession().save(file);
+		return file;
+	}
+	
+	/**
+	 * Metodo per creare un nuovo file
+	 * @param description: descrizione del file da creare
+	 * @param post: post a cui il file è associato
+	 * @param name: nome del file
+	 * @return file creato
+	 */
+	@Override
+	public File create(String description, Post post, String name) {
+		File file=new File();
+		file.setDescription(description);
+		file.setPost(post);
+		file.setName(name);
+		this.getSession().save(file);
+		return file;
+	}
+
+	/**
+	 * Metodo per creare un nuovo file
+	 * @param description: descrizione del file da creare
+	 * @param hide: visibilità del file
+	 * @param post: post a cui il file è associato
+	 * @param name: nome del file
+	 * @return file creato
+	 */
+	@Override
+	public File create(String description, boolean hide, Post post, String name) {
+		File file=new File();
+		file.setDescription(description);
+		file.setHide(hide);
+		file.setPost(post);
+		file.setName(name);
+		this.getSession().save(file);
+		return file;
+	}
+
+	/**
+	 * Metodo per creare un nuovo file
+	 * @param description: descrizione del file da creare
+	 * @param hide: visibilità del file
+	 * @param name: nome del file
+	 * @param downloadable: flag per indicare se il file è scaricabile o meno
+	 * @return file creato
+	 */
+	@Override
+	public File create(String description, Post post, String name, boolean downloadable) {
+		File file=new File();
+		file.setDescription(description);
 		file.setPost(post);
 		file.setName(name);
 		file.setNoDownloadable(downloadable);

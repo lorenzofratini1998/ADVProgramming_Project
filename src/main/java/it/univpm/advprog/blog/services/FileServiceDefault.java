@@ -1,14 +1,10 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.univpm.advprog.blog.model.dao.AttachmentDao;
 import it.univpm.advprog.blog.model.dao.FileDao;
-import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.File;
 import it.univpm.advprog.blog.model.entities.Post;
 
@@ -17,7 +13,6 @@ import it.univpm.advprog.blog.model.entities.Post;
 public class FileServiceDefault implements FileService {
 
 	FileDao fileRepository;
-	AttachmentDao attachmentRepository;
 	
 	/**
 	 * Metodo per ricavare tutti i file
@@ -62,23 +57,6 @@ public class FileServiceDefault implements FileService {
 	}
 	
 	/**
-	 * Metodo per ottenere l'allegato generico del file
-	 * @param file: file d'interesse
-	 * @return allegato se il file esiste
-	 * @return null se il file non esiste
-	 */
-	@Transactional(readOnly=true)
-	@Override
-	public Attachment getAttachmentByFile(File file) {
-		List<Attachment> attachments=this.attachmentRepository.getAll();
-		for(Attachment attachment : attachments) {
-			if(attachment.getId()==file.getId()) 
-				return attachment;
-			}
-		return null;
-	}
-	
-	/**
 	 * Metodo per restituire i file associati ad un certo post
 	 * @param post: post ricercato
 	 * @return lista dei file associati al post
@@ -94,6 +72,9 @@ public class FileServiceDefault implements FileService {
 
 	/**
 	 * Metodo per creare un file
+	 * @param description: descrizione del file 
+	 * @param hide: visibilità del file
+	 * @param post: post a cui il file è associato
 	 * @param name: nome del file
 	 * @param downloadble: flag per indicare se il file è scaricabile o meno
 	 */
@@ -101,7 +82,44 @@ public class FileServiceDefault implements FileService {
 	@Transactional(readOnly=true)
 	public File create(String description, boolean hide, Post post,String name, boolean downloadble) {
 		return this.fileRepository.create(description, hide, post, name, downloadble);
-		
+	}
+	
+	/**
+	 * Metodo per creare un file
+	 * @param description: descrizione del file 
+	 * @param post: post a cui il file è associato
+	 * @param name: nome del file
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public File create(String description, Post post, String name) {
+		return this.fileRepository.create(description, post, name);
+	}
+
+	/**
+	 * Metodo per creare un file
+	 * @param description: descrizione del file 
+	 * @param hide: visibilità del file
+	 * @param post: post a cui il file è associato
+	 * @param name: nome del file
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public File create(String description, boolean hide, Post post, String name) {
+		return this.fileRepository.create(description, hide, post, name);
+	}
+
+	/**
+	 * Metodo per creare un file
+	 * @param description: descrizione del file 
+	 * @param post: post a cui il file è associato
+	 * @param name: nome del file
+	 * @param downloadble: flag per indicare se il file è scaricabile o meno
+	 */
+	@Override
+	@Transactional(readOnly=true)
+	public File create(String description, Post post, String name, boolean downloadable) {
+		return this.fileRepository.create(description, post, name, downloadable);
 	}
 
 	/**
@@ -125,5 +143,4 @@ public class FileServiceDefault implements FileService {
 		this.fileRepository.delete(file);
 
 	}
-
 }

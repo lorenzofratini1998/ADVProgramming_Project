@@ -34,6 +34,9 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 
 	/**
 	 * Metodo per creare un nuovo link
+	 * @param description: descrizione del link
+	 * @param hide: visibilità del link
+	 * @param post: post a cui il link è associato
 	 * @param link: nome del link
 	 * @return link creato 
 	 */
@@ -45,8 +48,24 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 		newLink.setPost(post);
 		newLink.setLink(link);
 		this.getSession().save(newLink);
-		return newLink;
-		
+		return newLink;	
+	}
+	
+	/**
+	 * Metodo per creare un nuovo link
+	 * @param description: descrizione del link
+	 * @param post: post a cui il link è associato
+	 * @param link: nome del link
+	 * @return link creato 
+	 */
+	@Override
+	public Link create(String description, Post post, String link) {
+		Link newLink =new Link();
+		newLink.setDescription(description);
+		newLink.setPost(post);
+		newLink.setLink(link);
+		this.getSession().save(newLink);
+		return newLink;	
 	}
 
 	/**
