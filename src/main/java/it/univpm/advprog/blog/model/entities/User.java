@@ -36,6 +36,7 @@ public class User {
 	private String password;
 	private String imageProfile;
 	private boolean disabled = false;
+	private boolean admin = false;
 	private Set<Comment> comments = new HashSet<Comment>();
 	private Set<Post> posts = new HashSet<Post>();
 	
@@ -182,5 +183,24 @@ public class User {
 	 */
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+
+	/**
+	 * Getter della proprietà admin.
+	 *
+	 * @return se l'utente è un admin o meno
+	 */
+	@Column(nullable=false)
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	/**
+	 * Setter della proprietà admin.
+	 *
+	 * @param admin specifico se l'utente è un admin o meno
+	 */
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 }
