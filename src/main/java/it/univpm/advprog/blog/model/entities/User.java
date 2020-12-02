@@ -35,6 +35,7 @@ public class User {
 	private String lastname;
 	private String password;
 	private String imageProfile;
+	private boolean disabled = false;
 	private Set<Comment> comments = new HashSet<Comment>();
 	private Set<Post> posts = new HashSet<Post>();
 	
@@ -120,7 +121,7 @@ public class User {
 	
 	//Mapping della relazione con l'entità Comment (getter della proprietà comments)
 	
-	@OneToMany(mappedBy = "author", cascade=CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "author", orphanRemoval = true)
 	public Set<Comment> getComments() {
 		return this.comments;
 	}
@@ -143,7 +144,7 @@ public class User {
 	//Mapping della relazione con l'entità Post (Getter per la proprietà posts)
 	
 	
-	@OneToMany(mappedBy = "author" , cascade=CascadeType.REMOVE, orphanRemoval = true)
+	@OneToMany(mappedBy = "author", orphanRemoval = true)
 	public Set<Post> getPosts() {
 		return this.posts;
 	}
@@ -163,11 +164,23 @@ public class User {
 		post.setAuthor(this);
 		this.posts.add(post);
 	}
-	
-	
-	
-	
-    
 
+	/**
+	 * Getter della proprietà disabled.
+	 *
+	 * @return se l'utente è disabilitato o meno.
+	 */
+	@Column(nullable=false)
+	public boolean isDisabled() {
+		return disabled;
+	}
 
+	/**
+	 * Setter della proprietà disabled.
+	 *
+	 * @param disabled specifico se l'utente è disabilitato o meno
+	 */
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
 }

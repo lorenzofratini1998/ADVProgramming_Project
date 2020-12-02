@@ -40,32 +40,31 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override
 	public File getByName(String name) {
-		return (File) getSession().createNamedQuery("getFileByName", File.class);
+		return getSession().createNamedQuery("getFileByName", File.class).setParameter("name", name).getSingleResult();
 	}
 
 	/**
 	 * Metodo per ricercare la lista dei file che sono scaricabili o meno
-	 * @param downloadble: parametro per indicare se si è interessati a file scaricabili o meno
+	 * @param downloadable: parametro per indicare se si è interessati a file scaricabili o meno
 	 * @return lista dei file scaricabili o meno
 	 */
 	@Override
-	public List<File> getByDownloadble(boolean downloadable) {
-		return (List<File>) getSession().createNamedQuery("getFileByDownloadable", File.class);
+	public List<File> getByDownloadable(boolean downloadable) {
+		return getSession().createNamedQuery("getFileByDownloadable", File.class).getResultList();
 	}
 
 	/**
 	 * Metodo per creare un nuovo file
-	 * @param id: id del file da creare
-	 * @param name: nome del file 
-	 * @param downloadble: flag per indicare se il file è scaricabile o meno
+	 * @param name: nome del file
+	 * @param downloadable: flag per indicare se il file è scaricabile o meno
 	 * @return file creato
 	 */
 	@Override
-	public File create(String description, boolean hide, Set<Post> posts, String name, boolean downloadable) {
+	public File create(String description, boolean hide, Post post, String name, boolean downloadable) {
 		File file=new File();
 		file.setDescription(description);
 		file.setHide(hide);
-		file.setPosts(posts);
+		file.setPost(post);
 		file.setName(name);
 		file.setNoDownloadable(downloadable);
 		this.getSession().save(file);

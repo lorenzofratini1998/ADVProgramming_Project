@@ -1,15 +1,6 @@
 package it.univpm.advprog.blog.model.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "comments")
@@ -26,6 +17,7 @@ public class Comment {
 	private Post post;
 	private String title;
 	private String description;
+	private boolean hide = false;
 	
 	
 	//Proprietà id 
@@ -95,5 +87,23 @@ public class Comment {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
+	/**
+	 * Getter per la proprietà hide.
+	 *
+	 * @return se il commento è nascosto o meno
+	 */
+	@Column(nullable=false)
+	public boolean isHide() {
+		return hide;
+	}
+
+	/**
+	 * Setter per la proprietà hide.
+	 *
+	 * @param hide specifico se il commento è nascosto o meno
+	 */
+	public void setHide(boolean hide) {
+		this.hide = hide;
+	}
 }

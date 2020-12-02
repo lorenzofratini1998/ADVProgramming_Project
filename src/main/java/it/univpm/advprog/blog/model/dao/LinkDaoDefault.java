@@ -33,27 +33,16 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 	}
 
 	/**
-	 * Metodo per ricercare un link dalla stringa che lo caratterizza
-	 * @param link: stringa che descrive il link
-	 * @return link ricercato
-	 */
-	@Override
-	public Link getByLink(String link) {
-		return (Link) this.getSession().createNamedQuery("getLinkByLink",Link.class);
-	}
-
-	/**
 	 * Metodo per creare un nuovo link
-	 * @param id: id del link da creare
 	 * @param link: nome del link
 	 * @return link creato 
 	 */
 	@Override
-	public Link create(String description, boolean hide, Set<Post> posts, String link) {
+	public Link create(String description, boolean hide, Post post, String link) {
 		Link newLink =new Link();
 		newLink.setDescription(description);
 		newLink.setHide(hide);
-		newLink.setPosts(posts);
+		newLink.setPost(post);
 		newLink.setLink(link);
 		this.getSession().save(newLink);
 		return newLink;

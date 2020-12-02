@@ -16,10 +16,8 @@ public interface LinkDao {
 	List<Link> getAll();
 	
 	Link getById(long id);
-	
-	Link getByLink(String link);
-	
-	Link create(String description, boolean hide, Set<Post> posts, String link);
+
+	Link create(String description, boolean hide, Post post, String link);
 	
 	Link update(Link link);
 	

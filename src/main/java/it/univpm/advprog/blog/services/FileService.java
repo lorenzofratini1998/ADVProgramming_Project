@@ -17,11 +17,11 @@ public interface FileService {
 	
 	Attachment getAttachmentByFile(File file);
 	
-	List<File> getByDownloadble(boolean downloadble);
+	List<File> getByDownloadble(boolean downloadable);
 	
 	List<File> getFileByPost(Post post);
 	
-	File create(String description, boolean hide, Set<Post> posts, String name, boolean downloadble);
+	File create(String description, boolean hide, Post post, String name, boolean downloadable);
 	
 	File update(File file);
 	

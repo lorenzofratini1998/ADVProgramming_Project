@@ -3,23 +3,7 @@ package it.univpm.advprog.blog.model.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 
 
 @Entity
@@ -36,7 +20,7 @@ public abstract class Attachment {
 	private long id;
 	private String description;
 	private boolean hide=false;
-	private Set<Post> posts=new HashSet<>();
+	private Post post;
 	
 	/**
 	 * Getter per la proprietà id dell'allegato
@@ -93,32 +77,21 @@ public abstract class Attachment {
 	}
 	
 	/**
-	 * Getter per la proprietà posts
-	 * @return post associati agli allegati
+	 * Getter per la proprietà post
+	 * @return post associato all'allegato
 	 */
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.PERSIST)
-	@JoinTable(name="posts_attachments",
-			joinColumns=@JoinColumn(name="attachment_id",nullable=false),
-			inverseJoinColumns=@JoinColumn(name="post_id",nullable=false)
-	)
-	public Set<Post> getPosts() {
-		return this.posts;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "post_id", nullable = false)
+	public Post getPost() {
+		return this.post;
 	}
 	
 	/**
-	 * Setter per la proprietà posts
-	 * @param posts: posts associati agli allegati da settare
+	 * Setter per la proprietà post
+	 * @param post: post associato all'allegato da settare
 	 */
-	public void setPosts(Set<Post> posts) {
-		this.posts=posts;
+	public void setPost(Post post) {
+		this.post=post;
 	}
-	
-	/**
-	 * Metodo per aggiungere un post all'allegato
-	 * @param post: post da aggiungere
-	 */
-	public void addPost(Post post) {
-		post.addAttachment(this);
-		this.posts.add(post);
-    }
+
 }

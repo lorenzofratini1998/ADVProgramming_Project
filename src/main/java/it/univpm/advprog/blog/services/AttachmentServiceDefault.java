@@ -1,5 +1,7 @@
 package it.univpm.advprog.blog.services;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,14 +47,7 @@ public class AttachmentServiceDefault implements AttachmentService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Attachment> getByPost(Post post) {
-		List<Attachment> attachments=this.attachmentRepository.getAll();
-		for(Attachment attachment: attachments) {
-			Set<Post> postAttachments=attachment.getPosts();
-			if(!postAttachments.contains(post)) {
-				attachments.remove(attachment);
-			}
-		}
-		return attachments;
+		return new ArrayList<>(post.getAttachments());
 	}
 
 	/**

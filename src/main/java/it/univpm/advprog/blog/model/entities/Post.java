@@ -28,6 +28,7 @@ public class Post implements Serializable {
     private long id;
     private String title;
     private User author;
+    private boolean hide = false;
     private String shortDescription;
     private String longDescription;
     private Set<Tag> tags = new HashSet<>();
@@ -80,6 +81,16 @@ public class Post implements Serializable {
     }
 
     /**
+     * Getter per la proprietà hide del post.
+     *
+     * @return se il post è nascosto o meno
+     */
+    @Column(nullable=false)
+    public boolean isHide() {
+        return hide;
+    }
+
+    /**
      * Setter per la proprietà id.
      *
      * @param id id del post da settare
@@ -113,6 +124,15 @@ public class Post implements Serializable {
      */
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
+    }
+
+    /**
+     * Setter per la proprietà hide.
+     *
+     * @param hide specifico se il post non è visibile o meno
+     */
+    public void setHide(boolean hide) {
+        this.hide = hide;
     }
 
     /**
@@ -193,7 +213,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "posts")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "post")
     public Set<Attachment> getAttachments() {
         return attachments;
     }
@@ -213,7 +233,7 @@ public class Post implements Serializable {
      * @param attachment allegato da aggiungere
      */
     public void addAttachment(Attachment attachment) {
-        attachment.addPost(this);
+        attachment.setPost(this);
         this.attachments.add(attachment);
     }
 
@@ -222,7 +242,7 @@ public class Post implements Serializable {
      *
      * @return commenti del post
      */
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "post")
     public Set<Comment> getComments() {
         return comments;
     }
@@ -246,5 +266,3 @@ public class Post implements Serializable {
         this.comments.add(comment);
     }
 }
-
-//TODO: Una volta implementate anche le altre Entities bisogna controllare per bene tutti i CascadeType e FetchType

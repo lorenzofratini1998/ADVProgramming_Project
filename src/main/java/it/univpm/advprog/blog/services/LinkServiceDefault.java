@@ -41,17 +41,6 @@ public class LinkServiceDefault implements LinkService {
 	}
 
 	/**
-	 * Metodo per ricavare un link dal suo link
-	 * @param link: link da ricercare
-	 * @retun link ricercato
-	 */
-	@Transactional(readOnly=true)
-	@Override
-	public Link getByLink(String link) {
-		return this.linkRepository.getByLink(link);
-	}
-
-	/**
 	 * Metodo per ottenere le caratteristiche dell'allegato associato al link
 	 * @param link: link ricercato
 	 * @return allegato se il link esiste
@@ -77,25 +66,18 @@ public class LinkServiceDefault implements LinkService {
 	@Override
 	public List<Link> getLinkByPost(Post post) {
 		List<Link> links=this.linkRepository.getAll();
-		for(Link link: links) {
-			Attachment attachment=this.getAttachmentByLink(link);
-			Set<Post> postAttachments=attachment.getPosts();
-			if(!postAttachments.contains(post)) {
-				links.remove(link);
-			}
-		}
+		links.removeIf(link -> !link.getPost().equals(post));
 		return links;
 	}
 
 	/**
 	 * Metodo per creare un link
-	 * @param id: id del link da creare
 	 * @param link: link del link da creare
 	 * @return link creato
 	 */
 	@Override
-	public Link create(String description, boolean hide, Set<Post> posts, String link) {
-		return this.linkRepository.create(description, hide, posts, link);
+	public Link create(String description, boolean hide, Post post, String link) {
+		return this.linkRepository.create(description, hide, post, link);
 	}
 
 	/**

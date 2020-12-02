@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LoadDataTest {
     private final static String SHORTDESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
             "tempus magna vel posuere cursus. Sed ultricies nunc purus, et maximus eros accumsan sit amet. Donec " +
@@ -31,6 +34,9 @@ public class LoadDataTest {
             ArchiveDao archiveDao = ctx.getBean("archiveDao", ArchiveDao.class);
             TagDao tagDao = ctx.getBean("tagDao", TagDao.class);
             CommentDao commentDao = ctx.getBean("commentDao", CommentDao.class);
+            FileDao fileDao = ctx.getBean("fileDao", FileDao.class);
+            LinkDao linkDao = ctx.getBean("linkDao", LinkDao.class);
+            AttachmentDao attachmentDao = ctx.getBean("attachmentDao", AttachmentDao.class);
 
             try (Session session = sf.openSession()) {
 
@@ -40,6 +46,9 @@ public class LoadDataTest {
                 userDao.setSession(session);
                 tagDao.setSession(session);
                 commentDao.setSession(session);
+                fileDao.setSession(session);
+                linkDao.setSession(session);
+                attachmentDao.setSession(session);
 
 
 //**********************************************************************************************************************
@@ -182,13 +191,13 @@ public class LoadDataTest {
 
 
 //**********************************************************************************************************************
-                // ELIMINAZIONE POST (implica: eliminazione di tutte le sue associazioni con i tag)
+                // ELIMINAZIONE POST (implica: cancellazione COMMENTI, ALLEGATI e associazioni con i tag)
                 session.beginTransaction();
 
                 assert user1.getPosts().size() == 1;
                 assert archive1.getPosts().size() == 1;
 
-                postDao.delete(post1);
+                //postDao.delete(post1); //TODO, per ora commentato, poi togliere commento
 
                 session.getTransaction().commit();
 
@@ -223,6 +232,83 @@ public class LoadDataTest {
 //                archiveDao.delete(archive2); // ConstraintViolationException... OK!!
 
                 session.getTransaction().commit();
+
+//**********************************************************************************************************************
+                // INSERIMENTO COMMENTI
+                session.beginTransaction();
+                Comment comment1 = commentDao.create(user1, post1, "Stesso problema su Windows 7!",
+                        "Ciao, ho lo stesso problema su Windows 7, all'apertura esce errore 128383.");
+
+                Comment comment2 = commentDao.create(user1, post1, "Stesso problema su macOS Catalina!",
+                        "Ciao, ho lo stesso problema...");
+
+                assert post1.getComments().size() == 0;
+
+                session.refresh(post1);
+
+                assert post1.getComments().size() == 2;
+
+                session.getTransaction().commit();
+
+//**********************************************************************************************************************
+                // ELIMINAZIONE DI UN COMMENTO
+
+                session.beginTransaction();
+
+                commentDao.delete(comment2);
+
+                session.refresh(post1);
+
+                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
+                session.beginTransaction();
+
+                assert post1.getComments().size() == 1;
+
+                session.getTransaction().commit();
+
+//**********************************************************************************************************************
+                // INSERIMENTO ALLEGATI
+
+                session.beginTransaction();
+
+                File file1 = fileDao.create("Screenshot Office 2020", false, post1, "file1.jpg", true);
+                Link link1 = linkDao.create("Link al sito UNIVPM", false, post1, "https://www.univpm.it");
+
+                session.getTransaction().commit();
+
+                session.refresh(post1);
+                assert post1.getAttachments().size() == 2;
+                assert attachmentDao.getAll().size() == 2;
+
+//**********************************************************************************************************************
+                // ELIMINAZIONE di un ALLEGATO (implica: cancellazione dello stesso nella tabella padre dell'ereditarietà)
+
+                session.beginTransaction();
+                fileDao.delete(file1);
+                session.getTransaction().commit();
+
+                session.refresh(post1);
+                assert post1.getAttachments().size() == 1;
+                assert attachmentDao.getAll().size() == 1;
+
+//**********************************************************************************************************************
+                // MODIFICA di un ALLEGATO
+
+                session.beginTransaction();
+
+                Attachment attachment = attachmentDao.getById(2);
+                attachment.setDescription("Descrizione Link Updated");
+                attachmentDao.update(attachment);
+
+                session.getTransaction().commit();
+//**********************************************************************************************************************
+                // ELIMINAZIONE di un POST (implica: cancellazione COMMENTI, ALLEGATI e associazioni con i tag)
+
+                session.beginTransaction();
+                postDao.delete(post1);
+                session.getTransaction().commit();
+
+                assert attachmentDao.getAll().size() == 0;
 
             }
 

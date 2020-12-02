@@ -58,7 +58,7 @@ public class FileServiceDefault implements FileService {
 	@Transactional(readOnly=true)
 	@Override
 	public List<File> getByDownloadble(boolean downloadble) {
-		return this.fileRepository.getByDownloadble(downloadble);
+		return this.fileRepository.getByDownloadable(downloadble);
 	}
 	
 	/**
@@ -87,27 +87,20 @@ public class FileServiceDefault implements FileService {
 	@Override
 	public List<File> getFileByPost(Post post) {
 		List<File> files=this.fileRepository.getAll();
-		for(File file: files) {
-			Attachment attachment=this.getAttachmentByFile(file);
-			Set<Post> postAttachments=attachment.getPosts();
-			if(!postAttachments.contains(post)) {
-				files.remove(attachment);
-			}
-		}
+		files.removeIf(file -> !file.getPost().equals(post));
 		return files;
 		
 	}
 
 	/**
 	 * Metodo per creare un file
-	 * @param id: id del file
 	 * @param name: nome del file
 	 * @param downloadble: flag per indicare se il file è scaricabile o meno
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public File create(String description, boolean hide, Set<Post> posts,String name, boolean downloadble) {
-		return this.fileRepository.create(description, hide, posts, name, downloadble);
+	public File create(String description, boolean hide, Post post,String name, boolean downloadble) {
+		return this.fileRepository.create(description, hide, post, name, downloadble);
 		
 	}
 
