@@ -52,8 +52,8 @@ public class FileServiceDefault implements FileService {
 	 */
 	@Transactional(readOnly=true)
 	@Override
-	public List<File> getByDownloadble(boolean downloadble) {
-		return this.fileRepository.getByDownloadable(downloadble);
+	public List<File> getByNoDownloadble(boolean noDownloadable) {
+		return this.fileRepository.getByNoDownloadable(noDownloadable);
 	}
 	
 	/**
@@ -76,12 +76,12 @@ public class FileServiceDefault implements FileService {
 	 * @param hide: visibilità del file
 	 * @param post: post a cui il file è associato
 	 * @param name: nome del file
-	 * @param downloadble: flag per indicare se il file è scaricabile o meno
+	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public File create(String description, boolean hide, Post post,String name, boolean downloadble) {
-		return this.fileRepository.create(description, hide, post, name, downloadble);
+	public File create(String description, boolean hide, Post post,String name, boolean noDownloadable) {
+		return this.fileRepository.create(description, hide, post, name, noDownloadable);
 	}
 	
 	/**
@@ -114,12 +114,12 @@ public class FileServiceDefault implements FileService {
 	 * @param description: descrizione del file 
 	 * @param post: post a cui il file è associato
 	 * @param name: nome del file
-	 * @param downloadble: flag per indicare se il file è scaricabile o meno
+	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public File create(String description, Post post, String name, boolean downloadable) {
-		return this.fileRepository.create(description, post, name, downloadable);
+	public File create(String description, Post post, String name, boolean noDownloadable) {
+		return this.fileRepository.create(description, post, name, noDownloadable);
 	}
 
 	/**

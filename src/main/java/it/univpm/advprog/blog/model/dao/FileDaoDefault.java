@@ -45,11 +45,11 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 
 	/**
 	 * Metodo per ricercare la lista dei file che sono scaricabili o meno
-	 * @param downloadable: parametro per indicare se si è interessati a file scaricabili o meno
+	 * @param noDownloadable: parametro per indicare se si è interessati a file scaricabili o meno
 	 * @return lista dei file scaricabili o meno
 	 */
 	@Override
-	public List<File> getByDownloadable(boolean downloadable) {
+	public List<File> getByNoDownloadable(boolean noDownloadable) {
 		return getSession().createNamedQuery("getFileByDownloadable", File.class).getResultList();
 	}
 
@@ -59,17 +59,17 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @param hide: visibilità del file
 	 * @param post: post a cui il file è associato
 	 * @param name: nome del file
-	 * @param downloadable: flag per indicare se il file è scaricabile o meno
+	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 * @return file creato
 	 */
 	@Override
-	public File create(String description, boolean hide, Post post, String name, boolean downloadable) {
+	public File create(String description, boolean hide, Post post, String name, boolean noDownloadable) {
 		File file=new File();
 		file.setDescription(description);
 		file.setHide(hide);
 		file.setPost(post);
 		file.setName(name);
-		file.setNoDownloadable(downloadable);
+		file.setNoDownloadable(noDownloadable);
 		this.getSession().save(file);
 		return file;
 	}
@@ -115,16 +115,16 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @param description: descrizione del file da creare
 	 * @param hide: visibilità del file
 	 * @param name: nome del file
-	 * @param downloadable: flag per indicare se il file è scaricabile o meno
+	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 * @return file creato
 	 */
 	@Override
-	public File create(String description, Post post, String name, boolean downloadable) {
+	public File create(String description, Post post, String name, boolean noDownloadable) {
 		File file=new File();
 		file.setDescription(description);
 		file.setPost(post);
 		file.setName(name);
-		file.setNoDownloadable(downloadable);
+		file.setNoDownloadable(noDownloadable);
 		this.getSession().save(file);
 		return file;
 	}

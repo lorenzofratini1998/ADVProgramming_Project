@@ -20,15 +20,15 @@ public interface FileDao {
 	
 	File getByName(String name);
 	
-	List<File> getByDownloadable(boolean downloadable);
+	List<File> getByNoDownloadable(boolean noDownloadable);
 	
-	File create(String description, boolean hide, Post post, String name, boolean downloadable);
+	File create(String description, boolean hide, Post post, String name, boolean noDownloadable);
 	
 	File create(String description, Post post, String name);
 	
 	File create(String description, boolean hide, Post post, String name);
 	
-	File create(String description, Post post, String name, boolean downloadable);
+	File create(String description, Post post, String name, boolean noDownloadable);
 	
 	File update(File file);
 	
