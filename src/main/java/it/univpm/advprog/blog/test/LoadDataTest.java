@@ -271,8 +271,9 @@ public class LoadDataTest {
 
                 session.beginTransaction();
 
-                File file1 = fileDao.create("Screenshot Office 2020", false, post1, "file1.jpg", true);
-                Link link1 = linkDao.create("Link al sito UNIVPM", false, post1, "https://www.univpm.it");
+                File file1 = fileDao.create("Screenshot Office 2020", post1, "file1.jpg", true);
+                File file2 = fileDao.create("Screenshot Eclipse 2020-09", post1, "file2.jpg");
+                Link link1 = linkDao.create("Link al sito UNIVPM",true, post1, "https://www.univpm.it");
 
                 session.getTransaction().commit();
 
