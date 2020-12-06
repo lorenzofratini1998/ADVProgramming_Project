@@ -1,11 +1,14 @@
 package it.univpm.advprog.blog.services;
 
+import it.univpm.advprog.blog.model.dao.ArchiveDao;
 import it.univpm.advprog.blog.model.dao.PostDao;
 import it.univpm.advprog.blog.model.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +18,7 @@ import java.util.Set;
 public class PostServiceDefault implements PostService {
 
     private PostDao postRepository;
+    private ArchiveDao archiveRepository;
 
     /**
      * Funzione per restituire la lista di tutti i post.
@@ -150,15 +154,32 @@ public class PostServiceDefault implements PostService {
      * @param author           autore del post
      * @param shortDescription descrizione breve del post
      * @param longDescription  descrizione estesa del post
+     * @param tag              singolo tag del post
+     * @return nuovo post creato
+     */
+    @Override
+    public Post create(String title, User author, String shortDescription, String longDescription, Tag tag) {
+        Set<Tag> tags = new HashSet<>();
+        tags.add(tag);
+
+        return this.create(title, author, false, shortDescription, longDescription, tags, null,
+                null);
+    }
+
+    /**
+     * Funzione per creare un nuovo post.
+     *
+     * @param title            titolo del post
+     * @param author           autore del post
+     * @param shortDescription descrizione breve del post
+     * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
-     * @param archive          archivio del post
      * @return nuovo post creato
      */
     @Transactional
     @Override
-    public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                       Archive archive) {
-        return this.postRepository.create(title, author, shortDescription, longDescription, tags, archive,
+    public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags) {
+        return this.create(title, author, false, shortDescription, longDescription, tags, null,
                 null);
     }
 
@@ -167,19 +188,29 @@ public class PostServiceDefault implements PostService {
      *
      * @param title            titolo del post
      * @param author           autore del post
+     * @param hide             se il post è nascosto
      * @param shortDescription descrizione breve del post
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
-     * @param archive          archivio del post
      * @param attachments      allegati del post
+     * @param comments         commenti del post
      * @return nuovo post creato
      */
     @Transactional
     @Override
-    public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                       Archive archive, Set<Attachment> attachments) {
-        return this.postRepository.create(title, author, shortDescription, longDescription, tags, archive,
-                attachments);
+    public Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
+                       Set<Tag> tags, Set<Attachment> attachments, Set<Comment> comments) {
+        Calendar calendar = Calendar.getInstance();
+        String archiveName = new SimpleDateFormat("MMMMM yyyy").format(calendar.getTime());
+        // try to get the archive by generated name
+        Archive archive = this.archiveRepository.getByName(archiveName);
+        if (archive == null) {
+            // archive does not exist, create it
+            archive = this.archiveRepository.create(archiveName);
+        }
+
+        return this.postRepository.create(title, author, hide, shortDescription, longDescription, tags, archive,
+                attachments, comments);
     }
 
     /**
@@ -237,5 +268,10 @@ public class PostServiceDefault implements PostService {
     @Autowired
     public void setPostRepository(PostDao postRepository) {
         this.postRepository = postRepository;
+    }
+
+    @Autowired
+    public void setArchiveRepository(ArchiveDao archiveRepository) {
+        this.archiveRepository = archiveRepository;
     }
 }

@@ -17,7 +17,14 @@ public class CommentDaoDefault extends DefaultDao implements CommentDao {
 		return this.getSession().get(Comment.class, id);
 		
 	}
-	
+
+	@Override
+	public List<Comment> getAll() {
+		return getSession().
+				createQuery("from Comment c", Comment.class).
+				getResultList();
+	}
+
 	@Override
 	public Comment create(User author, Post post, String title, String description) {
 		

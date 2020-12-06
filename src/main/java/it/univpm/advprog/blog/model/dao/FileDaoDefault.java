@@ -68,7 +68,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		file.setDescription(description);
 		file.setHide(hide);
 		file.setPost(post);
-		file.setName(name);
+		file.setName("post" + post.getId() + "_" + name);
 		file.setNoDownloadable(noDownloadable);
 		this.getSession().save(file);
 		return file;
@@ -86,7 +86,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		File file=new File();
 		file.setDescription(description);
 		file.setPost(post);
-		file.setName(name);
+		file.setName("post" + post.getId() + "_" + name);
 		this.getSession().save(file);
 		return file;
 	}
@@ -105,7 +105,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		file.setDescription(description);
 		file.setHide(hide);
 		file.setPost(post);
-		file.setName(name);
+		file.setName("post" + post.getId() + "_" + name);
 		this.getSession().save(file);
 		return file;
 	}
@@ -113,7 +113,6 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	/**
 	 * Metodo per creare un nuovo file
 	 * @param description: descrizione del file da creare
-	 * @param hide: visibilità del file
 	 * @param name: nome del file
 	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 * @return file creato
@@ -123,7 +122,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 		File file=new File();
 		file.setDescription(description);
 		file.setPost(post);
-		file.setName(name);
+		file.setName("post" + post.getId() + "_" + name);
 		file.setNoDownloadable(noDownloadable);
 		this.getSession().save(file);
 		return file;
