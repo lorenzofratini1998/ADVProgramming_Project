@@ -1,5 +1,7 @@
 package it.univpm.advprog.blog.model.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +12,7 @@ import javax.persistence.*;
 			query = "SELECT c FROM Comment c WHERE c.post = :post"
 			)
 })
-public class Comment {
+public class Comment implements Serializable {
 
 	private long id;
 	private User author;
@@ -20,8 +22,12 @@ public class Comment {
 	private boolean hide = false;
 	
 	
-	//Proprietà id 
-	
+	/** 
+	 * Getter per la proprietà id del commento
+	 * 
+	 * @return username dell'utente 
+	 */
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "comment_id" , nullable = false)
@@ -29,6 +35,11 @@ public class Comment {
 		return this.id;
 	}
 	
+	/** 
+	 * Setter per la proprietà id del commento
+	 * 
+	 * @param id: id del commento da settare
+	 */
 	
 	public void setId(long id) {
 		this.id = id;
@@ -37,12 +48,24 @@ public class Comment {
 	
 	//Mapping della relazione con l'entità User 
 	
+	/** 
+	 * Getter per la proprietà author del commento
+	 * 
+	 * @return autore del commento
+	 */
+	
 	@ManyToOne //Di default fetch di tipo EAGER
 	@JoinColumn(name = "author" , nullable = false)
 	public User getAuthor() {
 		return this.author;
 	}
 	
+	
+	/** 
+	 * Setter per la proprietà author del commento
+	 * 
+	 * @param author: autore del commento da settare
+	 */
 	
 	public void setAuthor(User author) {
 		this.author = author;
@@ -51,6 +74,12 @@ public class Comment {
 	
 	//Mapping della relazione con l'entità Post
 	
+	/** 
+	 * Getter per la proprietà post del commento
+	 * 
+	 * @return post associato al commento
+	 */
+	
 	@ManyToOne //Di default fetch di tipo EAGER
 	@JoinColumn(name = "post_id" , nullable = false)
 	public Post getPost() {
@@ -58,31 +87,56 @@ public class Comment {
 	}
 	
 	
+	/** 
+	 * Setter per la proprietà post del commento
+	 * 
+	 * @param post: post associato al commento da settare
+	 */
+	
 	public void setPost(Post post) {
 		this.post = post;
 	}
 	
 	
-	//Proprietà title
-	
+	/** 
+	 * Getter per la proprietà title del commento
+	 * 
+	 * @return titolo del commento
+	 */	
 	@Column(name = "title" , nullable = false, length = 100)
 	public String getTitle() {
 		return this.title;
 	}
 	
 	
+	/** 
+	 * Setter per la proprietà title del commento
+	 * 
+	 * @param title: titolo da settare per il commento 
+	 */
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	
 	
-	//Proprietà description
+	/** 
+	 * Getter per la proprietà description del commento
+	 * 
+	 * @return descrizione del commento
+	 */	
 	
 	@Column(name = "description" , nullable = false, length = 300)
 	public String getDescription() {
 		return this.description;
 	}
 
+	
+	/** 
+	 * Setter per la proprietà description del commento
+	 * 
+	 * @param description: descrizione da settare per il commento 
+	 */
 	
 	public void setDescription(String description) {
 		this.description = description;
