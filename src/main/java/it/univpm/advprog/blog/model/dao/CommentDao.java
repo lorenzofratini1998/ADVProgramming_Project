@@ -15,8 +15,8 @@ public interface CommentDao {
 	public void setSession(Session session);
 	
 	Comment findCommentById(long id);
-	
-	
+
+	List<Comment> getAll();
 	
 	Comment create(User author, Post post, String title, String description);
 	

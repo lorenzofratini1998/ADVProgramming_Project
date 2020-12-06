@@ -6,9 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class LoadDataTest {
     private final static String SHORTDESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
             "tempus magna vel posuere cursus. Sed ultricies nunc purus, et maximus eros accumsan sit amet. Donec " +
@@ -21,6 +18,9 @@ public class LoadDataTest {
             "Nunc luctus metus at tristique lobortis. Nulla egestas dictum bibendum. Suspendisse iaculis quis lorem " +
             "id scelerisque. Cras ac imperdiet metus. Donec lobortis vestibulum velit, feugiat interdum tellus " +
             "consectetur ac.";
+    private final static String TITLE = "Lorem ipsum dolor sit amet.";
+    private final static String DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
+            "tempus magna vel posuere cursus.";
 
     public static void main(String... args) {
 
@@ -50,28 +50,121 @@ public class LoadDataTest {
                 linkDao.setSession(session);
                 attachmentDao.setSession(session);
 
-
 //**********************************************************************************************************************
-                // INSERIMENTO POST - UTENTI - TAG - ARCHIVI
+                // CREAZIONE UTENTI
                 session.beginTransaction();
 
-//                Calendar cal = Calendar.getInstance();
-//                Archive archive1 = archiveDao.create(new SimpleDateFormat("MMMMM yyyy").format(cal.getTime()));
+                User user1 = userDao.create("mario98", "12345678", "Mario", "Rossi");
+                User user2 = userDao.create("luca78", "12345678", "Luca", "Rossini");
+                User user3 = userDao.create("matteoVerdi", "12345678", "Matteo", "Verdi");
+                User user4 = userDao.create("giov_bian", "12345678", "Giovanni", "Bianchi");
+                User user5 = userDao.create("anto88", "12345678", "Antonio", "Bianchini");
 
-                Archive archive1 = archiveDao.create("novembre 2020");
-                Archive archive2 = archiveDao.create("dicembre 2020");
+                session.getTransaction().commit();
 
-                Tag tag1 = tagDao.create("Office 2013");
-                Tag tag2 = tagDao.create("Office 2020");
+                assert userDao.findAll().size() == 5;
 
-                User user1 = userDao.create("marco98", "123456", "Marco", "Rossi");
-                User user2 = userDao.create("mario88", "123456", "Mario", "Bianchi");
+//**********************************************************************************************************************
+                // INSERIMENTO ARCHIVI
+                session.beginTransaction();
 
-                Post post1 = postDao.create("Installazione Office 2013", user1, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Archive archive1 = archiveDao.create("settembre 2020");
+                Archive archive2 = archiveDao.create("ottobre 2020");
+                Archive archive3 = archiveDao.create("novembre 2020");
+                Archive archive4 = archiveDao.create("dicembre 2020");
+                Archive archive5 = archiveDao.create("gennaio 2021");
+
+                session.getTransaction().commit();
+
+                assert archiveDao.getAll().size() == 5;
+
+//**********************************************************************************************************************
+                // INSERIMENTO TAG
+                session.beginTransaction();
+
+                Tag tag1 = tagDao.create("Office 2021");
+                Tag tag2 = tagDao.create("Teams");
+                Tag tag3 = tagDao.create("GitHub");
+                Tag tag4 = tagDao.create("Google Calendar");
+                Tag tag5 = tagDao.create("Google Photos");
+
+                session.getTransaction().commit();
+
+                assert tagDao.getAll().size() == 5;
+
+//**********************************************************************************************************************
+                // INSERIMENTO POST
+                session.beginTransaction();
+
+                Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION,
                         tag1, archive1);
-                Post post2 = postDao.create("Installazione Office 2020", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post2 = postDao.create("titoloPost2", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
                         tag2, archive2);
+                Post post3 = postDao.create("titoloPost3", user3, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag3, archive3);
+                Post post4 = postDao.create("titoloPost4", user4, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag4, archive4);
+                Post post5 = postDao.create("titoloPost5", user5, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag5, archive5);
+                Post post6 = postDao.create("titoloPost6", user1, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag1, archive1);
+                Post post7 = postDao.create("titoloPost7", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag2, archive2);
+                Post post8 = postDao.create("titoloPost8", user3, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag3, archive3);
+                Post post9 = postDao.create("titoloPost9", user4, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag4, archive4);
+                Post post10 = postDao.create("titoloPost10", user5, SHORTDESCRIPTION, LONGDESCRIPTION,
+                        tag5, archive5);
 
+                session.getTransaction().commit();
+
+                assert postDao.getAll().size() == 10;
+
+//**********************************************************************************************************************
+                // INSERIMENTO COMMENTI
+                session.beginTransaction();
+
+                Comment comment1 = commentDao.create(user1, post5, TITLE, DESCRIPTION);
+                Comment comment2 = commentDao.create(user2, post4, TITLE, DESCRIPTION);
+                Comment comment3 = commentDao.create(user3, post3, TITLE, DESCRIPTION);
+                Comment comment4 = commentDao.create(user4, post2, TITLE, DESCRIPTION);
+                Comment comment5 = commentDao.create(user5, post1, TITLE, DESCRIPTION);
+                Comment comment6 = commentDao.create(user1, post3, TITLE, DESCRIPTION);
+                Comment comment7 = commentDao.create(user2, post1, TITLE, DESCRIPTION);
+                Comment comment8 = commentDao.create(user3, post2, TITLE, DESCRIPTION);
+                Comment comment9 = commentDao.create(user4, post5, TITLE, DESCRIPTION);
+                Comment comment10 = commentDao.create(user5, post4, TITLE, DESCRIPTION);
+
+                session.getTransaction().commit();
+
+                assert commentDao.getAll().size() == 10;
+
+//**********************************************************************************************************************
+                // INSERIMENTO ALLEGATI
+
+                session.beginTransaction();
+
+                File file1 = fileDao.create(DESCRIPTION, post1, "file1.jpg", true);
+                File file2 = fileDao.create(DESCRIPTION, post1, "file2.jpg");
+                File file3 = fileDao.create(DESCRIPTION, post2, "file1.jpg", true);
+                File file4 = fileDao.create(DESCRIPTION, post2, "file2.jpg");
+                File file5 = fileDao.create(DESCRIPTION, true, post1, "file3.jpg", true);
+
+                Link link1 = linkDao.create(DESCRIPTION, post1, "https://www.univpm.it");
+                Link link2 = linkDao.create(DESCRIPTION, true, post2, "https://www.univpm.it");
+                Link link3 = linkDao.create(DESCRIPTION, post3, "https://www.univpm.it");
+                Link link4 = linkDao.create(DESCRIPTION, true, post1, "https://www.univpm.it");
+                Link link5 = linkDao.create(DESCRIPTION, post2, "https://www.univpm.it");
+
+                session.getTransaction().commit();
+
+                assert attachmentDao.getAll().size() == 10;
+
+//**********************************************************************************************************************
+                // CONTROLLI
+                assert post1.getComments().size() == 0;
+                assert user1.getComments().size() == 0;
 
                 assert user1.getPosts().size() == 0;
                 assert user2.getPosts().size() == 0;
@@ -82,233 +175,235 @@ public class LoadDataTest {
                 assert archive1.getPosts().size() == 0;
                 assert archive2.getPosts().size() == 0;
 
+                assert post1.getAttachments().size() == 0;
+
                 session.refresh(user1);
                 session.refresh(user2);
+                session.refresh(user3);
+                session.refresh(user4);
+                session.refresh(user5);
 
                 session.refresh(tag1);
                 session.refresh(tag2);
+                session.refresh(tag3);
+                session.refresh(tag4);
+                session.refresh(tag5);
 
                 session.refresh(archive1);
                 session.refresh(archive2);
+                session.refresh(archive3);
+                session.refresh(archive4);
+                session.refresh(archive5);
 
-                assert user1.getPosts().size() == 1;
-                assert user2.getPosts().size() == 1;
+                session.refresh(post1);
+                session.refresh(post2);
+                session.refresh(post3);
+                session.refresh(post4);
+                session.refresh(post5);
+                session.refresh(post6);
+                session.refresh(post7);
+                session.refresh(post8);
+                session.refresh(post9);
+                session.refresh(post10);
+
+                assert post1.getAttachments().size() == 5;
+
+                assert post1.getComments().size() == 2;
+                assert user1.getComments().size() == 2;
+
+                assert user1.getPosts().size() == 2;
+                assert user2.getPosts().size() == 2;
 
                 assert post1.getTags().size() == 1;
                 assert post2.getTags().size() == 1;
 
-                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
-                session.beginTransaction();
-
-                assert tag1.getPosts().size() == 1;
-                assert tag2.getPosts().size() == 1;
-
-                assert archive1.getPosts().size() == 1;
-                assert archive2.getPosts().size() == 1;
-
-                Post post3 = postDao.create("Installazione Office", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
-                        tag2, archive2);
-
-                assert user2.getPosts().size() == 1;
-
-                assert tag2.getPosts().size() == 1;
-
-                assert archive2.getPosts().size() == 1;
-
-                session.refresh(user2);
-
-                session.refresh(tag2);
-
-                session.refresh(archive2);
-
-                assert user2.getPosts().size() == 2;
-
-                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
-                session.beginTransaction();
-
+                assert tag1.getPosts().size() == 2;
                 assert tag2.getPosts().size() == 2;
 
+                assert archive1.getPosts().size() == 2;
                 assert archive2.getPosts().size() == 2;
+
+//**********************************************************************************************************************
+                // AGGIORNAMENTO DATI POST
+                assert archive1.getPosts().size() == 2;
+                assert archive3.getPosts().size() == 2;
+
+                assert tag1.getPosts().size() == 2;
+                assert tag3.getPosts().size() == 2;
+
+                session.beginTransaction();
 
                 // cambio l'archivio
                 post3.setArchive(archive1);
-
                 // aggiungo un altro tag
                 post3.addTag(tag1);
-
                 // faccio l'update del post
                 post3 = postDao.update(post3);
 
-                assert archive1.getPosts().size() == 1;
-
-                assert tag1.getPosts().size() == 1;
-
-                session.refresh(archive1);
-
-                session.refresh(tag1);
-
-                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
-                session.beginTransaction();
-
-                assert archive1.getPosts().size() == 2;
-
-                assert tag1.getPosts().size() == 2;
-
                 session.getTransaction().commit();
 
+                session.refresh(archive1);
+                session.refresh(archive3);
+                session.refresh(tag1);
+                session.refresh(tag3);
+
+                assert archive1.getPosts().size() == 3;
+                assert archive3.getPosts().size() == 1;
+
+                assert tag1.getPosts().size() == 3;
+                assert tag3.getPosts().size() == 2;
 
 //**********************************************************************************************************************
-                // ELIMINAZIONE UTENTE (implica: eliminazione di tutti i SUOI POST comprese le associazioni fra i POST
-                // e i TAG e l'eliminazione di tutti i SUOI COMMENTI)
+                // AGGIORNAMENTO DATI ALLEGATI
                 session.beginTransaction();
 
+                Attachment attachment = attachmentDao.getById(8);
+                attachment.setDescription("Descrizione link aggiornata");
+                attachmentDao.update(attachment);
+
+                file3.setNoDownloadable(false);
+                attachmentDao.update(file3);
+
+                session.getTransaction().commit();
+//**********************************************************************************************************************
+                // ELIMINAZIONE UTENTE (implica -> eliminazione di tutti i SUOI POST comprese le associazioni dei
+                // POST [cioè associazioni con TAG, ALLEGATI, COMMENTI] e l'eliminazione di tutti i SUOI COMMENTI)
                 session.refresh(user2);
                 session.refresh(archive2);
 
                 assert user2.getPosts().size() == 2;
-                assert archive1.getPosts().size() == 2;
-                assert archive2.getPosts().size() == 1;
+                assert archive2.getPosts().size() == 2;
 
-                // NON SERVONO, viene gestito automaticamente da Hibernate (tramite i CascadeType)
+                session.beginTransaction();
+
+                // NON SERVONO, viene gestito automaticamente da Hibernate (tramite i orphanRemoval)
                 //user2.getPosts().clear();
                 //user2.getComments().clear();
                 //user2 = userDao.update(user2);
-
                 userDao.delete(user2);
 
-                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
-                session.beginTransaction();
+                session.getTransaction().commit();
 
-                session.refresh(archive1);
                 session.refresh(archive2);
 
-                assert archive1.getPosts().size() == 1;
                 assert archive2.getPosts().size() == 0;
 
-//                userDao.findUserByUsername(user2.getUsername()); // EntityNotFoundException... OK!!
+                User userFound = userDao.findUserByUsername(user2.getUsername());
 
-                session.getTransaction().commit();
-
-
-//**********************************************************************************************************************
-                // ELIMINAZIONE POST (implica: cancellazione COMMENTI, ALLEGATI e associazioni con i tag)
-                session.beginTransaction();
-
-                assert user1.getPosts().size() == 1;
-                assert archive1.getPosts().size() == 1;
-
-                //postDao.delete(post1); //TODO, per ora commentato, poi togliere commento
-
-                session.getTransaction().commit();
-
+                assert userFound == null; // userFound is NULL... OK!
 
 //**********************************************************************************************************************
-                // ELIMINAZIONE TAG (implica: ERRORE, NON permettiamo la cancellazione di tag a cui sono associati
-                // POSTS. Posso eliminare TAG VUOTI.)
-                session.beginTransaction();
-
-                postDao.create("Installazione Office", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag2, archive2);
-
-                session.getTransaction().commit();
-
-                session.beginTransaction();
-
-                session.refresh(tag2);
-                assert tag2.getPosts().size() == 1;
-
-//                tagDao.delete(tag2); // ConstraintViolationException... OK!!
-
-                session.getTransaction().commit();
-
-
-//**********************************************************************************************************************
-                // ELIMINAZIONE ARCHIVIO (implica: ERRORE, NON permettiamo la cancellazione di archivi a cui sono
-                // associati POSTS. Posso eliminare ARCHIVI VUOTI.)
-                session.beginTransaction();
-
-                session.refresh(archive2);
-                assert archive2.getPosts().size() == 1;
-
-//                archiveDao.delete(archive2); // ConstraintViolationException... OK!!
-
-                session.getTransaction().commit();
-
-//**********************************************************************************************************************
-                // INSERIMENTO COMMENTI
-                session.beginTransaction();
-                Comment comment1 = commentDao.create(user1, post1, "Stesso problema su Windows 7!",
-                        "Ciao, ho lo stesso problema su Windows 7, all'apertura esce errore 128383.");
-
-                Comment comment2 = commentDao.create(user1, post1, "Stesso problema su macOS Catalina!",
-                        "Ciao, ho lo stesso problema...");
-
-                assert post1.getComments().size() == 0;
-
+                // ELIMINAZIONE POST (implica: cancellazione dei suoi COMMENTI, ALLEGATI e associazioni con i tag)
                 session.refresh(post1);
 
-                assert post1.getComments().size() == 2;
+                assert user1.getPosts().size() == 2;
+                assert archive1.getPosts().size() == 3;
+
+                session.beginTransaction();
+
+                postDao.delete(post1);
 
                 session.getTransaction().commit();
+
+                session.refresh(user1);
+                session.refresh(archive1);
+
+                assert user1.getPosts().size() == 1;
+                assert archive1.getPosts().size() == 2;
+
+
+//**********************************************************************************************************************
+                // ELIMINAZIONE TAG (implica: 1) TAG VUOTO     -> viene ELIMINATO
+                //                            2) TAG NON VUOTO -> ERRORE (NON permettiamo la cancellazione di tag a cui
+                //                                                sono associati dei post.
+                session.refresh(tag2);
+                session.refresh(tag4);
+
+                assert tag2.getPosts().size() == 0;
+                assert tag4.getPosts().size() == 2;
+
+                session.beginTransaction();
+                tagDao.delete(tag2);
+                session.getTransaction().commit();
+
+                try {
+                    session.beginTransaction();
+                    tagDao.delete(tag4);
+                    session.getTransaction().commit();
+                } catch (Exception e) {
+                    // ConstraintViolationException... OK!!
+                }
+
+                Tag tagFound = tagDao.getByName(tag2.getName());
+                assert tagFound == null; // tagFound is NULL... OK!
+
+                tag4 = tagDao.getByName(tag4.getName());
+                assert tag4 != null; // tag4 NON è stato eliminato... OK!
+
+//**********************************************************************************************************************
+                // ELIMINAZIONE ARCHIVIO (implica: 1) ARCHIVIO VUOTO     -> viene ELIMINATO
+                //                                 2) ARCHIVIO NON VUOTO -> ERRORE (NON permettiamo la cancellazione di
+                //                                 archivi a cui sono associati dei post.
+                session.refresh(archive2);
+                session.refresh(archive4);
+
+                assert archive2.getPosts().size() == 0;
+                assert archive4.getPosts().size() == 2;
+
+                session.beginTransaction();
+                archiveDao.delete(archive2);
+                session.getTransaction().commit();
+
+                try {
+                    session.beginTransaction();
+                    archiveDao.delete(archive4);
+                    session.getTransaction().commit();
+                } catch (Exception e) {
+                    // ConstraintViolationException... OK!!
+                }
+
+                Tag archiveFound = tagDao.getByName(archive2.getName());
+                assert archiveFound == null; // archiveFound is NULL... OK!
+
+                archive4 = archiveDao.getByName(archive4.getName());
+                assert archive4 != null; // archive4 NON è stato eliminato... OK!
 
 //**********************************************************************************************************************
                 // ELIMINAZIONE DI UN COMMENTO
+                session.refresh(post4);
+                session.refresh(comment10);
+
+                assert post4.getComments().size() == 1;
 
                 session.beginTransaction();
 
-                commentDao.delete(comment2);
-
-                session.refresh(post1);
-
-                session.getTransaction().commit(); //TODO, perché serve il commit() + beginTransaction() ???
-                session.beginTransaction();
-
-                assert post1.getComments().size() == 1;
+                commentDao.delete(comment10);
 
                 session.getTransaction().commit();
+
+                session.refresh(post4);
+
+                assert post4.getComments().size() == 0;
+
+                Comment commentFound = commentDao.findCommentById(comment10.getId());
+
+                assert commentFound == null; // commentFound is NULL... OK!
 
 //**********************************************************************************************************************
-                // INSERIMENTO ALLEGATI
+                // ELIMINAZIONE di un ALLEGATO (implica: cancellazione dello stesso nella tabella padre
+                // dell'ereditarietà)
+                session.refresh(post3);
+                session.refresh(link3);
 
-                session.beginTransaction();
-
-                File file1 = fileDao.create("Screenshot Office 2020", post1, "file1.jpg", true);
-                File file2 = fileDao.create("Screenshot Eclipse 2020-09", post1, "file2.jpg");
-                Link link1 = linkDao.create("Link al sito UNIVPM",true, post1, "https://www.univpm.it");
-
-                session.getTransaction().commit();
-
-                session.refresh(post1);
-                assert post1.getAttachments().size() == 2;
-                assert attachmentDao.getAll().size() == 2;
-
-//**********************************************************************************************************************
-                // ELIMINAZIONE di un ALLEGATO (implica: cancellazione dello stesso nella tabella padre dell'ereditarietà)
-
-                session.beginTransaction();
-                fileDao.delete(file1);
-                session.getTransaction().commit();
-
-                session.refresh(post1);
-                assert post1.getAttachments().size() == 1;
+                assert post3.getAttachments().size() == 1;
                 assert attachmentDao.getAll().size() == 1;
 
-//**********************************************************************************************************************
-                // MODIFICA di un ALLEGATO
-
                 session.beginTransaction();
-
-                Attachment attachment = attachmentDao.getById(2);
-                attachment.setDescription("Descrizione Link Updated");
-                attachmentDao.update(attachment);
-
-                session.getTransaction().commit();
-//**********************************************************************************************************************
-                // ELIMINAZIONE di un POST (implica: cancellazione COMMENTI, ALLEGATI e associazioni con i tag)
-
-                session.beginTransaction();
-                postDao.delete(post1);
+                linkDao.delete(link3);
                 session.getTransaction().commit();
 
+                session.refresh(post3);
+                assert post3.getAttachments().size() == 0;
                 assert attachmentDao.getAll().size() == 0;
 
             }

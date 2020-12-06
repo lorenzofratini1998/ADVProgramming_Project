@@ -22,7 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@ComponentScan(basePackages = {"it.univpm.advprog.blog.model"},
+@ComponentScan(basePackages = {"it.univpm.advprog.blog"},
         excludeFilters = {@ComponentScan.Filter(
                 type = FilterType.ASSIGNABLE_TYPE, classes = {DataServiceConfigTest.class})})
 

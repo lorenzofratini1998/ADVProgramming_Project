@@ -24,11 +24,12 @@ public interface PostService {
 
     List<Post> getByAttachments(Set<Attachment> attachments);
 
-    Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                Archive archive);
+    Post create(String title, User author, String shortDescription, String longDescription, Tag tag);
 
-    Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
-                Archive archive, Set<Attachment> attachments);
+    Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags);
+
+    Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
+                Set<Tag> tags, Set<Attachment> attachments, Set<Comment> comments);
 
     Post update(Post post);
 
