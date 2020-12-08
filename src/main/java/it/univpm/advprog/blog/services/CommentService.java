@@ -8,6 +8,8 @@ import it.univpm.advprog.blog.model.entities.User;
 
 public interface CommentService {
 
+	List<Comment> getAll();
+
     Comment findCommentById(long id);
 	
 	Comment create(User author, Post post, String title, String description);

@@ -1,6 +1,8 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +49,7 @@ public class FileServiceDefault implements FileService {
 
 	/**
 	 * Metodo per ricavare la lista dei file scaribili o non scaricabili
-	 * @param downloadble: flag per indicare se si è interessati a file scaricabili o no
+	 * @param noDownloadable: flag per indicare se si è interessati a file scaricabili o no
 	 * @return lista dei file che soddisfano il parametro
 	 */
 	@Transactional(readOnly=true)
@@ -79,7 +81,7 @@ public class FileServiceDefault implements FileService {
 	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public File create(String description, boolean hide, Post post,String name, boolean noDownloadable) {
 		return this.fileRepository.create(description, hide, post, name, noDownloadable);
 	}
@@ -91,7 +93,7 @@ public class FileServiceDefault implements FileService {
 	 * @param name: nome del file
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public File create(String description, Post post, String name) {
 		return this.fileRepository.create(description, post, name);
 	}
@@ -104,7 +106,7 @@ public class FileServiceDefault implements FileService {
 	 * @param name: nome del file
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public File create(String description, boolean hide, Post post, String name) {
 		return this.fileRepository.create(description, hide, post, name);
 	}
@@ -117,7 +119,7 @@ public class FileServiceDefault implements FileService {
 	 * @param noDownloadable: flag per indicare se il file è scaricabile o meno
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public File create(String description, Post post, String name, boolean noDownloadable) {
 		return this.fileRepository.create(description, post, name, noDownloadable);
 	}
@@ -127,7 +129,7 @@ public class FileServiceDefault implements FileService {
 	 * @param file: file da aggiornare
 	 * @return file aggiornato	
 	 */
-	@Transactional(readOnly=true)
+	@Transactional
 	@Override
 	public File update(File file) {
 		return this.fileRepository.update(file);
@@ -137,10 +139,19 @@ public class FileServiceDefault implements FileService {
 	 * Metodo per cancellare un file
 	 * @param file: file da eliminare
 	 */
-	@Transactional(readOnly=true)
+	@Transactional
 	@Override
 	public void delete(File file) {
 		this.fileRepository.delete(file);
+	}
 
+	/**
+	 * Setter per la proprietà che si riferisce al DAO dell'entità File.
+	 *
+	 * @param fileRepository DAO dell'entità File da settare
+	 */
+	@Autowired
+	public void setFileRepository(FileDao fileRepository) {
+		this.fileRepository = fileRepository;
 	}
 }

@@ -1,6 +1,8 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +58,7 @@ public class LinkServiceDefault implements LinkService {
 	 * @return link creato
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public Link create(String description, boolean hide, Post post, String link) {
 		return this.linkRepository.create(description, hide, post, link);
 	}
@@ -69,7 +71,7 @@ public class LinkServiceDefault implements LinkService {
 	 * @return link creato
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public Link create(String description, Post post, String link) {
 		return this.linkRepository.create(description, post, link);
 	}
@@ -80,7 +82,7 @@ public class LinkServiceDefault implements LinkService {
 	 * @return link aggiornato
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public Link update(Link link) {
 		return this.linkRepository.update(link);
 	}
@@ -90,10 +92,19 @@ public class LinkServiceDefault implements LinkService {
 	 * @param link: link da eliminare
 	 */
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional
 	public void delete(Link link) {
 		this.linkRepository.delete(link);
 
 	}
 
+	/**
+	 * Setter per la proprietà che si riferisce al DAO dell'entità Link.
+	 *
+	 * @param linkRepository DAO dell'entità Link da settare
+	 */
+	@Autowired
+	public void setLinkRepository(LinkDao linkRepository) {
+		this.linkRepository = linkRepository;
+	}
 }

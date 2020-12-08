@@ -1,10 +1,9 @@
 package it.univpm.advprog.blog.services;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,7 +67,7 @@ public class AttachmentServiceDefault implements AttachmentService {
 	 * @param attachment: allegato da aggiornare
 	 * @return allegato aggiornato
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
 	public Attachment update(Attachment attachment) {
 		return this.attachmentRepository.update(attachment);
@@ -78,10 +77,19 @@ public class AttachmentServiceDefault implements AttachmentService {
 	 * Metodo per cancellare un allegato
 	 * @param attachment: allegato da cancellare
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
 	public void delete(Attachment attachment) {
 		this.attachmentRepository.delete(attachment);
 	}
 
+	/**
+	 * Setter per la proprietà che si riferisce al DAO dell'entità Attachment.
+	 *
+	 * @param attachmentRepository DAO dell'entità Attachment da settare
+	 */
+	@Autowired
+	public void setLinkRepository(AttachmentDao attachmentRepository) {
+		this.attachmentRepository = attachmentRepository;
+	}
 }

@@ -29,9 +29,20 @@ public class CommentServiceDefault implements CommentService {
 	public void setPostRepository(PostDao postDao) {
 		this.postRepository = postDao;
 	}
-	
+
+	/**
+	 * Funzione che restituisce tutti i commenti.
+	 *
+	 * @return lista di commenti restituita
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public List<Comment> getAll() {
+		return this.commentRepository.getAll();
+	}
+
 	//Funzione per trovare un commento dall'id
-	
+
 	@Transactional
 	@Override
 	public Comment findCommentById(long id) {
