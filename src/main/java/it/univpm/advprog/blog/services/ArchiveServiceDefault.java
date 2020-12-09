@@ -46,7 +46,7 @@ public class ArchiveServiceDefault implements ArchiveService {
 	 * @param name dell'archivio da creare
 	 */
 
-	@Transactional(readOnly=true)
+	@Transactional
 	@Override
 	public Archive create(String name) {
 		return this.archiveRepository.create(name);
@@ -66,7 +66,7 @@ public class ArchiveServiceDefault implements ArchiveService {
 	/**
 	 * Funzione per elimiare l'archivio specificato
 	 * 
-	 * @param name dell'archivio da eliminare
+	 * @param archive archivio da eliminare
 	 */
 	@Transactional
 	@Override

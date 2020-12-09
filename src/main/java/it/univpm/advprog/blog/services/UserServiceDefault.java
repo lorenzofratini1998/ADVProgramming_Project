@@ -61,7 +61,7 @@ public class UserServiceDefault implements UserService{
 	
 	//Funzione per aggiornare un utente
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
 	public User update(User user) {
 		return this.userRepository.update(user);
@@ -70,7 +70,7 @@ public class UserServiceDefault implements UserService{
 	
 	//Funzione per eliminare un utente
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	@Override
 	public void delete(User user) {
 		this.userRepository.delete(user);
@@ -88,7 +88,8 @@ public class UserServiceDefault implements UserService{
 	
 	
 	//Funzione per trovare tutti i post scritti da un utente, conoscendo l'username
-	
+
+	@Transactional(readOnly = true)
 	@Override
 	public List<Post> findPosts(String username) {
 		

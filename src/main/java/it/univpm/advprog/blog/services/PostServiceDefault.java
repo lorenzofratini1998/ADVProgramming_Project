@@ -270,6 +270,11 @@ public class PostServiceDefault implements PostService {
         this.postRepository = postRepository;
     }
 
+    /**
+     * Setter per la proprietà che si riferisce al DAO dell'entità Archive.
+     *
+     * @param archiveRepository DAO dell'entità Archive da settare
+     */
     @Autowired
     public void setArchiveRepository(ArchiveDao archiveRepository) {
         this.archiveRepository = archiveRepository;
