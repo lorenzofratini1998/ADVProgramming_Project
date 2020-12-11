@@ -68,19 +68,19 @@ public class WebConfig implements WebMvcConfigurer {
 	//TODO decommentare quando avremo definito il layout
 	
 	//Configuratore dei tiles, necessario per il precedente
-//	@Bean
-//	TilesConfigurer tilesConfigurer() {
-//		TilesConfigurer tilesConfigurer = new TilesConfigurer(); 
-//	
-//		//COnfigurazione dei file.xml che contengono la deinizione delle viste
-//		tilesConfigurer.setDefinitions( 
-//				"/WEB-INF/layouts/layouts.xml",
-//				"/WEB-INF/views/views.xml", 
-//				"/WEB-INF/views/**/views.xml" );
-//	
-//		tilesConfigurer.setCheckRefresh(true);
-//		return tilesConfigurer;
-//	}
+	@Bean
+	TilesConfigurer tilesConfigurer() {
+		TilesConfigurer tilesConfigurer = new TilesConfigurer();
+
+		//COnfigurazione dei file.xml che contengono la deinizione delle viste
+		tilesConfigurer.setDefinitions(
+				"/WEB-INF/layouts/layouts.xml",
+				"/WEB-INF/views/views.xml",
+				"/WEB-INF/views/**/views.xml" );
+
+		tilesConfigurer.setCheckRefresh(true);
+		return tilesConfigurer;
+	}
 	
 	//Formattatore per le date
 	@Bean
