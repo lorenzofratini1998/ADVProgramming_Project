@@ -29,9 +29,8 @@ import it.univpm.advprog.blog.test.DataServiceConfigTest;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "it.univpm.advprog.blog" }, 
-
-excludeFilters  = {@ComponentScan.Filter(                       
+@ComponentScan(basePackages = { "it.univpm.advprog.blog" },
+		excludeFilters  = {@ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE, classes = {it.univpm.advprog.blog.test.DataServiceConfigTest.class})})
 
 public class WebConfig implements WebMvcConfigurer {
@@ -143,15 +142,12 @@ public class WebConfig implements WebMvcConfigurer {
 //		public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 //			configurer.enable();
 //		}
-	
-//		// <=> <mvc:view-controller .../>
-//		@Override
-//		public void addViewControllers(ViewControllerRegistry registry) {
-//			registry.addRedirectViewController("/", "/singers/list");
-//			registry.addRedirectViewController("/singers/", "/singers/list/");
-//
-//		}
 
+		// <=> <mvc:view-controller .../>
+		@Override
+		public void addViewControllers(ViewControllerRegistry registry) {
+			registry.addRedirectViewController("/", "/blog");
+		}
 		}
 
 

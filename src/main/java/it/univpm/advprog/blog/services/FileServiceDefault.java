@@ -10,7 +10,7 @@ import it.univpm.advprog.blog.model.dao.FileDao;
 import it.univpm.advprog.blog.model.entities.File;
 import it.univpm.advprog.blog.model.entities.Post;
 
-@Transactional()
+@Transactional
 @Service("fileService")
 public class FileServiceDefault implements FileService {
 
