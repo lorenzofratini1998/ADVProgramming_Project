@@ -84,29 +84,6 @@ public class AdminController {
         this.postService = postService;
     }
 
-// TODO: DA SPOSTARE SU GuestController
-
-//    /**
-//     * Metodo per la richiesta GET per la visualizzazione della lista di tags.
-//     *
-//     * @param message eventuale messaggio da mostrare
-//     * @param uiModel modello associato alla vista
-//     * @return nome della vista da visualizzare
-//     */
-//    @GetMapping(value = "/tags")
-//    public String showTags(@RequestParam(value = "message", required = false) String message, Model uiModel) {
-//        logger.info("Listing all the tags...");
-//
-//        List<Tag> allTags = this.tagService.getAll();
-//
-//        uiModel.addAttribute("tags", allTags);
-//
-//        uiModel.addAttribute("message", message);
-//
-//        return "tags/list";
-//    }
-
-
     /**
      * Metodo per la richiesta GET per la creazione di un nuovo tag.
      *
@@ -119,7 +96,7 @@ public class AdminController {
 
         uiModel.addAttribute("tag", new Tag());
 
-        return "tags/newTag";
+        return "tags.new";
     }
 
     /**
@@ -178,7 +155,7 @@ public class AdminController {
 // TODO: DA SPOSTARE SU GuestController
 
 //    /**
-//     * Metodo per la richiesta GET per la visualizzazione della lista di tags.
+//     * Metodo per la richiesta GET per la visualizzazione della lista di archivi.
 //     *
 //     * @param message eventuale messaggio da mostrare
 //     * @param uiModel modello associato alla vista

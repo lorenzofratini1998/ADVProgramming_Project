@@ -5,8 +5,18 @@
 <tiles-definitions>
     <definition extends="default" name="home">
         <put-attribute name="body" value="/WEB-INF/views/home.jsp"/>
+        <put-attribute name="pageTitle" value="Home Blog"/>
     </definition>
     <definition extends="default" name="login">
         <put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
+        <put-attribute name="pageTitle" value="Login"/>
+    </definition>
+    <definition extends="default" name="tags.list">
+        <put-attribute name="body" value="/WEB-INF/views/tags/list.jsp"/>
+        <put-attribute name="pageTitle" value="Lista Tag"/>
+    </definition>
+    <definition extends="default" name="tags.new">
+        <put-attribute name="body" value="/WEB-INF/views/tags/newTag.jsp"/>
+        <put-attribute name="pageTitle" value="Inserisci Tag"/>
     </definition>
 </tiles-definitions>
