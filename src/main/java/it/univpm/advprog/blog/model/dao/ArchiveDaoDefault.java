@@ -75,4 +75,14 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 		return (Archive)this.getSession().merge(archive);
 	}
 	
+	/**
+	 * Funzione per trovare tutti gli archivi relativi ad un determinato post
+	 */
+	@Override
+	public List<Archive> getArchivesFromPost (Post post) {
+		
+		return this.getSession().getNamedQuery("Archive.getArchivesFromPost").setParameter("post", post).getResultList();
+	}
+
+	
 }

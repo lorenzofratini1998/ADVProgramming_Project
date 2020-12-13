@@ -167,4 +167,5 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     public void delete(Post post) {
         this.getSession().delete(post);
     }
+    
 }

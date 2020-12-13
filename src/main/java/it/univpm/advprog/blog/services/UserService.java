@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.hibernate.Session;
 
+import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
@@ -20,13 +21,13 @@ public interface UserService {
 		
 	User create(String username, String password, String firstName, String lastName, String imgProfile);
 
-	
 	User update(User user);
 	
 	void delete(User user);
 	
 	List<Post> findPosts (String username);
 	
+	List<User> getUserFromPost(Post post);
 	
 	
 }

@@ -69,6 +69,15 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
         Tag tag = this.getByName(name);
         this.delete(tag);
     }
+    
+	/**
+	 * Funzione per trovare tutti i tag relativi ad un determinato post
+	 */
+	@Override
+	public List<Tag> getTagsFromPost (Post post) {
+		
+		return this.getSession().getNamedQuery("Tag.getTagsFromPost").setParameter("post", post).getResultList();
+	}
 
 
 }

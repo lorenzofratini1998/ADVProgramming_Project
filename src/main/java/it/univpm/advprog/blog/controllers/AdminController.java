@@ -151,30 +151,6 @@ public class AdminController {
         return "redirect:/tags/?message=" + strMessage;
     }
 
-
-// TODO: DA SPOSTARE SU GuestController
-
-//    /**
-//     * Metodo per la richiesta GET per la visualizzazione della lista di archivi.
-//     *
-//     * @param message eventuale messaggio da mostrare
-//     * @param uiModel modello associato alla vista
-//     * @return nome della vista da visualizzare
-//     */
-//    @GetMapping(value = "/archives")
-//    public String showArchives(@RequestParam(value = "message", required = false) String message, Model uiModel) {
-//        logger.info("Listing all the archives...");
-//
-//        List<Archive> allArchives = this.archiveService.getAll();
-//
-//        uiModel.addAttribute("archives", allArchives);
-//
-//        uiModel.addAttribute("message", message);
-//
-//        return "archives/list";
-//    }
-
-
     /**
      * Metodo per la richiesta GET per la cancellazione di un archivio VUOTO.
      *
