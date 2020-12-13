@@ -25,10 +25,6 @@ import javax.persistence.Table;
 	@NamedQuery(
 			name = "findPostsOfUser",
 			query = "SELECT u FROM User u JOIN Post p ON u.username = p.author WHERE u.username = :username"
-			),
-	@NamedQuery(
-			name = "getUserFromPost",
-			query = "SELECT u FROM User u WHERE u.post = :post"
 			)
 	
 })

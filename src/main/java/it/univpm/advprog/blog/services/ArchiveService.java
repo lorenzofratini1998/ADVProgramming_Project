@@ -18,5 +18,4 @@ public interface ArchiveService {
 	    
 	    void delete(String name);
 
-	    List<Archive> getArchivesFromPost(Post post);
 }
