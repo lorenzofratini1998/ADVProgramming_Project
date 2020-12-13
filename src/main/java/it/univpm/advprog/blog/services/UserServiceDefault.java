@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.univpm.advprog.blog.model.dao.PostDao;
 import it.univpm.advprog.blog.model.dao.UserDao;
+import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
@@ -101,6 +102,16 @@ public class UserServiceDefault implements UserService{
 		
 		else return Collections.emptyList(); 
 		
+	}
+	
+	//Funzione per ottenere l'utente che ha scritto un certo post
+	
+	@Transactional
+	@Override
+	public List<User> getUserFromPost(Post post) {
+		
+		return this.userRepository.getUserFromPost(post);
+	
 	}
 
 }

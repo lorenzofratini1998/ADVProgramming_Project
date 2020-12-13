@@ -11,6 +11,12 @@ import java.util.Set;
 	
 	@Entity
 	@Table(name="tags")
+	@NamedQueries({
+		@NamedQuery(
+				name = "getTagsFromPost",
+				query = "SELECT t FROM Tag t WHERE t.post = :post"
+				)
+	})
 	public class Tag implements Serializable {
 		
 		private String name;

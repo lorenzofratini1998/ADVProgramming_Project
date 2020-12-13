@@ -33,4 +33,5 @@ public interface PostDao {
     Post update(Post post);
 
     void delete(Post post);
+    
 }

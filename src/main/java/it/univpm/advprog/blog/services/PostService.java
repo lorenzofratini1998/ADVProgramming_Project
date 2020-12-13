@@ -38,5 +38,6 @@ public interface PostService {
     void delete(long id);
 
     void delete(String title);
+    
 
 }
