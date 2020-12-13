@@ -17,6 +17,4 @@ public interface TagService {
 	void delete(Tag tag);
 	
 	void delete(String name);
-	
-	List<Tag> getTagsFromPost(Post post);
 }
