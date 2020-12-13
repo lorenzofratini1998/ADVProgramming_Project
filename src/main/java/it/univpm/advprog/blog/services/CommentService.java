@@ -22,4 +22,5 @@ public interface CommentService {
 	
 //	List<Comment> findCommentsByPostAndAuthor(Post post, User author);
 	
+	List<Comment> getCommentsFromAuthor(String username);
 }
