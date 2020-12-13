@@ -10,16 +10,16 @@ import java.util.Set;
 @Table(name = "posts")
 @NamedQueries({
         @NamedQuery(
-                name = "getPostByTitle",
+                name = "Post.getPostByTitle",
                 query = "SELECT p FROM Post p WHERE p.title = :title"
         ),
         @NamedQuery(
-                name = "getPostsByArchive",
+                name = "Post.getPostsByArchive",
                 query = "SELECT p FROM Post p WHERE p.archive = :archive"
         ),
         @NamedQuery(
-                name = "getPostsByAuthor",
-                query = "SELECT p FROM Post p WHERE p.author = :author"
+                name = "Post.getPostsByAuthor",
+                query = "SELECT p, u FROM Post p JOIN p.author u ON p.author = u.username WHERE u.username = :authorName"
         )
 })
 

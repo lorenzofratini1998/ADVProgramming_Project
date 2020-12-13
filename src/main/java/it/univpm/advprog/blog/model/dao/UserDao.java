@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.hibernate.Session;
 
-import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
@@ -27,7 +26,6 @@ public interface UserDao {
 	
 	void delete(User user);
 	
-	List<User> getUserFromPost(Post post);
 	
 	
 	

@@ -26,5 +26,9 @@ public interface CommentDao {
 	
 	List<Comment> getCommentsFromPost(Post post);
 	
+	List<Comment> getCommentsFromAuthor(User user);
+	
+	
+
 	
 }

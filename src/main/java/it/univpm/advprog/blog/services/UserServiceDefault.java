@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.univpm.advprog.blog.model.dao.PostDao;
 import it.univpm.advprog.blog.model.dao.UserDao;
-import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
@@ -21,7 +20,11 @@ public class UserServiceDefault implements UserService{
 	
 	 
 	
-	//Dipendenze con UserDao e PostDao
+	/**
+	 * Setter per la dipendenza verso l'UserDao
+	 * 
+	 * @param userDao bean userDao
+	 */
 	
 	@Autowired
 	public void setUserRepository(UserDao userDao) {
@@ -30,7 +33,12 @@ public class UserServiceDefault implements UserService{
 	
 	
 	
-	//Funzione per trovare un utente in base al suo username
+	/**
+	 * Metodo per trovare un utente dato il suo username
+	 * 
+	 * @param username nome dell'utente da ricercare
+	 * @return  utente corrispondente al nome passato
+	 */
 	
 	@Transactional(readOnly = true)
 	@Override
@@ -39,8 +47,16 @@ public class UserServiceDefault implements UserService{
 		return this.userRepository.findUserByUsername(username);
 	}
 	
-	//Funzione per creare un utente
-	
+	/**
+	 * Metodo per creare un nuovo utente
+	 * 
+	 * @param username username dell'utente da creare
+	 * @param password password dell'utente da creare
+	 * @param firstName nome dell'utente da creare
+	 * @param lastName cognome dell'utente da creare
+	 * @return utente creato
+	 * 
+	 */
 	@Transactional
 	@Override
 	public User create(String username, String password, String firstName, String lastName) {
@@ -48,9 +64,16 @@ public class UserServiceDefault implements UserService{
 		return this.userRepository.create(username, password, firstName, lastName);
 	}
 	
-	//Funzione per creare un utente fornendo anche il path che rimanda all'immagine di profilo
-	
-	
+	/**
+	 * Metodo per creare un utente fornendo anche il nome dell'immagine profilo
+	 * 
+	 * @param username username dell'utente da creare
+	 * @param password password dell'utente da creare
+	 * @param firstName nome dell'utente da creare
+	 * @param lastName cognome dell'utente da creare
+	 * @param imgProfile nome del file contente l'immagine profilo dell'utente da creare
+	 * @return utente creato
+	 */
 	@Transactional
 	@Override
 	public User create(String username, String password, String firstName, String lastName, String imgProfile) {
@@ -60,8 +83,12 @@ public class UserServiceDefault implements UserService{
 		return nu;
 	}
 	
-	//Funzione per aggiornare un utente
-	
+	/**
+	 * Metodo per aggiornare un utente 
+	 * 
+	 * @param user utente da modificare
+	 * @return utente modificato
+	 */
 	@Transactional
 	@Override
 	public User update(User user) {
@@ -69,8 +96,12 @@ public class UserServiceDefault implements UserService{
 	}
 	
 	
-	//Funzione per eliminare un utente
-	
+	/**
+	 * Metodo per eliminare un utente
+	 * 
+	 * @param user utente da eliminare
+	 * 
+	 */	
 	@Transactional
 	@Override
 	public void delete(User user) {
@@ -78,8 +109,11 @@ public class UserServiceDefault implements UserService{
 	}
 	
 	
-	//Funzione per trovare tutti gli utenti
-	
+	/**
+	 * Metodo per trovare tutti gli utenti registrati
+	 * 
+	 * @return lista degli utenti registrati
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<User> findAll() {
@@ -88,8 +122,13 @@ public class UserServiceDefault implements UserService{
 	}
 	
 	
-	//Funzione per trovare tutti i post scritti da un utente, conoscendo l'username
-
+	/**
+	 * Metodo per trovare tutti i post scritti da un utente, conoscendo l'username
+	 * 
+	 * @param username username dell'utente di cui cercare i post
+	 * @return lista di post associati all'utente specificato
+	 */
+	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	@Override
 	public List<Post> findPosts(String username) {
@@ -104,14 +143,7 @@ public class UserServiceDefault implements UserService{
 		
 	}
 	
-	//Funzione per ottenere l'utente che ha scritto un certo post
 	
-	@Transactional
-	@Override
-	public List<User> getUserFromPost(Post post) {
-		
-		return this.userRepository.getUserFromPost(post);
-	
-	}
+
 
 }

@@ -22,7 +22,5 @@ public interface TagDao {
 	void delete(Tag tag);
 	
 	void delete(String name);
-	
-	List<Tag> getTagsFromPost(Post post);
 
 }

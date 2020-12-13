@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.univpm.advprog.blog.model.dao.CommentDao;
 import it.univpm.advprog.blog.model.dao.PostDao;
+import it.univpm.advprog.blog.model.dao.UserDao;
 import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
@@ -18,20 +19,40 @@ public class CommentServiceDefault implements CommentService {
 
 	private CommentDao commentRepository;
 	private PostDao postRepository;
+	private UserDao userRepository;
 	
-	
+	/**
+	 * Setter della proprietà commentRepository
+	 * 
+	 * @param commentDao bean della classe Dao relativa ai commenti
+	 */
 	@Autowired
 	public void setCommentRepository(CommentDao commentDao) {
 		this.commentRepository = commentDao;
 	}
 	
+	/**
+	 * Setter della proprietà postRepository
+	 * 
+	 * @param postDao bean della classe Dao relativa ai post
+	 */
 	@Autowired
 	public void setPostRepository(PostDao postDao) {
 		this.postRepository = postDao;
 	}
+	
+	/**
+	 * Setter della proprietà userRepository
+	 * 
+	 * @param userDao bean della classe Dao relativa agli utenti
+	 */
+	@Autowired
+	public void setUserRepository(UserDao userDao) {
+		this.userRepository = userDao;
+	}
 
 	/**
-	 * Funzione che restituisce tutti i commenti.
+	 * Metodo che restituisce tutti i commenti.
 	 *
 	 * @return lista di commenti restituita
 	 */
@@ -41,8 +62,11 @@ public class CommentServiceDefault implements CommentService {
 		return this.commentRepository.getAll();
 	}
 
-	//Funzione per trovare un commento dall'id
-
+	/**
+	 * Metodo che restituisce il commento conoscendo il suo id
+	 * 
+	 * @return commento corrispondente all'id
+	 */
 	@Transactional
 	@Override
 	public Comment findCommentById(long id) {
@@ -50,16 +74,22 @@ public class CommentServiceDefault implements CommentService {
 	}
 	
 	
-	//Funzione per creare un commento
-	
+	/**
+	 * Metodo che crea un nuovo commento
+	 * 
+	 * @return commento creato da un certo utente
+	 */
 	@Transactional
 	@Override
 	public Comment create(User author, Post post, String title, String description) {
 		return this.commentRepository.create(author, post, title, description);
 	}
 	
-	//Funzione per aggiornare un commento
-	
+	/**
+	 * Metodo per aggiornare un commento
+	 * 
+	 * @return commento con eventuali modifiche apportate
+	 */
 	@Transactional
 	@Override
 	public Comment update(Comment comment) {
@@ -67,8 +97,11 @@ public class CommentServiceDefault implements CommentService {
 	}
 	
 	
-	//Funzione per rimuovere un commento
-	
+	/**
+	 * Metodo per rimuovere un commento
+	 * 
+	 * @return null
+	 */
 	@Transactional
 	@Override
 	public void delete(Comment comment) {
@@ -76,8 +109,11 @@ public class CommentServiceDefault implements CommentService {
 	}
 	
 	
-	//Funzione per ottenere i commenti relativi ad un post
-	
+	/**
+	 * Metodo per ottenere i commenti relativi ad un certo post
+	 * 
+	 * @return lista di tutti i commenti di un post specifico
+	 */
 	@Transactional
 	@Override
 	public List<Comment> getCommentsFromPost(Post post) {
@@ -86,16 +122,21 @@ public class CommentServiceDefault implements CommentService {
 	
 	}
 	
-	//Funzione per ottenere i commenti di un utente specificato sotto un post specificato
 	
-//	@Override
-//	public List<Comment> findCommentsByPostAndAuthor(Post post, User author) {
-//		
-//		return this.commentRepository.getSession().createQuery("SELECT c FROM Comment c JOIN User u ON c.author = u.username WHERE c.post = :post AND u.username = :username", Post.class)
-//		
-//		
-//		
-//		
-//	}
+	/**
+	 * Metodo per ottenere i commenti di un certo utente
+	 * 
+	 * @return lista di commenti relativi ad un utente specifico
+	 */
+	@Override
+	public List<Comment> getCommentsFromAuthor(String username) {
+		
+		User u = this.userRepository.findUserByUsername(username);
+		
+		return this.commentRepository.getCommentsFromAuthor(u);
+		
+		
+		
+	}
 	
 }

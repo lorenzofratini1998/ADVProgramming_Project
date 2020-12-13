@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import it.univpm.advprog.blog.model.entities.Archive;
-import it.univpm.advprog.blog.model.entities.Comment;
-import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.Tag;
 
 @Transactional
@@ -81,18 +79,6 @@ public class TagServiceDefault implements TagService {
 	public void delete(String name) {
 		Tag tag= this.getByName(name);
         this.tagRepository.delete(tag);
-	}
-	
-	/**
-	 * Funzione per trovare tutti itag relativi ad un determinato post
-	 */
-	
-	@Transactional
-	@Override
-	public List<Tag> getTagsFromPost(Post post) {
-		
-		return this.tagRepository.getTagsFromPost(post);
-	
 	}
 	
     /**

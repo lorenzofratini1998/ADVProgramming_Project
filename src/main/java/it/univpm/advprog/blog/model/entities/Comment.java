@@ -8,9 +8,12 @@ import javax.persistence.*;
 @Table(name = "comments")
 @NamedQueries({
 	@NamedQuery(
-			name = "getCommentsFromPost",
+			name = "Comment.getCommentsFromPost",
 			query = "SELECT c FROM Comment c WHERE c.post = :post"
-			)
+			),
+	@NamedQuery(
+			name = "Comment.getCommentsFromAuthor",
+			query = "SELECT c FROM Comment c WHERE c.author = :author")
 })
 public class Comment implements Serializable {
 
