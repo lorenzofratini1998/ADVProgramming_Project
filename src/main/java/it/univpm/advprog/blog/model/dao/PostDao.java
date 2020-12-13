@@ -9,17 +9,13 @@ import java.util.Set;
 public interface PostDao {
     Session getSession();
 
-    public void setSession(Session session);
+    void setSession(Session session);
 
     List<Post> getAll();
 
     Post getById(long id);
 
     Post getByTitle(String title);
-
-    List<Post> getByArchive(Archive archive);
-
-    List<Post> getByAuthor(String username);
 
     Post create(String title, User author, String shortDescription, String longDescription, Tag tag,
                 Archive archive);

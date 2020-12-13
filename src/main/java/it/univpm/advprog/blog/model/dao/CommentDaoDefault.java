@@ -52,23 +52,4 @@ public class CommentDaoDefault extends DefaultDao implements CommentDao {
 		this.getSession().delete(comment);
 	}
 	
-	
-	/*
-	 * Funzione per trovare tutti i commenti relativi ad un certo post
-	 */
-	
-	@Override
-	public List<Comment> getCommentsFromPost (Post post) {
-		
-		return this.getSession().getNamedQuery("Comment.getCommentsFromPost").setParameter("post", post).getResultList();
-	}
-	
-	
-	@Override
-	public List<Comment> getCommentsFromAuthor (User user) {
-		
-		return this.getSession().getNamedQuery("Comment.getCommentsFromAuthor").setParameter("author", user).getResultList();
-	}
-	
-	
 }

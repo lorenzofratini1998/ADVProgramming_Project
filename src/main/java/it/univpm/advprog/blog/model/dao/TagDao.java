@@ -9,7 +9,7 @@ public interface TagDao {
 
 	Session getSession();
 
-	public void setSession(Session session);
+	void setSession(Session session);
 
 	List<Tag> getAll();
 	

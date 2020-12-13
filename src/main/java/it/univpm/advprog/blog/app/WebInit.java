@@ -2,6 +2,7 @@ package it.univpm.advprog.blog.app;
 
 import javax.servlet.Filter;
 
+import it.univpm.advprog.blog.security.WebSecurityConfig;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -13,7 +14,7 @@ public class WebInit extends AbstractAnnotationConfigDispatcherServletInitialize
 	protected Class<?>[] getRootConfigClasses() {
 		
 		return new Class<?>[] {
-			//WebSecurityConfig.class,
+			WebSecurityConfig.class,
 			DataServiceConfig.class
 		};
 	}

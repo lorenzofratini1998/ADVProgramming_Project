@@ -8,7 +8,7 @@ import it.univpm.advprog.blog.model.entities.*;
 public interface ArchiveDao {
 	Session getSession();
 
-    public void setSession(Session session);
+    void setSession(Session session);
     
     List<Archive> getAll();
     

@@ -108,35 +108,4 @@ public class CommentServiceDefault implements CommentService {
 		this.commentRepository.delete(comment);
 	}
 	
-	
-	/**
-	 * Metodo per ottenere i commenti relativi ad un certo post
-	 * 
-	 * @return lista di tutti i commenti di un post specifico
-	 */
-	@Transactional
-	@Override
-	public List<Comment> getCommentsFromPost(Post post) {
-		
-		return this.commentRepository.getCommentsFromPost(post);
-	
-	}
-	
-	
-	/**
-	 * Metodo per ottenere i commenti di un certo utente
-	 * 
-	 * @return lista di commenti relativi ad un utente specifico
-	 */
-	@Override
-	public List<Comment> getCommentsFromAuthor(String username) {
-		
-		User u = this.userRepository.findUserByUsername(username);
-		
-		return this.commentRepository.getCommentsFromAuthor(u);
-		
-		
-		
-	}
-	
 }

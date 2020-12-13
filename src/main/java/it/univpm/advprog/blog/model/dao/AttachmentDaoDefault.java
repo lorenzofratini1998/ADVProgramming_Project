@@ -32,16 +32,6 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	public Attachment getById(long id) {
 		return getSession().find(Attachment.class, id);
 	}
-
-	/**
-	 * Metodo per cercare tutti gli allegati di un certo post
-	 * @param post: post specificato
-	 * @return lista degli allegati associati ad un certo post
-	 */
-	/*@Override
-	public List<Attachment> getByPost(Post post) {
-		return getSession().createNamedQuery("getAttachmentByPost", Attachment.class).setParameter("id", post.getId()).getResultList();
-	}*/
 	
 	/**
 	 * Metodo per creare un nuovo allegato

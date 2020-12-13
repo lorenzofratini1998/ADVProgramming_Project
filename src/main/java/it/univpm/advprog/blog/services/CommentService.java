@@ -17,10 +17,6 @@ public interface CommentService {
 	Comment update(Comment comment);
 	
 	void delete(Comment comment);
-	
-	List<Comment> getCommentsFromPost(Post post);
-	
+
 //	List<Comment> findCommentsByPostAndAuthor(Post post, User author);
-	
-	List<Comment> getCommentsFromAuthor(String username);
 }

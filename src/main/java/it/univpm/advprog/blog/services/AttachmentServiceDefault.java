@@ -39,17 +39,6 @@ public class AttachmentServiceDefault implements AttachmentService {
 	}
 
 	/**
-	 * Metodo per restituire gli allegati associati ad un certo post
-	 * @param post: post specificato
-	 * @return lista degli allegati associati al post
-	 */
-	@Transactional(readOnly = true)
-	@Override
-	public List<Attachment> getByPost(Post post) {
-		return new ArrayList<>(post.getAttachments());
-	}
-
-	/**
 	 * Metodo per creare un nuovo allegato
 	 * @param id: id dell'allegato da creare
 	 * @param description: descrizione dell'allegato

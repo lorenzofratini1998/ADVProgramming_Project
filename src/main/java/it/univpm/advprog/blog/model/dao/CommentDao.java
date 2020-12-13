@@ -12,7 +12,7 @@ public interface CommentDao {
 
 	Session getSession();
 	
-	public void setSession(Session session);
+	void setSession(Session session);
 	
 	Comment findCommentById(long id);
 
@@ -23,12 +23,5 @@ public interface CommentDao {
 	Comment update(Comment comment);
 	
 	void delete(Comment comment);
-	
-	List<Comment> getCommentsFromPost(Post post);
-	
-	List<Comment> getCommentsFromAuthor(User user);
-	
-	
 
-	
 }

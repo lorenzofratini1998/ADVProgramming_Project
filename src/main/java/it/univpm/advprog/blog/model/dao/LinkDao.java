@@ -11,7 +11,7 @@ import it.univpm.advprog.blog.model.entities.Post;
 public interface LinkDao {
 	Session getSession();
 	
-	public void setSession(Session session);
+	void setSession(Session session);
 	
 	List<Link> getAll();
 	

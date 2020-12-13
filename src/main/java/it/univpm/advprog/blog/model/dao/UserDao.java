@@ -1,21 +1,19 @@
 package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 
-import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 public interface UserDao {
 
 	Session getSession();
-	
-	public void setSession(Session session);
-	
+
+	void setSession(Session session);
+
 	List<User> findAll();
 	
     User findUserByUsername(String username);
@@ -25,11 +23,11 @@ public interface UserDao {
 	User update(User user);
 	
 	void delete(User user);
-	
-	
-	
-	
-	
-	
-	
+
+	String encryptPassword(String password);
+
+	void setPasswordEncoder(PasswordEncoder passwordEncoder);
+
+	PasswordEncoder getpasswordEncoder();
+
 }

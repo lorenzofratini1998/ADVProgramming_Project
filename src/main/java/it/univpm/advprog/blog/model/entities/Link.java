@@ -12,12 +12,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="links")
-@NamedQueries({
-	@NamedQuery(
-			name="getLinkByLink",
-			query="SELECT l FROM Link l WHERE l.link= :link"
-			)
-})
+//@NamedQueries({
+//	@NamedQuery(
+//			name="getLinkByLink",
+//			query="SELECT l FROM Link l WHERE l.link= :link"
+//			)
+//})
 @PrimaryKeyJoinColumn(name="attachment_id")
 public class Link extends Attachment implements Serializable {
 	

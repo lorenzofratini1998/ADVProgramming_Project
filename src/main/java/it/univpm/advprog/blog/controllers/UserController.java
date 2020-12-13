@@ -1,10 +1,12 @@
 package it.univpm.advprog.blog.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +23,6 @@ import it.univpm.advprog.blog.services.CommentService;
 import it.univpm.advprog.blog.services.PostService;
 import it.univpm.advprog.blog.services.UserService;
 
-@RequestMapping("/{username}")
 @Controller
 public class UserController {
 	
@@ -65,29 +66,32 @@ public class UserController {
 	
 	/**
 	 * Metodo per la richiesta GET di mosrare tutti i post scritti dall'utente
-	 * 
-	 * @param username	identificativo dell'utente
+	 *
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/posts")
-	public String showMyPosts(@PathVariable("username") String username, Model uiModel) {
-		logger.info("Listing posts written by the user");
-		
-		
-		List<Post> allPosts = this.postService.getByAuthor(username);
-		
+	public String showMyPosts(Authentication authentication, Model uiModel) {
+		logger.info("Showing your posts...");
+
+		List<Post> allPosts = new ArrayList<>();
+
+		if(authentication != null) {
+			User currentLoggedInUser = userService.findUserByUsername(authentication.getName());
+			allPosts.addAll(currentLoggedInUser.getPosts());
+		}
+
 		if(allPosts.isEmpty()) {
-			String strMessage = username + ": No Post associati";
+			String strMessage = "Non hai scritto alcun post!";
 			return "redirect:/?message=" + strMessage ;
 		}
-		
+
 		else {
-		uiModel.addAttribute("posts", allPosts);
-		uiModel.addAttribute("numPosts", allPosts.size());
-		
-		return "posts.list";}
-		
+			uiModel.addAttribute("posts", allPosts);
+			uiModel.addAttribute("numPosts", allPosts.size());
+
+			return "posts.list";}
+
 	}
 	
 	/**
@@ -236,17 +240,21 @@ public class UserController {
 	
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dei commenti
-	 * 
-	 * @param username	username dell'utente che sta richiedendo l'operazione
+	 *
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/comments")
-	public String showComments(@PathVariable("username") String username, Model uiModel) {
-		logger.info(username + "Showing his comments...");
-		
-		List<Comment> allComments = this.commentService.getCommentsFromAuthor(username);
-		
+	public String showComments(Authentication authentication, Model uiModel) {
+		logger.info("Showing your comments...");
+
+		List<Comment> allComments = new ArrayList<>();
+
+		if(authentication != null) {
+			User currentLoggedInUser = userService.findUserByUsername(authentication.getName());
+			allComments.addAll(currentLoggedInUser.getComments());
+		}
+
 		uiModel.addAttribute("comments", allComments);
 	
 		

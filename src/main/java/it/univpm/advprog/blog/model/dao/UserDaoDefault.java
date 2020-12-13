@@ -3,6 +3,7 @@ package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import it.univpm.advprog.blog.model.entities.Post;
@@ -11,7 +12,9 @@ import it.univpm.advprog.blog.model.entities.User;
 @Repository("userDao")
 public class UserDaoDefault extends DefaultDao implements UserDao {
 
-	/**
+    private PasswordEncoder passwordEncoder;
+
+    /**
 	 * Metodo per trovare tutti gli utenti registrati
 	 * 
 	 * @return lista di utenti registrati
@@ -80,8 +83,19 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
         this.getSession().delete(user);
     }
 
-    
-    
+    @Override
+    public String encryptPassword(String password) {
+        return this.passwordEncoder.encode(password);
+    }
 
+    @Override
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public PasswordEncoder getpasswordEncoder() {
+        return this.passwordEncoder;
+    }
 
 }

@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<sec:authorize access="hasRole('admin')" var="isAdmin"/>
 
 <div class="row">
     <c:if test="${fn:length(message) > 0}">
@@ -9,13 +12,14 @@
 </div>
 
 <div class="row">
-    <!-- TODO: quando si implementa il lato SICUREZZA mostrare il seguente bottone SOLTANTO all'ADMIN -->
-    <div class="col-md-4 mb-4 mx-auto">
-        <div>
-            <c:url value="/tags/new" var="newTag_url"/>
-            <a type="button" class="btn btn-success" href="${newTag_url}">Crea un nuovo tag</a>
+    <c:if test="${isAdmin}">
+        <div class="col-md-4 mb-4 mx-auto">
+            <div>
+                <c:url value="/tags/new" var="newTag_url"/>
+                <a type="button" class="btn btn-success" href="${newTag_url}">Crea un nuovo tag</a>
+            </div>
         </div>
-    </div>
+    </c:if>
 
     <div class="col-md-6 mb-4">
         <div class="overflow-auto">

@@ -1,21 +1,21 @@
 package it.univpm.advprog.blog.services;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.univpm.advprog.blog.model.dao.PostDao;
 import it.univpm.advprog.blog.model.dao.UserDao;
-import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
 @Transactional
 @Service("userService")
-public class UserServiceDefault implements UserService{
-	
+public class UserServiceDefault implements UserService, UserDetailsService {
+
 	private UserDao userRepository;
 	
 	 
@@ -120,30 +120,25 @@ public class UserServiceDefault implements UserService{
 		
 		return this.userRepository.findAll();
 	}
-	
-	
-	/**
-	 * Metodo per trovare tutti i post scritti da un utente, conoscendo l'username
-	 * 
-	 * @param username username dell'utente di cui cercare i post
-	 * @return lista di post associati all'utente specificato
-	 */
-	@SuppressWarnings("unchecked")
+
 	@Transactional(readOnly = true)
 	@Override
-	public List<Post> findPosts(String username) {
-		
-		
-		User author = this.userRepository.findUserByUsername(username);
-		if (author != null) {
-			return this.userRepository.getSession().getNamedQuery("User.findPostsOfUser").setParameter(":username", username).getResultList();
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findUserByUsername(username);
+		org.springframework.security.core.userdetails.User.UserBuilder builder;
+
+		if (user != null) {
+			builder = org.springframework.security.core.userdetails.User.withUsername(username);
+			builder.disabled(user.isDisabled());
+			builder.password(user.getPassword());
+			String role = "user";
+			if (user.isAdmin()) {
+				role = "admin";
+			}
+			builder.roles(role);
+		} else {
+			throw new UsernameNotFoundException("User not found.");
 		}
-		
-		else return Collections.emptyList(); 
-		
+		return builder.build();
 	}
-	
-	
-
-
 }

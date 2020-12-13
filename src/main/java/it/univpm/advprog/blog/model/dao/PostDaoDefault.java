@@ -46,34 +46,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     }
 
     /**
-     * Funzione per cercare tutti i post contenuti in un particolare archivio.
-     *
-     * @param archive archivio specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Post> getByArchive(Archive archive) {
-        return (List<Post>) getSession().getNamedQuery("Post.getPostsByArchive").
-                setParameter("archive", archive.getName()).
-                getResultList();
-    }
-
-    /**
-     * Funzione per cercare tutti i post scritti da un particolare utente.
-     *
-     * @param author autore specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Post> getByAuthor(String username) {
-        return (List<Post>) getSession().getNamedQuery("Post.getPostsByAuthor").
-                setParameter("authorName", username).
-                getResultList();
-    }
-
-    /**
      * Funzione per creare un nuovo post.
      *
      * @param title            titolo del post

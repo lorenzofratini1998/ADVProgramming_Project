@@ -54,7 +54,7 @@ public class FileServiceDefault implements FileService {
 	 */
 	@Transactional(readOnly=true)
 	@Override
-	public List<File> getByNoDownloadble(boolean noDownloadable) {
+	public List<File> getByNoDownloadable(boolean noDownloadable) {
 		return this.fileRepository.getByNoDownloadable(noDownloadable);
 	}
 	

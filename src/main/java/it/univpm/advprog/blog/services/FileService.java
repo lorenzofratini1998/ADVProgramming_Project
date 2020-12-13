@@ -15,10 +15,10 @@ public interface FileService {
 	
 	File getByName(String name);
 	
-	List<File> getByNoDownloadble(boolean noDownloadable);
-	
-	List<File> getFileByPost(Post post);
-	
+	List<File> getByNoDownloadable(boolean noDownloadable);
+
+	List<File> getFileByPost(Post post); //TODO: lasciare (prendo solo la lista dei file e non di tutti gli allegati)... magari spostarlo sul DAO
+
 	File create(String description, boolean hide, Post post, String name, boolean noDownloadable);
 	
 	File create(String description, Post post, String name);

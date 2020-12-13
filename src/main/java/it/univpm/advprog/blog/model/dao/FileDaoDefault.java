@@ -48,7 +48,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 * @param noDownloadable: parametro per indicare se si è interessati a file scaricabili o meno
 	 * @return lista dei file scaricabili o meno
 	 */
-	@Override
+	@Override //TODO: da rivedere, forse non serve che riceve il parametro in input
 	public List<File> getByNoDownloadable(boolean noDownloadable) {
 		return getSession().createNamedQuery("getFileByDownloadable", File.class).getResultList();
 	}

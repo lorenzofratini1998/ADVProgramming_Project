@@ -12,14 +12,6 @@ import java.util.Set;
         @NamedQuery(
                 name = "Post.getPostByTitle",
                 query = "SELECT p FROM Post p WHERE p.title = :title"
-        ),
-        @NamedQuery(
-                name = "Post.getPostsByArchive",
-                query = "SELECT p FROM Post p WHERE p.archive = :archive"
-        ),
-        @NamedQuery(
-                name = "Post.getPostsByAuthor",
-                query = "SELECT p, u FROM Post p JOIN p.author u ON p.author = u.username WHERE u.username = :authorName"
         )
 })
 

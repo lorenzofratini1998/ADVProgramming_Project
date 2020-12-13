@@ -12,7 +12,7 @@ import it.univpm.advprog.blog.model.entities.Post;
 public interface FileDao {
 	Session getSession();
 	
-	public void setSession(Session session);
+	void setSession(Session session);
 	
 	List<File> getAll();
 	

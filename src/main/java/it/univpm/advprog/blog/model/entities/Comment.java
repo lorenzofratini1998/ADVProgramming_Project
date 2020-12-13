@@ -6,15 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "comments")
-@NamedQueries({
-	@NamedQuery(
-			name = "Comment.getCommentsFromPost",
-			query = "SELECT c FROM Comment c WHERE c.post = :post"
-			),
-	@NamedQuery(
-			name = "Comment.getCommentsFromAuthor",
-			query = "SELECT c FROM Comment c WHERE c.author = :author")
-})
 public class Comment implements Serializable {
 
 	private long id;

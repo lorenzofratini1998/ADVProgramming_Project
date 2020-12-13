@@ -56,45 +56,6 @@ public class PostServiceDefault implements PostService {
     }
 
     /**
-     * Funzione per cercare tutti i post contenuti in un particolare archivio.
-     *
-     * @param archive archivio specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @Transactional(readOnly = true)
-    @Override
-    public List<Post> getByArchive(Archive archive) {
-        return this.postRepository.getByArchive(archive);
-    }
-
-    /**
-     * Funzione per cercare tutti i post scritti da un particolare utente.
-     *
-     * @param author autore specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @Transactional(readOnly = true)
-    @Override
-    public List<Post> getByAuthor(String author) {
-        return this.postRepository.getByAuthor(author);
-    }
-
-    /**
-     * Funzione per cercare tutti i post appartenenti ad un tag specifico.
-     *
-     * @param tag tag specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @Transactional(readOnly = true)
-    @Override
-    public List<Post> getByTag(Tag tag) {
-        Set<Tag> tags = new HashSet<>();
-        tags.add(tag);
-
-        return this.getByTags(tags);
-    }
-
-    /**
      * Funzione per cercare tutti i post appartenenti ad un insieme di tag specifico.
      *
      * @param tags insieme di tag specificato
@@ -102,7 +63,7 @@ public class PostServiceDefault implements PostService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<Post> getByTags(Set<Tag> tags) {
+    public List<Post> getByTags(Set<Tag> tags) { //TODO: spostare sul DAO
         List<Post> posts = this.postRepository.getAll();
         for (Post post : posts) {
             Set<Tag> tagsPost = post.getTags();
@@ -114,21 +75,6 @@ public class PostServiceDefault implements PostService {
     }
 
     /**
-     * Funzione per cercare tutti i post che utilizzano un allegato specifico.
-     *
-     * @param attachment allegato specificato
-     * @return lista contenente i post che soddisfano i criteri di ricerca
-     */
-    @Transactional(readOnly = true)
-    @Override
-    public List<Post> getByAttachment(Attachment attachment) {
-        Set<Attachment> attachments = new HashSet<>();
-        attachments.add(attachment);
-
-        return this.getByAttachments(attachments);
-    }
-
-    /**
      * Funzione per cercare tutti i post che utilizzano un insieme di allegati specifico.
      *
      * @param attachments insieme di allegati specificato
@@ -136,7 +82,7 @@ public class PostServiceDefault implements PostService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<Post> getByAttachments(Set<Attachment> attachments) {
+    public List<Post> getByAttachments(Set<Attachment> attachments) {//TODO: spostare sul DAO
         List<Post> posts = this.postRepository.getAll();
         for (Post post : posts) {
             Set<Attachment> attachmentsPost = post.getAttachments();

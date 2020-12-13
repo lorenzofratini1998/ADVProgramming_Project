@@ -12,15 +12,7 @@ public interface PostService {
 
     Post getByTitle(String title);
 
-    List<Post> getByArchive(Archive archive);
-
-    List<Post> getByAuthor(String author);
-
-    List<Post> getByTag(Tag tag);
-
     List<Post> getByTags(Set<Tag> tags);
-
-    List<Post> getByAttachment(Attachment attachment);
 
     List<Post> getByAttachments(Set<Attachment> attachments);
 
