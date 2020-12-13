@@ -19,7 +19,7 @@ public interface PostDao {
 
     List<Post> getByArchive(Archive archive);
 
-    List<Post> getByAuthor(User author);
+    List<Post> getByAuthor(String username);
 
     Post create(String title, User author, String shortDescription, String longDescription, Tag tag,
                 Archive archive);

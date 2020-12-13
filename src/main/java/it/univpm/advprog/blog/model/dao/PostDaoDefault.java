@@ -67,9 +67,9 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public List<Post> getByAuthor(User author) {
+    public List<Post> getByAuthor(String username) {
         return (List<Post>) getSession().getNamedQuery("Post.getPostsByAuthor").
-                setParameter("author", author.getUsername()).
+                setParameter("authorName", username).
                 getResultList();
     }
 

@@ -75,7 +75,7 @@ public class PostServiceDefault implements PostService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<Post> getByAuthor(User author) {
+    public List<Post> getByAuthor(String author) {
         return this.postRepository.getByAuthor(author);
     }
 

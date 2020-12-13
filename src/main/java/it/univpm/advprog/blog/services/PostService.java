@@ -14,7 +14,7 @@ public interface PostService {
 
     List<Post> getByArchive(Archive archive);
 
-    List<Post> getByAuthor(User author);
+    List<Post> getByAuthor(String author);
 
     List<Post> getByTag(Tag tag);
 

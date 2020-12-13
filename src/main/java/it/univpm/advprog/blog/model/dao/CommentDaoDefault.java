@@ -64,4 +64,11 @@ public class CommentDaoDefault extends DefaultDao implements CommentDao {
 	}
 	
 	
+	@Override
+	public List<Comment> getCommentsFromAuthor (User user) {
+		
+		return this.getSession().getNamedQuery("Comment.getCommentsFromAuthor").setParameter("author", user).getResultList();
+	}
+	
+	
 }

@@ -4,11 +4,18 @@ package it.univpm.advprog.blog.model.dao;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+
+import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
 @Repository("userDao")
 public class UserDaoDefault extends DefaultDao implements UserDao {
 
+	/**
+	 * Metodo per trovare tutti gli utenti registrati
+	 * 
+	 * @return lista di utenti registrati
+	 */
     @Override
     public List<User> findAll() {
 
@@ -17,12 +24,27 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
                 getResultList();
     }
 
+    /**
+     * Metodo per trovare un utente conoscendo il suo username
+     * 
+     * @param username username dell'utente da ricercare
+     * @return utente corrispondente all'username specificato
+     */
     @Override
     public User findUserByUsername(String username) {
 
         return this.getSession().find(User.class, username);
     }
 
+    /**
+     * Metodo per creare un nuovo utente
+     * 
+     * @param username username dell'utente da creare
+	 * @param password password dell'utente da creare
+	 * @param firstName nome dell'utente da creare
+	 * @param lastName cognome dell'utente da creare
+	 * 
+     */
     @Override
     public User create(String username, String password, String firstName, String lastName) {
 
@@ -36,15 +58,30 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
         return newUser;
     }
 
+    /**
+     * Meetodo per aggiornare un utente 
+     * 
+     * @param user utente da modificare
+     * @return utente modificato
+     */
     @Override
     public User update(User user) {
         return (User) this.getSession().merge(user);
     }
 
+    /**
+     * Metodo per rimuovere un utente
+     * 
+     * @param utente da rimuovere
+     * 
+     */
     @Override
     public void delete(User user) {
         this.getSession().delete(user);
     }
+
+    
+    
 
 
 }
