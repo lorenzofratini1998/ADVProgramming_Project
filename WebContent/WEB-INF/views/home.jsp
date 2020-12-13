@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="false"%>
 
  <div class="container">
@@ -9,51 +11,62 @@
       <!-- Blog Entries Column -->
       <div class="col-md-8">
 
-        <h1 class="my-4">Titolo</h1>
+        <h1 class="my-4">Numero post: ${numPosts}</h1>
 
-        <!-- Blog Post -->
-        <div class="card mb-4">
-          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-          <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
-          </div>
-        </div>
+		<div>
+			<c:forEach items="${posts}" var="p">
+				<div class="card mb-4">
+				<div class="card-body">
+					<h2 class="card-title">${p.title}</h2>
+					<p class="card-text">${p.shortDescription}</p>
+					 <a href="#" class="btn btn-primary">Read More &rarr;</a>
+				</div>
+				<div class="card-footer text-muted">
+	    			Posted on ${p.getArchive().name} by <a href="#">${p.getAuthor().username}</a>
+	          	</div>
+				</div>
+			</c:forEach>
+		</div>
 
-        <!-- Blog Post -->
-        <div class="card mb-4">
-          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-          <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
-          </div>
-        </div>
+			<div id="pagination" class="pagination justify-content-center mb-4">
 
-        <!-- Blog Post -->
-        <div class="card mb-4">
-          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-          <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-          </div>
-          <div class="card-footer text-muted">
-            Posted on January 1, 2020 by
-            <a href="#">Start Bootstrap</a>
-          </div>
-        </div>
+				<c:url value="/blog/" var="prev">
+					<c:param name="page" value="${page-1}" />
+				</c:url>
+				<c:if test="${page > 1}">
+					<li class="page-item">
+						<a href="<c:out value="${prev}" />" class="pn prev page-link">Prev</a>
+					</li>
+				</c:if>
 
-        <!-- Pagination -->
+				<c:forEach begin="1" end="${maxPages}" step="1" varStatus="i">
+					<c:choose>
+						<c:when test="${page == i.index}">
+						<li class="page-item disabled">
+							<span class="page-link">${i.index}</span>
+						</li>
+						</c:when>
+						<c:otherwise>
+							<c:url value="/blog/" var="url">
+								<c:param name="page" value="${i.index}" />
+							</c:url>
+							<li class="page-item">
+								<a href='<c:out value="${url}" />' class="page-link">${i.index}</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:url value="/blog/" var="next">
+					<c:param name="page" value="${page + 1}" />
+				</c:url>
+				<c:if test="${page + 1 <= maxPages}">
+					<li class="page-item">
+						<a href='<c:out value="${next}" />' class="pn next page-link">Next</a>
+					<li class="page-item">
+				</c:if>
+			</div>
+
+			<!-- Pagination 
         <ul class="pagination justify-content-center mb-4">
           <li class="page-item">
             <a class="page-link" href="#">&larr; Older</a>
@@ -62,6 +75,7 @@
             <a class="page-link" href="#">Newer &rarr;</a>
           </li>
         </ul>
+        -->
 
       </div>
 
@@ -69,71 +83,37 @@
       <div class="col-md-4">
 
         <!-- Achieves Widget -->
+        
         <div class="card my-4">
           <h5 class="card-header">Archivi</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Novembre 2020</a>
-                  </li>
-                  <li>
-                    <a href="#">Ottobre 2020</a>
-                  </li>
-                  <li>
-                    <a href="#">Settembre 2020</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Agosto 2020</a>
-                  </li>
-                  <li>
-                    <a href="#">Luglio 2020</a>
-                  </li>
-                  <li>
-                    <a href="#">Giugno 2020</a>
-                  </li>
-                </ul>
-              </div>
+             <c:forEach items="${archives}" var="a">
+            	<div class="col-lg-12">
+            		<ul class="list-unstyled mb-0">
+	            		<li>
+	                    	<a href="#">${a.name}</a>
+	                  	</li>
+	                </ul>
+                </div>
+            </c:forEach>
             </div>
-          </div>
-        </div>
+           </div>
         
         <!-- Tags Widget -->
         <div class="card my-4">
           <h5 class="card-header">Tags</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">Microsoft</a>
-                  </li>
-                  <li>
-                    <a href="#">Java</a>
-                  </li>
-                  <li>
-                    <a href="#">Eclipse</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">TomCat</a>
-                  </li>
-                  <li>
-                    <a href="#">Apple</a>
-                  </li>
-                  <li>
-                    <a href="#">Univpm</a>
-                  </li>
-                </ul>
-              </div>
+            <c:forEach items="${tags}" var="t">
+            	<div class="col-lg-12">
+            		<ul class="list-unstyled mb-0">
+	            		<li>
+	                    	<a href="#">${t.name}</a>
+	                  	</li>
+	                </ul>
+                </div>
+            </c:forEach>
             </div>
           </div>
         </div>
@@ -144,3 +124,4 @@
     <!-- /.row -->
 
   </div>
+</div>

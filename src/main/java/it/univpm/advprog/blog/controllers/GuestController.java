@@ -16,6 +16,7 @@ import it.univpm.advprog.blog.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -85,13 +86,38 @@ public class GuestController {
      */
     
     @GetMapping(value="/blog")
-    public String showPost(@RequestParam(value="message", required = false) String message, Model uiModel) {
+    public String showPost(	@RequestParam(value="message", required = false) String message, 
+    						@RequestParam(required = false) Integer page, 
+    						Model uiModel) {
     	 logger.info("Listing all the posts...");
     	
 	     List<Post> allPosts = this.postService.getAll();
-	
-	     uiModel.addAttribute("posts", allPosts);
-	
+	     List<Tag>allTags=this.tagService.getAll();
+	     List<Archive> allArchives=this.archiveService.getAll();
+	     int numPosts=allPosts.size();
+	     
+	     PagedListHolder<Post> pagedListHolder = new PagedListHolder<>(allPosts);
+	     pagedListHolder.setPageSize(4);
+	     uiModel.addAttribute("maxPages",pagedListHolder.getPageCount());
+	     
+	     if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
+	     
+	     uiModel.addAttribute("page",page);
+	     if(page == null || page < 1 || page > pagedListHolder.getPageCount()){
+	            pagedListHolder.setPage(0);
+	            uiModel.addAttribute("posts", pagedListHolder.getPageList());
+	        }
+	       else if(page <= pagedListHolder.getPageCount()) {
+	            pagedListHolder.setPage(page-1);
+	            uiModel.addAttribute("posts", pagedListHolder.getPageList());
+	        }
+	     
+	     
+	     
+	     uiModel.addAttribute("archives", allArchives);
+	     uiModel.addAttribute("tags",allTags);
+	     //uiModel.addAttribute("posts", allPosts);
+	     uiModel.addAttribute("numPosts",numPosts);
 	     uiModel.addAttribute("message", message);
 	
 	     return "home";
