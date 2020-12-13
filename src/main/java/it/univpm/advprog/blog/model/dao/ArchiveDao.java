@@ -22,7 +22,5 @@ public interface ArchiveDao {
     
     void delete(String name);
     
-    List<Archive> getArchivesFromPost(Post post);
-    
 
 }

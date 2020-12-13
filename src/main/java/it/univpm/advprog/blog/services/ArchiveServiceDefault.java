@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import it.univpm.advprog.blog.model.dao.ArchiveDao;
 import it.univpm.advprog.blog.model.entities.Archive;
 import it.univpm.advprog.blog.model.entities.Post;
-import it.univpm.advprog.blog.model.entities.Tag;
 
 @Transactional
 @Service("archiveService")
@@ -93,19 +92,6 @@ public class ArchiveServiceDefault implements ArchiveService {
      *
      * @param archiveRepository DAO dell'entità archive da settare
      */
-	
-	/**
-	 * Funzione per trovare tutti gli archivi relativi ad un determinato post
-	 */
-	
-	@Transactional
-	@Override
-	public List<Archive> getArchivesFromPost(Post post) {
-		
-		return this.archiveRepository.getArchivesFromPost(post);
-	
-	}
-	
     @Autowired
     public void setArchiveRepository(ArchiveDao archiveRepository) {
         this.archiveRepository = archiveRepository;
