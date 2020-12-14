@@ -30,7 +30,7 @@
 
 			<div id="pagination" class="pagination justify-content-center mb-4">
 
-				<c:url value="/blog/" var="prev">
+				<c:url value="/" var="prev">
 					<c:param name="page" value="${page-1}" />
 				</c:url>
 				<c:if test="${page > 1}">
@@ -47,7 +47,7 @@
 						</li>
 						</c:when>
 						<c:otherwise>
-							<c:url value="/blog/" var="url">
+							<c:url value="/" var="url">
 								<c:param name="page" value="${i.index}" />
 							</c:url>
 							<li class="page-item">
@@ -56,7 +56,7 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				<c:url value="/blog/" var="next">
+				<c:url value="/" var="next">
 					<c:param name="page" value="${page + 1}" />
 				</c:url>
 				<c:if test="${page + 1 <= maxPages}">

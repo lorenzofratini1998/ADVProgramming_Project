@@ -85,7 +85,7 @@ public class GuestController {
      * @return nome della vista da ritornare
      */
     
-    @GetMapping(value="/blog")
+    @GetMapping(value="/")
     public String showPost(	@RequestParam(value="message", required = false) String message, 
     						@RequestParam(required = false) Integer page, 
     						Model uiModel) {
