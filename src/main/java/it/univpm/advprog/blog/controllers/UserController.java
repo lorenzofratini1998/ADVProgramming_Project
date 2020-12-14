@@ -94,25 +94,6 @@ public class UserController {
 
 	}
 	
-	/**
-	 * Metodo per la rchiesta GET di visualizzazione dettagli di un singolo post
-	 * 
-	 * @param username	username dell'utente che sta richiedendo l'operazione
-	 * @param postId	id del post da visualizzare
-	 * @param uiModel	porzione del modello da passare alla vista
-	 * @return			nome della vista da renderizzare
-	 */
-	@GetMapping(value = "/posts/{postId}")
-	public String showSpecificPost(@PathVariable("username") String username, @PathVariable("postId") long postId, Model uiModel) {
-		logger.info(username + ": Showing post: " + postId);
-		
-		Post p = this.postService.getById(postId);
-		
-		uiModel.addAttribute("singlePost", p);
-		
-		return "posts/postpage";
-	
-	}
 	
 	/**
 	 * Metodo per la richiesta GET di creazione nuovo post
@@ -262,23 +243,6 @@ public class UserController {
 	}
 
 	
-	/**
-	 * Metodo per la richiesta GET di creazione nuovo commento
-	 * 
-	 * @param username	username dell'utente che sta richiedendo l'operazione
-	 * @param postId	id del post in cui aggiungere il commento
-	 * @param uiModel	porzione del modello da passare alla vista
-	 * @return			nome della vista da renderizzare
-	 */
-	@GetMapping(value = "/posts/{postId}/newcomment")
-	public String newComment(@PathVariable("username") String username, @PathVariable("postId") long postId, Model uiModel) {
-		logger.info(username + "Creating a new comment...");
-
-		
-		uiModel.addAttribute("comment", new Comment());
-		
-		return "comments/form";
-	}
 	
 	/**
 	 * Metodo per la richiesta POST di salvataggio nuovo commento 
