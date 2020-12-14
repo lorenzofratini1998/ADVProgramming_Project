@@ -19,4 +19,8 @@
         <put-attribute name="body" value="/WEB-INF/views/tags/newTag.jsp"/>
         <put-attribute name="pageTitle" value="Inserisci Tag"/>
     </definition>
+    <definition extends="default" name="posts.new">
+        <put-attribute name="body" value="/WEB-INF/views/posts/newPost.jsp"/>
+        <put-attribute name="pageTitle" value="Nuovo Post"/>
+    </definition>
 </tiles-definitions>

@@ -91,6 +91,7 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
     }
 
     @Override
+    @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }

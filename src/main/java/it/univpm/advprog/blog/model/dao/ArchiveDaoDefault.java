@@ -25,7 +25,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	/**
 	 * Funzione per trovare un archivio specificando il nome
 	 * 
-	 * @param nome dell'archivio da trovare
+	 * @param name dell'archivio da trovare
 	 * @return archivio eventualmente trovato
 	 */
 	public Archive getByName(String name) {

@@ -10,7 +10,6 @@ import it.univpm.advprog.blog.model.dao.ArchiveDao;
 import it.univpm.advprog.blog.model.entities.Archive;
 import it.univpm.advprog.blog.model.entities.Post;
 
-@Transactional
 @Service("archiveService")
 public class ArchiveServiceDefault implements ArchiveService {
 	
@@ -79,7 +78,7 @@ public class ArchiveServiceDefault implements ArchiveService {
      *
      * @param name nome dell'archivio
      */
-	
+
 	@Transactional
 	@Override
 	public void delete(String name) {

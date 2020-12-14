@@ -31,4 +31,5 @@ public interface PostService {
 
     void delete(String title);
 
+    Archive createCurrentArchive();
 }

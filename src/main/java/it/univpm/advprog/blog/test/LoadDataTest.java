@@ -39,7 +39,7 @@ public class LoadDataTest {
             LinkDao linkDao = ctx.getBean("linkDao", LinkDao.class);
             AttachmentDao attachmentDao = ctx.getBean("attachmentDao", AttachmentDao.class);
 
-            userDao.setPasswordEncoder(new BCryptPasswordEncoder());
+//            userDao.setPasswordEncoder(new BCryptPasswordEncoder()); // non mi serve, uso @Autowired
 
             try (Session session = sf.openSession()) {
 
@@ -57,11 +57,11 @@ public class LoadDataTest {
                 // CREAZIONE UTENTI
                 session.beginTransaction();
 
-                User user1 = userDao.create("mario98", userDao.encryptPassword("12345678"), "Mario", "Rossi");
-                User user2 = userDao.create("luca78", userDao.encryptPassword("12345678"), "Luca", "Rossini");
-                User user3 = userDao.create("matteoVerdi", userDao.encryptPassword("12345678"), "Matteo", "Verdi");
-                User user4 = userDao.create("giov_bian", userDao.encryptPassword("12345678"), "Giovanni", "Bianchi");
-                User user5 = userDao.create("anto88", userDao.encryptPassword("12345678"), "Antonio", "Bianchini");
+                User user1 = userDao.create("mario98", "12345678", "Mario", "Rossi");
+                User user2 = userDao.create("luca78", "12345678", "Luca", "Rossini");
+                User user3 = userDao.create("matteoVerdi", "12345678", "Matteo", "Verdi");
+                User user4 = userDao.create("giov_bian", "12345678", "Giovanni", "Bianchi");
+                User user5 = userDao.create("anto88", "12345678", "Antonio", "Bianchini");
 
                 user1.setAdmin(true);
 

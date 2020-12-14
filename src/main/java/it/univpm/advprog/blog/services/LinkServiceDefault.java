@@ -10,7 +10,6 @@ import it.univpm.advprog.blog.model.dao.LinkDao;
 import it.univpm.advprog.blog.model.entities.Link;
 import it.univpm.advprog.blog.model.entities.Post;
 
-@Transactional
 @Service("linkService")
 public class LinkServiceDefault implements LinkService {
 

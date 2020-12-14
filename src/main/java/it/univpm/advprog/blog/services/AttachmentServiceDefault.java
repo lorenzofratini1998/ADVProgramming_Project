@@ -1,6 +1,5 @@
 package it.univpm.advprog.blog.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.univpm.advprog.blog.model.dao.AttachmentDao;
 import it.univpm.advprog.blog.model.entities.Attachment;
-import it.univpm.advprog.blog.model.entities.Post;
 
-@Transactional
+
 @Service("attachmentService")
 public class AttachmentServiceDefault implements AttachmentService {
 
@@ -37,19 +35,6 @@ public class AttachmentServiceDefault implements AttachmentService {
 	public Attachment getById(long id) {
 		return this.attachmentRepository.getById(id);
 	}
-
-	/**
-	 * Metodo per creare un nuovo allegato
-	 * @param id: id dell'allegato da creare
-	 * @param description: descrizione dell'allegato
-	 * @param hide: visibilità dell'allegato
-	 * @return allegato creato
-	 */
-	/*@Transactional(readOnly = true)
-	@Override
-	public Attachment create(long id, String description, boolean hide, Set<Post> posts) {
-		return this.attachmentRepository.create(id, description, hide, posts);
-	}*/
 
 	/**
 	 * Metodo per aggiornare un allegato

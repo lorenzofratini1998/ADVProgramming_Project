@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import it.univpm.advprog.blog.model.dao.UserDao;
 import it.univpm.advprog.blog.model.entities.User;
 
-@Transactional
 @Service("userService")
 public class UserServiceDefault implements UserService, UserDetailsService {
 

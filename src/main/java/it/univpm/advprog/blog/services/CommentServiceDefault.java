@@ -13,7 +13,6 @@ import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.User;
 
-@Transactional
 @Service("commentService")
 public class CommentServiceDefault implements CommentService {
 

@@ -12,7 +12,6 @@ import java.util.List;
 import it.univpm.advprog.blog.model.entities.Archive;
 import it.univpm.advprog.blog.model.entities.Tag;
 
-@Transactional
 @Service("tagService")
 public class TagServiceDefault implements TagService {
 	

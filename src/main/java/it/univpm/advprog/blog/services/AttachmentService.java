@@ -12,11 +12,8 @@ public interface AttachmentService {
 	
 	Attachment getById(long id);
 
-//	Attachment create(long id, String description, boolean hide, Set<Post> posts);
-	
 	Attachment update(Attachment attachment);
 	
 	void delete(Attachment attachment);
-	
 
 }

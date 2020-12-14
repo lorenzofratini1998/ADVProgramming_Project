@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Transactional
 @Service("postService")
 public class PostServiceDefault implements PostService {
 
@@ -103,6 +102,7 @@ public class PostServiceDefault implements PostService {
      * @param tag              singolo tag del post
      * @return nuovo post creato
      */
+    @Transactional
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Tag tag) {
         Set<Tag> tags = new HashSet<>();
@@ -146,14 +146,7 @@ public class PostServiceDefault implements PostService {
     @Override
     public Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
                        Set<Tag> tags, Set<Attachment> attachments, Set<Comment> comments) {
-        Calendar calendar = Calendar.getInstance();
-        String archiveName = new SimpleDateFormat("MMMMM yyyy").format(calendar.getTime());
-        // try to get the archive by generated name
-        Archive archive = this.archiveRepository.getByName(archiveName);
-        if (archive == null) {
-            // archive does not exist, create it
-            archive = this.archiveRepository.create(archiveName);
-        }
+        Archive archive = createCurrentArchive();
 
         return this.postRepository.create(title, author, hide, shortDescription, longDescription, tags, archive,
                 attachments, comments);
@@ -204,6 +197,22 @@ public class PostServiceDefault implements PostService {
     public void delete(String title) {
         Post post = this.getByTitle(title);
         this.postRepository.delete(post);
+    }
+
+    @Transactional
+    @Override
+    public Archive createCurrentArchive() {
+        Calendar calendar = Calendar.getInstance();
+        String archiveName = new SimpleDateFormat("MMMMM yyyy").format(calendar.getTime());
+        // try to get the archive by generated name
+        Archive archive = this.archiveRepository.getByName(archiveName);
+        if (archive == null) {
+            // archive does not exist, create it
+            archive = this.archiveRepository.create(archiveName);
+        }
+        archive = archiveRepository.getByName(archive.getName());
+        archiveRepository.update(archive);
+        return archive;
     }
 
     /**
