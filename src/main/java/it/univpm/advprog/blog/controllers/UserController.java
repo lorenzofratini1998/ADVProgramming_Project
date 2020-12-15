@@ -3,6 +3,8 @@ package it.univpm.advprog.blog.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.univpm.advprog.blog.model.entities.*;
+import it.univpm.advprog.blog.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import it.univpm.advprog.blog.model.entities.Comment;
-import it.univpm.advprog.blog.model.entities.Post;
-import it.univpm.advprog.blog.model.entities.User;
-import it.univpm.advprog.blog.services.CommentService;
-import it.univpm.advprog.blog.services.PostService;
-import it.univpm.advprog.blog.services.UserService;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
@@ -31,7 +22,18 @@ public class UserController {
 	private PostService postService;
 	private CommentService commentService;
 	private UserService userService;
-	
+	private TagService tagService;
+
+	/**
+	 * Setter per la proprietà riferita al Service dell'entità Tag.
+	 *
+	 * @param tagService Service dell'entità Tag da settare
+	 */
+	@Autowired
+	public void setTagService(TagService tagService) {
+		this.tagService = tagService;
+	}
+
 	/**
 	 * Setter per la proprietà postService, relativa alla classe di servizio dei Post
 	 * 
@@ -98,17 +100,19 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di creazione nuovo post
 	 * 
-	 * @param username	nome dell'utente che crea il post
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/posts/new")
-	public String newPost(@PathVariable("username") String username, Model uiModel) {
-		logger.info(username + ":Creating a new post");
+	public String newPost(Model uiModel) {
+		logger.info("Creating a new post");
+
+		List<Tag> tags = tagService.getAll();
 
 		uiModel.addAttribute("post", new Post());
-		
-		return "posts/form";
+		uiModel.addAttribute("tags", tags);
+
+		return "posts.new";
 	}
 	
 	
@@ -116,29 +120,36 @@ public class UserController {
 	 * Metodo per la richiesta POST di salvataggio di un nuovo post
 	 * 
 	 * @param post		post da salvare ottenutod alla form
-	 * @param username	username dell'utente che sta richiedendo l'operazione
+	 * @param tags      array contenente i nomi dei tag selezionati
+	 * @param authentication informazioni per l'autenticazione corrente
 	 * @param br		eventuali errori di validazione
-	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@PostMapping(value="/posts/new/save")
-	public String saveNewPost(@ModelAttribute("post") Post post, @PathVariable("username") String username,
-			BindingResult br, Model uiModel) {
-		logger.info(username + ":Saving a new post");
+	public String saveNewPost(@RequestParam("tags") String[] tags, Authentication authentication, @ModelAttribute("post") Post post, BindingResult br) {
+		logger.info("Saving a new post");
 
-		
 		try {
-			
+
+			Archive archive = postService.createCurrentArchive();
+			post.setArchive(archive);
+
+			User author = userService.findUserByUsername(authentication.getName());
+			post.setAuthor(author);
+
+			for (String tagName : tags) {
+				post.addTag(tagService.getByName(tagName));
+			}
+
 			this.postService.update(post);
-			
-			String strMessage = "Post (" + post.getTitle() + ") salvato correttamente";
-			//uiModel.addAttribute("message", strMessage);
-			
-			return "redirect:/" + username + "/posts?message=" + strMessage;}
-		
-		catch (RuntimeException e) {
-			
-			return "redirect:/" + username + "/posts?message=" + e.getMessage();
+
+			String strMessage = "Post \"" + post.getTitle() + "\" salvato correttamente";
+			return "redirect:/?message=" + strMessage;
+
+		} catch (RuntimeException e) {
+
+			String strMessage = "ERRORE: " + e.getMessage();
+			return "redirect:/?message=" + strMessage;
 		}
 		
 	}

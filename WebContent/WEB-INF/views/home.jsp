@@ -2,7 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false"%>
+
+<sec:authorize access="isAuthenticated()" var="isAuth"/>
+
+<div class="row">
+	<c:if test="${fn:length(message) > 0}">
+		<p class="mx-auto">${message}</p>
+	</c:if>
+</div>
 
  <div class="container">
 
@@ -81,7 +90,9 @@
 
       <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
-
+		<c:if test="${isAuth}">
+		  <a href="<c:url value="/posts/new"/>">Scrivi un nuovo post</a>
+		</c:if>
         <!-- Achieves Widget -->
         
         <div class="card my-4">
@@ -99,6 +110,7 @@
             </c:forEach>
             </div>
            </div>
+		</div>
         
         <!-- Tags Widget -->
         <div class="card my-4">
@@ -123,5 +135,4 @@
     </div>
     <!-- /.row -->
 
-  </div>
 </div>

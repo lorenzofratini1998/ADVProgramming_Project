@@ -17,10 +17,15 @@
         <form:label path="longDescription">Descrizione estesa</form:label>
         <form:input path="longDescription"/>
 
-        <form:label path="tags">Tag</form:label>
-        <form:checkboxes path="tags" items="${tags}"/>
+        <label>Seleziona il/i Tag
+            <select name="tags" multiple size="5">
+                <c:forEach items="${tags}" var="tag">
+                    <option value="${tag.name}">${tag.name}</option>
+                </c:forEach>
+            </select>
+        </label>
 
-        <form:hidden path="id" />
+        <form:hidden path="id"/>
         <form:hidden path="author" value="${author}"/>
         <form:hidden path="archive" value="${archive}"/>
 

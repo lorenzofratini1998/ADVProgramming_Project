@@ -64,6 +64,7 @@ public class TagServiceDefault implements TagService {
 	 * 
 	 * @param tag tag da cancellare
 	 */
+	@Transactional
 	@Override
 	public void delete(Tag tag) {
 		this.tagRepository.delete(tag);
@@ -75,6 +76,8 @@ public class TagServiceDefault implements TagService {
 	 * 
 	 * @param name nome del tag da cancellare
 	 */
+	@Transactional
+	@Override
 	public void delete(String name) {
 		Tag tag= this.getByName(name);
         this.tagRepository.delete(tag);

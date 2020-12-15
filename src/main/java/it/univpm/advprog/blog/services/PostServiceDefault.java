@@ -210,8 +210,6 @@ public class PostServiceDefault implements PostService {
             // archive does not exist, create it
             archive = this.archiveRepository.create(archiveName);
         }
-        archive = archiveRepository.getByName(archive.getName());
-        archiveRepository.update(archive);
         return archive;
     }
 
