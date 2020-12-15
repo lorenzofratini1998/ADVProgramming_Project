@@ -41,7 +41,7 @@ import java.util.Set;
 	 * @return
 	 */
 	
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy="tags")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy="tags")
 	public Set<Post> getPosts(){
 		return posts;
 	}

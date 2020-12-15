@@ -27,23 +27,27 @@
             <table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>
-                    <th scope="col">Elimina</th>
+                    <c:if test="${isAdmin}">
+                        <th scope="col">Elimina</th>
+                    </c:if>
                     <th scope="col">Tag</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${tags}" var="tag">
                     <tr>
-                        <td>
-                            <div class="row">
-                                <div class="col-lg">
-                                    <a class="btn btn-danger"
-                                       href="<c:url value="/tags/delete/${tag.name}"/>"
-                                       title="Elimina &quot;${tag.name}&quot;"><i
-                                            class="fa fa-trash"></i></a>
+                        <c:if test="${isAdmin}">
+                            <td>
+                                <div class="row">
+                                    <div class="col-lg">
+                                        <a class="btn btn-danger"
+                                           href="<c:url value="/tags/delete/${tag.name}"/>"
+                                           title="Elimina &quot;${tag.name}&quot;"><i
+                                                class="fa fa-trash"></i></a>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+                        </c:if>
                         <td>${tag.name}</td>
                     </tr>
                 </c:forEach>

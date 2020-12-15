@@ -38,7 +38,7 @@ import java.util.Set;
 	 * 
 	 */
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="archive")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="archive")
 	public Set<Post> getPosts(){
 		return posts;
 	}

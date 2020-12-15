@@ -172,7 +172,7 @@ public class Post implements Serializable {
      *
      * @return tags del post
      */
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "tag_name", nullable = false)
@@ -205,7 +205,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "post")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "post")
     public Set<Attachment> getAttachments() {
         return attachments;
     }
@@ -234,7 +234,7 @@ public class Post implements Serializable {
      *
      * @return commenti del post
      */
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "post")
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "post")
     public Set<Comment> getComments() {
         return comments;
     }
