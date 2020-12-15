@@ -161,7 +161,7 @@ public class GuestController {
 	
 	     uiModel.addAttribute("message", message);
 	
-	     return "archives/list";
+	     return "archives.list";
     }
     
     /**
@@ -248,7 +248,7 @@ public class GuestController {
      * Metodo per la visualizzazione della pagina statica about_us
      * 
      */
-    @GetMapping(value="/about_us")
+    @GetMapping(value="/about")
     public String showAboutUs() {
     	
     	return "about_us";
