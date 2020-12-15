@@ -239,7 +239,7 @@ public class UserController {
 		uiModel.addAttribute("comments", allComments);
 	
 		
-		return "comments/list";
+		return "comments.list";
 	}
 
 	
