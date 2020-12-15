@@ -301,6 +301,25 @@ public class GuestController {
     		
     	return "sign_up";
     	}
+    
+    /**
+     * Metodo per la richiesta POST di salvataggio nuovo utente
+     * 
+     * @param newUser utente registrato
+     * @return redirect alla vista con la lista di tutti i posts
+     */
+    @PostMapping(value="/sign_up/save")
+    public String newUserSave(@ModelAttribute("newUser") User newUser) {
+    	logger.info("Saving a new user");
+    	
+    	if(newUser.getImageProfile() == null) {
+    	this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName());   	
+    	}
+    	
+    	else this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName(), newUser.getImageProfile());
+    	
+    	return "redirect:/login";
+    }
 
 
 }
