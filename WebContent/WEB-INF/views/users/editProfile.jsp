@@ -14,14 +14,14 @@
         <input type="hidden" name="password" value="${user.password}">
 
         <label>Nome</label>
-        <input type="text" name="firstName" class="form-control mt-2" autofocus/><br>
+        <input type="text" name="firstName" class="form-control mt-2" value="${user.firstName}" autofocus/><br>
 
         <label>Cognome</label>
-        <input type="text" name="lastName"  class="form-control mt-2"/><br>
+        <input type="text" name="lastName"  class="form-control mt-2" value="${user.lastName}"/><br>
 
         <label>Immagine Profilo</label>
-        <input type="file" name="imageProfile" placeholder="${user.imageProfile}" class="form-control mt-2"/><br>
+        <input type="file" name="imageProfile" value="${user.imageProfile}" class="form-control mt-2"/><br>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit"/>Applica Modifiche!</button><br><br>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!"/><br><br>
     </form:form>
 </div>
