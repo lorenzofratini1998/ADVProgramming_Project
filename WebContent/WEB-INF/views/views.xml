@@ -19,4 +19,24 @@
         <put-attribute name="body" value="/WEB-INF/views/tags/newTag.jsp"/>
         <put-attribute name="pageTitle" value="Inserisci Tag"/>
     </definition>
+        <definition extends="default" name="archives.list">
+        <put-attribute name="body" value="/WEB-INF/views/archives/list.jsp"/>
+        <put-attribute name="pageTitle" value="Lista Archivi"/>
+    </definition>  
+        <definition extends="default" name="about_us">
+        <put-attribute name="body" value="/WEB-INF/views/about/list.jsp"/>
+        <put-attribute name="pageTitle" value="Chi Siamo"/>
+    </definition> 
+     <definition extends="default" name="users.profile">
+        <put-attribute name="body" value="/WEB-INF/views/users/profile.jsp"/>
+        <put-attribute name="pageTitle" value="Inserisci Tag"/>
+    </definition>
+    <definition extends="default" name="users.editProfile">
+        <put-attribute name="body" value="/WEB-INF/views/users/editProfile.jsp"/>
+        <put-attribute name="pageTitle" value="Nuovo Post"/>
+    </definition>
+    <definition extends="default" name="sign_up">
+        <put-attribute name="body" value="/WEB-INF/views/sign_up.jsp"/>
+        <put-attribute name="pageTitle" value="Registrati"/>
+    </definition>
 </tiles-definitions>

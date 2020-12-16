@@ -362,13 +362,20 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/profile")
-	public String showUserProfile (@PathVariable("username") String username, Model uiModel) {
-		logger.info(username + ": Showing Profile...");
-
-		User u = this.userService.findUserByUsername(username);
-		uiModel.addAttribute("user", u);
+	public String showUserProfile (Authentication auth, Model uiModel) {
+		logger.info("Showing Profile...");
 		
-		return "profile";
+		if (auth != null) {
+			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
+			uiModel.addAttribute("user", userLoggedIn);
+		}
+		
+		else {
+			String message = "Nessun utente autenticato";
+			uiModel.addAttribute("message", message);
+		}
+		
+		return "users.profile";
 	}
 	
 	/**
@@ -379,13 +386,21 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/profile/edit")
-	public String editProfile (@PathVariable("username") String username, Model uiModel) {
+	public String editProfile (Authentication auth, Model uiModel) {
 		
-		User u = this.userService.findUserByUsername(username);
 		
-		uiModel.addAttribute("username", u);
+		if (auth != null) {
+			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
+			uiModel.addAttribute("user", userLoggedIn);
+		}
 		
-		return "/profile/form";
+		else {
+			String message = "Nessun utente autenticato";
+			uiModel.addAttribute("message", message);
+		}
+		
+		
+		return "users.editProfile";
 	}
 	
 	
@@ -400,17 +415,17 @@ public class UserController {
 	@PostMapping(value = "/profile/edit/save")
 	public String saveProfile(@ModelAttribute("userProfile") User profile, BindingResult br, Model uiModel) {
 		logger.info("Saving the edited profile...");
-		String username = profile.getUsername();
+				
 		
 		try {
 			this.userService.update(profile);
 			String strMessage = "Il tuo profilo utente è stato salvato correttamente!";
-			
-			return "redirect:" + username + "/profile?message=" + strMessage;
+			uiModel.addAttribute("message", strMessage);
+			return "redirect:/profile?message=" + strMessage;
 		}
 		catch (RuntimeException e) {
 			
-			return "redirect:" + username + "/profile?message=" + e.getMessage();
+			return "redirect:/profile?message=" + profile.getFirstName();
 			
 		}
 		

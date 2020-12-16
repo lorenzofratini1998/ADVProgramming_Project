@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
