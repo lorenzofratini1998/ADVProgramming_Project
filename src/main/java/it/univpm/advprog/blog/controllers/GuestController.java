@@ -69,7 +69,7 @@ public class GuestController {
     /**
      * Setter per la proprietà riferita al Service dell'entità User
      * 
-     * @param userSrvice Service dell'entità User da settare
+     * @param userService Service dell'entità User da settare
      */
     
     @Autowired
@@ -95,29 +95,15 @@ public class GuestController {
 	     List<Tag>allTags=this.tagService.getAll();
 	     List<Archive> allArchives=this.archiveService.getAll();
 	     int numPosts=allPosts.size();
-	     
-	     PagedListHolder<Post> pagedListHolder = new PagedListHolder<>(allPosts);
-	     pagedListHolder.setPageSize(4);
-	     uiModel.addAttribute("maxPages",pagedListHolder.getPageCount());
-	     
-	     if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
-	     
-	     uiModel.addAttribute("page",page);
-	     if(page == null || page < 1 || page > pagedListHolder.getPageCount()){
-	            pagedListHolder.setPage(0);
-	            uiModel.addAttribute("posts", pagedListHolder.getPageList());
-	        }
-	       else if(page <= pagedListHolder.getPageCount()) {
-	            pagedListHolder.setPage(page-1);
-	            uiModel.addAttribute("posts", pagedListHolder.getPageList());
-	        }
-	     
-	     
-	     
-	     uiModel.addAttribute("archives", allArchives);
+
+        postsPagination(page, uiModel, allPosts);
+
+
+        uiModel.addAttribute("archives", allArchives);
 	     uiModel.addAttribute("tags",allTags);
 	     //uiModel.addAttribute("posts", allPosts);
-	     uiModel.addAttribute("numPosts",numPosts);
+         uiModel.addAttribute("numPosts",numPosts);
+	     uiModel.addAttribute("postsTitle","Tutti i post del blog");
 	     uiModel.addAttribute("message", message);
 	
 	     return "home";
@@ -170,19 +156,26 @@ public class GuestController {
      * @param archiveName nome dell'archivio selezionato
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value="/post/archive/{archive_name}")
-    public String showPostByArchive(@PathVariable("archive_name") String archiveName, Model uiModel) {
+    @GetMapping(value="/blog/archive/{archive_name}")
+    public String showPostByArchive(@RequestParam(required = false) Integer page, @PathVariable("archive_name")
+            String archiveName, Model uiModel) {
     	logger.info("Listing all the posts searched by archive...");
     	Archive selectedArchive = archiveService.getByName(archiveName);
     	
     	List<Post> allPostsByArchive = new ArrayList<>(selectedArchive.getPosts());
-    	
+
+        postsPagination(page, uiModel, allPostsByArchive);
+
+        uiModel.addAttribute("archives", this.archiveService.getAll());
+        uiModel.addAttribute("tags",this.tagService.getAll());
     	uiModel.addAttribute("postByArchive",allPostsByArchive);
+        uiModel.addAttribute("postsTitle","Tutti i post dell'archivio \"" + archiveName + "\"");
+        uiModel.addAttribute("numPosts",allPostsByArchive.size());
     	
     	return "home";
     
     }
-    
+
     /**
      * Metodo per la visualizzazione di tutti i post appartenenti ad un particolare tag
      * 
@@ -190,13 +183,20 @@ public class GuestController {
      * @return nome della vista da visualizzare
      */
     @GetMapping(value="/blog/tag/{tag_name}")
-    public String showPostByTag(@PathVariable("tag_name") String tagName, Model uiModel) {
+    public String showPostByTag(@RequestParam(required = false) Integer page, @PathVariable("tag_name") String tagName,
+                                Model uiModel) {
     	logger.info("Listing all the posts searched by tag...");
     	Tag selectedTag = tagService.getByName(tagName);
     	
     	List<Post> allPostsByTag = new ArrayList<>(selectedTag.getPosts());
-    	
+
+        postsPagination(page, uiModel, allPostsByTag);
+
+        uiModel.addAttribute("archives", this.archiveService.getAll());
+        uiModel.addAttribute("tags", this.tagService.getAll());
     	uiModel.addAttribute("postByTag",allPostsByTag);
+        uiModel.addAttribute("postsTitle","Tutti i post con tag \"" + tagName + "\"");
+        uiModel.addAttribute("numPosts",allPostsByTag.size());
     	
     	return "home";
     
@@ -209,13 +209,20 @@ public class GuestController {
      * @return nome della vista da visualizzare
      */
     @GetMapping(value="/blog/author/{username}")
-    public String showPostByAuthor(@PathVariable("username") String userName, Model uiModel) {
+    public String showPostByAuthor(@RequestParam(required = false) Integer page, @PathVariable("username") String
+            userName, Model uiModel) {
     	logger.info("Listing all the posts searched by author...");
     	User selectedUser = userService.findUserByUsername(userName);
     	
     	List<Post> allPostsByAuthor = new ArrayList<>(selectedUser.getPosts());
-    	
+
+        postsPagination(page, uiModel, allPostsByAuthor);
+
+        uiModel.addAttribute("archives", this.archiveService.getAll());
+        uiModel.addAttribute("tags", this.tagService.getAll());
     	uiModel.addAttribute("postByAuthor", allPostsByAuthor);
+        uiModel.addAttribute("postsTitle","Tutti i post dell'autore \"" + userName + "\"");
+        uiModel.addAttribute("numPosts",allPostsByAuthor.size());
     	
     	return "post/author";
    
@@ -321,5 +328,29 @@ public class GuestController {
     	return "redirect:/login";
     }
 
+    /**
+     * Metodo utilizzato per sfruttare la paginazione nella home.
+     *
+     * @param page numero della pagina
+     * @param uiModel modello associato alla vista
+     * @param posts lista di post da paginare
+     */
+    private void postsPagination(@RequestParam(required = false) Integer page, Model uiModel, List<Post>
+            posts) {
+        PagedListHolder<Post> pagedListHolder = new PagedListHolder<>(posts);
+        pagedListHolder.setPageSize(4);
+        uiModel.addAttribute("maxPages",pagedListHolder.getPageCount());
 
+        if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
+
+        uiModel.addAttribute("page",page);
+        if(page == null || page < 1 || page > pagedListHolder.getPageCount()){
+            pagedListHolder.setPage(0);
+            uiModel.addAttribute("posts", pagedListHolder.getPageList());
+        }
+        else if(page <= pagedListHolder.getPageCount()) {
+            pagedListHolder.setPage(page-1);
+            uiModel.addAttribute("posts", pagedListHolder.getPageList());
+        }
+    }
 }

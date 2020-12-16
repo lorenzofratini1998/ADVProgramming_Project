@@ -20,7 +20,8 @@
       <!-- Blog Entries Column -->
       <div class="col-md-8">
 
-        <h1 class="my-4">Numero post: ${numPosts}</h1>
+		  <h2 class="my-4">${postsTitle}</h2>
+		  <h5 class="my-4">Numero post: ${numPosts}</h5>
 
 		<div>
 			<c:forEach items="${posts}" var="p">
@@ -103,14 +104,14 @@
             	<div class="col-lg-12">
             		<ul class="list-unstyled mb-0">
 	            		<li>
-	                    	<a href="#">${a.name}</a>
+	                    	<a href="<c:url value="/blog/archive/${a.name}"/>">${a.name}</a>
 	                  	</li>
 	                </ul>
                 </div>
             </c:forEach>
             </div>
 			  <div class="row">
-				  <a href="#" class="mt-2 mx-auto" style="font-size: small;">Vai alla lista degli archivi</a>
+				  <a href="<c:url value="/archives"/>" class="mt-2 mx-auto" style="font-size: small;">Vai alla lista degli archivi</a>
 			  </div>
            </div>
 		</div>
@@ -124,7 +125,7 @@
             	<div class="col-lg-12">
             		<ul class="list-unstyled mb-0">
 	            		<li>
-	                    	<a href="#">${t.name}</a>
+	                    	<a href="<c:url value="/blog/tag/${t.name}"/>">${t.name}</a>
 	                  	</li>
 	                </ul>
                 </div>
