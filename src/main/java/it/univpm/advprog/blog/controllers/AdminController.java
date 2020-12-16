@@ -5,11 +5,14 @@ import it.univpm.advprog.blog.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -275,6 +278,30 @@ public class AdminController {
 
         return "redirect:/users/?message=" + strMessage;
     }
+    
+    /**
+	 * Metodo per la richiesta GET di visualizzazione dei commenti di tutti gli autori
+	 *
+	 * @param uiModel	porzione di modello da passare alla vista
+	 * @return			nome della vista da renderizzare
+	 */
+	@GetMapping(value = "/comments/manage")
+	public String showComments(Authentication authentication, Model uiModel) {
+		logger.info("Showing all comments...");
+
+		List<Comment> allComments = new ArrayList<>();
+		List<User> allAuthor= this.userService.findAll();
+		
+		for(User author: allAuthor) {
+			if(!author.isAdmin()) {
+				allComments.addAll(author.getComments());
+			}
+		}
+		uiModel.addAttribute("comments", allComments);
+	
+		
+		return "comments.listforAdmin";
+	}
 
     /**
      * Metodo per la richiesta GET per nascondere un commento.
@@ -282,7 +309,7 @@ public class AdminController {
      * @param comment_id ID del commento da nascondere
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value = "/comments/hide/{comment_id}")
+    @GetMapping(value = "/comments/manage/hide/{comment_id}")
     public String hideComment(@PathVariable("comment_id") String comment_id) {
         Comment selectedComment = commentService.findCommentById(Long.parseLong(comment_id));
         logger.info("Hiding the comment \"" + selectedComment.getDescription() + "\"...");
@@ -291,16 +318,67 @@ public class AdminController {
         this.commentService.update(selectedComment); //TODO: serve?
         String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" è stato nascosto correttamente!";
 
-        return "redirect:/comments/?message=" + strMessage;
+        return "redirect:/comments/manage";
+    }
+    
+    /**
+     * Metodo per la richiesta GET per mostrare un commento.
+     *
+     * @param comment_id ID del commento da nascondere
+     * @return nome della vista da visualizzare
+     */
+    @GetMapping(value = "/comments/manage/show/{comment_id}")
+    public String showComment(@PathVariable("comment_id") String comment_id, Model uiModel) {
+        Comment selectedComment = commentService.findCommentById(Long.parseLong(comment_id));
+        logger.info("Hiding the comment \"" + selectedComment.getDescription() + "\"...");
+
+        selectedComment.setHide(false);
+        this.commentService.update(selectedComment); //TODO: serve?
+        String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" è stato mostrato correttamente!";
+        
+        uiModel.addAttribute("showMessage", strMessage);
+
+        return "redirect:/comments/manage";
     }
 
+    /**
+	 * Metodo per la richiesta GET di mosrare tutti i post scritti dall'utente
+	 *
+	 * @param uiModel	porzione di modello da passare alla vista
+	 * @return			nome della vista da renderizzare
+	 */
+	@GetMapping(value = "/posts/manage")
+	public String showMyPosts(Authentication authentication, Model uiModel) {
+		logger.info("Showing your posts...");
+
+		List<Post> allPosts = new ArrayList<>();
+		List<User> allAuthor= this.userService.findAll();
+		
+		for(User author: allAuthor) {
+			if(!author.isAdmin()) {
+				allPosts.addAll(author.getPosts());
+			}
+		}
+		
+		if(allPosts.isEmpty()) {
+			String strMessage = "Non ci sono post scritti dagli utenti!";
+			return "redirect:/?message=" + strMessage ;
+		}
+			
+		uiModel.addAttribute("posts", allPosts);
+		uiModel.addAttribute("numPosts", allPosts.size());
+
+		return "posts.listForAdmin";
+
+	}
+    
     /**
      * Metodo per la richiesta GET per nascondere un post.
      *
      * @param post_id ID del post da nascondere
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value = "/posts/hide/{post_id}")
+    @GetMapping(value = "/posts//manage/hide/{post_id}")
     public String hidePost(@PathVariable("post_id") String post_id) {
         Post selectedPost = postService.getById(Long.parseLong(post_id));
         logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");
@@ -309,6 +387,24 @@ public class AdminController {
         this.postService.update(selectedPost); //TODO: serve?
         String strMessage = "Il post \"" + selectedPost.getTitle() + "\" è stato nascosto correttamente!";
 
-        return "redirect:/posts/?message=" + strMessage;
+        return "redirect:/posts/manage?message=" + strMessage;
+    }
+    
+    /**
+     * Metodo per la richiesta GET per mostrare un post.
+     *
+     * @param post_id ID del post da mostrare
+     * @return nome della vista da visualizzare
+     */
+    @GetMapping(value = "/posts//manage/show/{post_id}")
+    public String showPost(@PathVariable("post_id") String post_id) {
+        Post selectedPost = postService.getById(Long.parseLong(post_id));
+        logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");
+
+        selectedPost.setHide(false);
+        this.postService.update(selectedPost); //TODO: serve?
+        String strMessage = "Il post \"" + selectedPost.getTitle() + "\" è stato mostrato correttamente!";
+
+        return "redirect:/posts/manage?message=" + strMessage;
     }
 }

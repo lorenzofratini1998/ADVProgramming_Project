@@ -1,0 +1,18 @@
+<?xml  version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache  Software
+   Foundation//DTD Tiles  Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition extends="default" name="posts.list">
+        <put-attribute name="body" value="/WEB-INF/views/posts/list.jsp"/>
+        <put-attribute name="pageTitle" value="Lista Post"/>
+    </definition>
+    <definition extends="default" name="posts.listForAdmin">
+        <put-attribute name="body" value="/WEB-INF/views/posts/listForAdmin.jsp"/>
+        <put-attribute name="pageTitle" value="Lista Post Autori"/>
+    </definition>
+    <definition extends="default" name="posts.new">
+        <put-attribute name="body" value="/WEB-INF/views/posts/newPost.jsp"/>
+        <put-attribute name="pageTitle" value="Nuovo Post"/>
+    </definition>
+</tiles-definitions>

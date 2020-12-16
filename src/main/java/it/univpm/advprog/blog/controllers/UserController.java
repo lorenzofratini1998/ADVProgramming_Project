@@ -83,16 +83,15 @@ public class UserController {
 			allPosts.addAll(currentLoggedInUser.getPosts());
 		}
 
-		if(allPosts.isEmpty()) {
+		/*if(allPosts.isEmpty()) {
 			String strMessage = "Non hai scritto alcun post!";
 			return "redirect:/?message=" + strMessage ;
-		}
+		}*/
+			
+		uiModel.addAttribute("posts", allPosts);
+		uiModel.addAttribute("numPosts", allPosts.size());
 
-		else {
-			uiModel.addAttribute("posts", allPosts);
-			uiModel.addAttribute("numPosts", allPosts.size());
-
-			return "posts.list";}
+		return "posts.list";
 
 	}
 	
@@ -217,13 +216,13 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/posts/delete/{postId}")
-	public String deletePost (@PathVariable("username") String username, @PathVariable("postId") long id, Model uiModel) {
-		logger.info(username + "Deleting a post...");
+	public String deletePost (@PathVariable("postId") long id, Model uiModel) {
+		logger.info("Deleting a post...");
 
 		Post p = this.postService.getById(id);
 		this.postService.delete(p);
 		String message = "Post" + p.getTitle() + "eliminato correttamente!";
-		return "redirect:" + username + "/comments/?message=" + message; 
+		return "redirect:" + "/posts/?message=" + message; 
 	}
 	
 	
@@ -345,13 +344,13 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/comments/delete/{commentId}")
-	public String deleteComment (@PathVariable("username") String username, @PathVariable("commentId") long id, Model uiModel) {
-		logger.info(username + "Deleting a comment...");
+	public String deleteComment (/*@PathVariable("username") String username,*/ @PathVariable("commentId") long id, Model uiModel) {
+		//logger.info(username + "Deleting a comment...");
 
 		Comment c = this.commentService.findCommentById(id);
 		this.commentService.delete(c);
-		String message = "Commento" + c.getTitle() + "eliminato correttamente!";
-		return "redirect:/" + username + "/comments/?message=" + message; 
+		String message = "Commento: " + c.getTitle() + "eliminato correttamente!";
+		return "redirect:/" + "comments?message=" + message;
 	}
 	
 	
