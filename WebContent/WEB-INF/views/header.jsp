@@ -15,7 +15,8 @@
 <c:url value="/comments" var="my_comments_url"/>
 <c:url value="/login" var="login_url"/>
 <c:url value="/logout" var="logout_url"/>
-
+<c:url value="/sign_up" var="sign_up_url"/>
+ 
 <c:if test="${isNoAuth}">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -27,13 +28,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="">
                         <a class="nav-link" href="${home_url}">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about_us_url">Su di noi</a>
+                        <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -41,6 +42,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${login_url}">Login</a>
                     </li>
+                    <li class="nav-item">
+                    	<a class="nav-link" href="${sign_up_url}">Registrati</a>
                 </ul>
             </div>
         </div>
@@ -65,7 +68,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about_us_url">Su di noi</a>
+                        <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -106,7 +109,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about_us_url">Su di noi</a>
+                        <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
