@@ -34,7 +34,9 @@
 						<td>
 							<div class="row">
 								<div class="col-lg">
-									<a class="btn btn-success">
+									<a class="btn btn-success"
+                                       href="<c:url value="/posts/edit/${post.id}"/>"
+                                       title="Modifica &quot;${post.title}&quot;">
 										<i class="fa fa-pencil-square-o"></i>
 									</a>
 								</div>

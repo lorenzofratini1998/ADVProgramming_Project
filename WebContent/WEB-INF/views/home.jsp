@@ -109,6 +109,9 @@
                 </div>
             </c:forEach>
             </div>
+			  <div class="row">
+				  <a href="#" class="mt-2 mx-auto" style="font-size: small;">Vai alla lista degli archivi</a>
+			  </div>
            </div>
 		</div>
         
@@ -127,6 +130,9 @@
                 </div>
             </c:forEach>
             </div>
+			  <div class="row">
+				  <a href="<c:url value="/tags"/>" class="mt-2 mx-auto" style="font-size: small;">Vai alla lista dei tag</a>
+			  </div>
           </div>
         </div>
 

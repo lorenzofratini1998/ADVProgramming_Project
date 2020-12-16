@@ -8,7 +8,11 @@
 <sec:authorize access="!isAuthenticated()" var="isNoAuth"/>
 
 <c:url value="/" var="home_url"/>
+<c:url value="/about" var="about_us_url"/>
 <c:url value="/tags" var="tags_url"/>
+<c:url value="/profile" var="profile_url"/>
+<c:url value="/posts" var="my_posts_url"/>
+<c:url value="/comments" var="my_comments_url"/>
 <c:url value="/login" var="login_url"/>
 <c:url value="/logout" var="logout_url"/>
 
@@ -29,10 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/advprogproject/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="#">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -64,19 +65,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="#">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profilo</a>
+                        <a class="nav-link" href="${my_posts_url}">Miei Post</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${tags_url}">Lista Tag</a>
+                        <a class="nav-link" href="${my_comments_url}">Miei Commenti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${profile_url}">User</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${logout_url}">Logout</a>
@@ -105,19 +106,25 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
+                        <a class="nav-link" href="#">Su di noi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profilo</a>
+                        <a class="nav-link" href="${my_posts_url}">Miei Post</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${tags_url}">Lista Tag</a>
+                        <a class="nav-link" href="${my_comments_url}">Miei Commenti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gestione Archivi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${tags_url}">Gestione Tag</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${profile_url}">Admin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${logout_url}">Logout</a>

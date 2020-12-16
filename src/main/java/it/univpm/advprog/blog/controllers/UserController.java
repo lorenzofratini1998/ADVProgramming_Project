@@ -23,6 +23,17 @@ public class UserController {
 	private CommentService commentService;
 	private UserService userService;
 	private TagService tagService;
+	private ArchiveService archiveService;
+
+	/**
+	 * Setter per la proprietà riferita al Service dell'entità Archive.
+	 *
+	 * @param archiveService Service dell'entità Archive da settare
+	 */
+	@Autowired
+	public void setArchiveService(ArchiveService archiveService) {
+		this.archiveService = archiveService;
+	}
 
 	/**
 	 * Setter per la proprietà riferita al Service dell'entità Tag.
@@ -109,7 +120,7 @@ public class UserController {
 		List<Tag> tags = tagService.getAll();
 
 		uiModel.addAttribute("post", new Post());
-		uiModel.addAttribute("tags", tags);
+		uiModel.addAttribute("allTags", tags);
 
 		return "posts.new";
 	}
@@ -117,24 +128,35 @@ public class UserController {
 	
 	/**
 	 * Metodo per la richiesta POST di salvataggio di un nuovo post
-	 * 
+	 *
+	 * @param currentArchive eventuale archivio corrente
 	 * @param post		post da salvare ottenutod alla form
 	 * @param tags      array contenente i nomi dei tag selezionati
 	 * @param authentication informazioni per l'autenticazione corrente
-	 * @param br		eventuali errori di validazione
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
-	@PostMapping(value="/posts/new/save")
-	public String saveNewPost(@RequestParam("tags") String[] tags, Authentication authentication, @ModelAttribute("post") Post post, BindingResult br) {
-		logger.info("Saving a new post");
-
+	@PostMapping(value="/posts/save")
+	public String saveNewPost(@RequestParam("archive.name") String currentArchive, @RequestParam(value = "tagsSelected", required = false) String[] tags,
+							  Authentication authentication, @ModelAttribute("post") Post post) {
+		logger.info("Saving the post");
 		try {
-
-			Archive archive = postService.createCurrentArchive();
+			Archive archive;
+			if (currentArchive.equals("")) {
+				// sto CREANDO il POST, quindi devo IMPOSTARE l'ARCHIVIO
+				archive = postService.createCurrentArchive();
+			} else {
+				// sto EDITANDO il POST, quindi lascio il VECCHIO ARCHIVIO
+				archive = archiveService.getByName(currentArchive);
+			}
 			post.setArchive(archive);
 
 			User author = userService.findUserByUsername(authentication.getName());
 			post.setAuthor(author);
+
+			if(tags == null || tags.length == 0) {
+				String strMessage = "ERRORE, il post deve contenere almeno un tag.";
+				return "redirect:/?message=" + strMessage;
+			}
 
 			for (String tagName : tags) {
 				post.addTag(tagService.getByName(tagName));
@@ -150,67 +172,43 @@ public class UserController {
 			String strMessage = "ERRORE: " + e.getMessage();
 			return "redirect:/?message=" + strMessage;
 		}
-		
+
 	}
 	
 	
 	/**
 	 * Metodo per la richiesta GET di modifica di un post
-	 * 
-	 * @param username	nome dell'utente che modifica il post
+	 *
+	 * @param authentication informazioni per 'autenticazione corrente
 	 * @param postId	id del post da modificare
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value="/posts/edit/{postId}")
-	public String editPost(@PathVariable("username") String username, @PathVariable("postId") long postId, Model uiModel) {
-		logger.info(username + ":Modifying a post");
-	
-		Post p = this.postService.getById(postId);
-		User u = this.userService.findUserByUsername(username);
-		
-		//TODO verificare se il controllo seguente può essere evolto con le funzioni di sicurezza
-		if (p.getAuthor() == u) {
-		uiModel.addAttribute("post", p);
-		
-		return "posts/form";}
-		
-		else {
-			String strMessage = "Non abilitato";
-			return "redirect:/" + username + "/posts/list?message=" + strMessage;
-	}}
-	
-	
-	/**
-	 * Metodo per la richiesta POST di salvataggio di un post modificato
-	 * 
-	 * @param post		post modificato da rendere persistente
-	 * @param username	username dell'utente che sta richiedendo l'operazione
-	 * @param br		eventuali errori di validazione
-	 * @param uiModel	porzione di modello da passare alla vista
-	 * @return			redirect all'indirizzo cui fare richiesta
-	 */
-	@PostMapping(value="/posts/edit/{postId}/save")
-	public String saveEditPost(@ModelAttribute("post") Post post, @PathVariable("username") String username,
-			BindingResult br, Model uiModel) {
-		
-			logger.info(username + ":Saving a modified post");
+	public String editPost(Authentication authentication, @PathVariable("postId") long postId, Model uiModel) {
+		logger.info("Modifying a post");
 
-		
-			this.postService.update(post);
-			
-			String strMessage = "Post (" + post.getTitle() + ") salvato correttamente";
-			
-			
-			return "redirect:/" + username + "/posts?message=" + strMessage;
-		
+		Post post = this.postService.getById(postId);
+		String authorUsername = authentication.getName();
+
+		if (post.getAuthor().getUsername().equals(authorUsername)) {
+			List<Tag> tags = tagService.getAll();
+
+			uiModel.addAttribute("post", post);
+			uiModel.addAttribute("allTags", tags);
+			return "posts.new";
+
+		} else {
+
+			String strMessage = "Non sei abilitato a modificare il post specificato.";
+			return "redirect:/?message=" + strMessage;
+
+		}
 	}
-	
 	
 	/**
 	 * Metodo per la richiesta GET di eliminazione post
 	 * 
-	 * @param username 	username dell'utente che ha richiesto l'operazione
 	 * @param id		id del commento da rimuovere
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta

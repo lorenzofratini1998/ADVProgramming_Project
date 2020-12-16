@@ -16,7 +16,7 @@
                 <tr>
                     <th scope="col">Commento</th>
                     <th scope="col">Post</th>
-                    <th scoper="col">Archivio</th>
+                    <th scope="col">Archivio</th>
                     <th scope="col">Modifica</th>
                     <th scope="col">Elimina</th>
                 </tr>
