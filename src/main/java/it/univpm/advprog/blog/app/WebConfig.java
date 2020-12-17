@@ -9,6 +9,7 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -26,6 +27,8 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import it.univpm.advprog.blog.test.DataServiceConfigTest;
+
+import javax.servlet.MultipartConfigElement;
 
 @Configuration
 @EnableWebMvc
@@ -51,11 +54,18 @@ public class WebConfig implements WebMvcConfigurer {
 		.setCachePeriod(31556926);
 	}
 	
-	@Bean 
-	StandardServletMultipartResolver multipartResolver() {
-		return new StandardServletMultipartResolver();
+//	@Bean
+//	StandardServletMultipartResolver multipartResolver() {
+//		return new StandardServletMultipartResolver();
+//	}
+
+	@Bean
+	public MultipartResolver multipartResolver() {
+		org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+		multipartResolver.setMaxUploadSize(1000000);
+		return multipartResolver;
 	}
-	
+
 	//Bean che carica la definizione delle viste sotto forma di tiles
 	@Bean
 	UrlBasedViewResolver tilesViewResolver() {
@@ -148,8 +158,12 @@ public class WebConfig implements WebMvcConfigurer {
 		public void addViewControllers(ViewControllerRegistry registry) {
 			registry.addRedirectViewController("/", "/blog");
 		}
-		}
 
 
-	
+	@Bean
+	public MultipartConfigElement multipartConfigElement() {
+		return new MultipartConfigElement("");
+	}
 
+
+}

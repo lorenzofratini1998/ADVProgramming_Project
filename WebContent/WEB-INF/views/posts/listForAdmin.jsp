@@ -36,7 +36,8 @@
 										<a class="btn btn-warning"
 											href="<c:url value="/posts/manage/hide/${post.id}"/>"
 											title="Nascondi &quot;${post.title}&quot;"> <i
-											class="fa fa-eye-slash"></i>
+											class="fa fa-eye-slash"
+                                            onclick='return confirm("Sei sicuro di voler nascondere il post?");'></i>
 										</a>
 									</c:if>
 								</div>

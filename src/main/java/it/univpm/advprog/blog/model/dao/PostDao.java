@@ -13,6 +13,8 @@ public interface PostDao {
 
     List<Post> getAll();
 
+    List<Post> getAllByHide(boolean hide);
+
     Post getById(long id);
 
     Post getByTitle(String title);

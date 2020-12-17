@@ -33,8 +33,9 @@
                                 <c:if test="${isAdmin}">
                                     <a class="btn btn-danger"
                                        href="<c:url value="/archives/delete/${archives.name}"/>"
-                                       title="Elimina &quot;${archives.name}&quot;"><i
-                                            class="fa fa-trash"></i></a>
+                                       title="Elimina &quot;${archives.name}&quot;"
+                                       onclick='return confirm("Sei sicuro di voler eliminare l\"archivio \"${archives.name}\"?");'>
+                                        <i class="fa fa-trash"></i></a>
                                 </c:if>
                                 </div>
                             </div>

@@ -23,6 +23,17 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     }
 
     /**
+     * Funzione per restituire la lista di tutti i post nascosti/non nascosti.
+     *
+     * @return lista contenente tutti i post nascosti/non nascosti
+     */
+    @Override
+    public List<Post> getAllByHide(boolean hide) {
+        return getSession().
+                getNamedQuery("Post.getPostsByHide").setParameter("hide", hide).getResultList();
+    }
+
+    /**
      * Funzione per cercare un particolare post specificandone l'ID.
      *
      * @param id ID del post da cercare

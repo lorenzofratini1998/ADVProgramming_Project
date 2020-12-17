@@ -1,10 +1,12 @@
 package it.univpm.advprog.blog.controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import it.univpm.advprog.blog.model.entities.*;
 import it.univpm.advprog.blog.services.*;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserController {
@@ -24,6 +30,8 @@ public class UserController {
 	private UserService userService;
 	private TagService tagService;
 	private ArchiveService archiveService;
+	@Autowired
+	private HttpServletRequest request;
 
 	/**
 	 * Setter per la proprietà riferita al Service dell'entità Archive.
@@ -336,7 +344,6 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di eliminazione commento
 	 * 
-	 * @param 			username username dell'utente che ha richiesto l'operazione
 	 * @param id		id del commento da rimuovere
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
@@ -355,7 +362,6 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dettagli profilo
 	 * 
-	 * @param username	username dell'utente che sta richiedendo l'operazione
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
@@ -379,7 +385,6 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di modifica profilo utente
 	 * 
-	 * @param username	username dell'utente che sta richiedendo l'operazione
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
@@ -410,34 +415,57 @@ public class UserController {
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
-	@PostMapping(value = "/profile/edit/save")
-	public String saveProfile(@ModelAttribute("userProfile") User profile, BindingResult br, Model uiModel) {
+	@PostMapping(value = "/profile/edit/save", consumes = "multipart/form-data")
+	public String saveProfile(@ModelAttribute("user") User profile, BindingResult br, Model uiModel,
+							  @RequestParam("image") MultipartFile file) {
 		logger.info("Saving the edited profile...");
-				
-		
-		try {
-			this.userService.update(profile);
-			String strMessage = "Il tuo profilo utente è stato salvato correttamente!";
-			uiModel.addAttribute("message", strMessage);
-			return "redirect:/profile?message=" + strMessage;
+		if (!file.isEmpty()) {
+			String nameOfFile = null;
+			try {
+				String uploadsDir = "/WEB-INF/files/profile_pictures/";
+				String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+				if (!new java.io.File(realPathtoUploads).exists()) {
+					logger.info("creating the directory...");
+					if (!new java.io.File(realPathtoUploads).mkdir()) {
+						String strMessage = "ERRORE, impossibile creare la cartella nel server!";
+						return "redirect:/profile?message=" + strMessage;
+					}
+				}
+
+				logger.info("realPathtoUploads = {}", realPathtoUploads);
+				// rename uploaded file with the username
+				String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+				nameOfFile = profile.getUsername() + "." + fileExtension;
+				String filePath = realPathtoUploads + nameOfFile;
+				java.io.File dest = new File(filePath);
+				// controllo che sia un file immagine
+				String mimetype = new MimetypesFileTypeMap().getContentType(dest);
+				String type = mimetype.split("/")[0];
+				if (!type.equals("image")) {
+					String strMessage = "ERRORE, il file specificato non è un'immagine!";
+					return "redirect:/profile?message=" + strMessage;
+				}
+				// sposto il file sulla cartella destinazione
+				file.transferTo(dest);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			profile.setImageProfile(nameOfFile);
 		}
-		catch (RuntimeException e) {
-			
-			return "redirect:/profile?message=" + profile.getFirstName();
-			
+			try {
+				this.userService.update(profile); //todo verificare se rimane la vecchia immagine profilo
+				String strMessage = "Il tuo profilo utente è stato salvato correttamente!";
+				uiModel.addAttribute("message", strMessage);
+				return "redirect:/profile?message=" + strMessage;
+			} catch (RuntimeException e) {
+
+				return "redirect:/profile?message=" + e.getMessage();
+
+			}
 		}
-		
 	}
-	
-	
-	
-	
-		
-		
-	
-	
-	
-}
+
 	
 	
 

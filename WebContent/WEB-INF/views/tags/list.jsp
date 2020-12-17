@@ -42,8 +42,9 @@
                                     <div class="col-lg">
                                         <a class="btn btn-danger"
                                            href="<c:url value="/tags/delete/${tag.name}"/>"
-                                           title="Elimina &quot;${tag.name}&quot;"><i
-                                                class="fa fa-trash"></i></a>
+                                           title="Elimina &quot;${tag.name}&quot;"
+                                           onclick='return confirm("Sei sicuro di voler eliminare il tag \"${tag.name}\"?");'>
+                                            <i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             </td>

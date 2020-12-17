@@ -25,8 +25,17 @@
         
         
          <label>Immagine Profilo</label>
-         <input type="text" name="imageProfile" class="form-control mt-2" placeholder="${user.imageProfile}" disabled="disabled"><br>
+         <input type="text" name="image" class="form-control mt-2" placeholder="${user.imageProfile}" disabled="disabled"><br>
 
         <a href="${url}"><div class="btn btn-lg btn-primary btn-block">Modifica</div></a><br><br>
-    
+
+    <c:if test="${not empty user.imageProfile}">
+        <div class="md-form mt-4 mb-4">
+            <h5 class="font-weight-normal"> Immagine del profilo attualmente caricata sul server: </h5>
+            <div class="text-center">
+                <img src="<c:url value="files/profile_pictures/${user.imageProfile}"/>" alt="Immagine profilo" class="img-thumbnail mx-auto w-50">
+            </div>
+        </div>
+    </c:if>
+
 </div>

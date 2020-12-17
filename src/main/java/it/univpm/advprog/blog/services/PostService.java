@@ -8,6 +8,8 @@ import java.util.Set;
 public interface PostService {
     List<Post> getAll();
 
+    List<Post> getAllByHide(boolean hide);
+
     Post getById(long id);
 
     Post getByTitle(String title);

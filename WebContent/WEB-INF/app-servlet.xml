@@ -15,5 +15,6 @@
     <annotation-driven/>
     <context:component-scan base-package="it.univpm.advprog"/>
     <mvc:resources location="/WEB-INF/immagini/" mapping="/immagini/**" />
+    <mvc:resources location="/WEB-INF/files/" mapping="/files/**" />
 
 </beans:beans>

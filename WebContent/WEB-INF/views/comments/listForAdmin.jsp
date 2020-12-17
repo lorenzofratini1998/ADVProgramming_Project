@@ -37,7 +37,8 @@
 									<c:if test="${!comment.isHide() }">
 										<a class="btn btn-warning"
 											href="<c:url value="/comments/manage/hide/${comment.id}"/>"
-											title="Nascondi &quot;${comment.description}&quot;"> <i
+											title="Nascondi &quot;${comment.description}&quot;"
+                                           onclick='return confirm("Sei sicuro di voler nascondere il commento?");'> <i
 											class="fa fa-eye-slash"></i>
 										</a>
 									</c:if>
@@ -50,8 +51,8 @@
 									<c:if test="${comment.isHide() }">
 										<a class="btn btn-success"
 											href="<c:url value="/comments/manage/show/${comment.id}"/>"
-											title="Mostra &quot;${comment.description}&quot;"> <i
-											class="fa fa-eye"></i>
+											title="Mostra &quot;${comment.description}&quot;">
+                                            <i class="fa fa-eye"></i>
 										</a>
 									</c:if>
 								</div>

@@ -5,7 +5,7 @@
 <c:url value="/profile/edit/save" var="action_url"/>
 <div class="col">
    
-    <form:form class="form-signin" action="${action_url}" method="POST" modelAttribute="userProfile" >
+    <form:form class="form-signin" action="${action_url}" method="POST" modelAttribute="user" enctype="multipart/form-data">
         <h1 class="h3 mb-3 font-weight-normal">Modifica i tuoi Dati</h1>
 
         <label>Nome Utente</label>
@@ -13,15 +13,17 @@
         
         <input type="hidden" name="password" value="${user.password}">
 
-        <label>Nome</label>
+        <label>Nome*</label>
         <input type="text" name="firstName" class="form-control mt-2" value="${user.firstName}" autofocus/><br>
 
-        <label>Cognome</label>
+        <label>Cognome*</label>
         <input type="text" name="lastName"  class="form-control mt-2" value="${user.lastName}"/><br>
 
         <label>Immagine Profilo</label>
-        <input type="file" name="imageProfile" value="${user.imageProfile}" class="form-control mt-2"/><br>
-
+        <input type="file" name="image" class="form-control mt-2"/><br>
+        <p>NOTA: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server.</p>
+        <p>* Campo obbligatorio.</p>
+        <form:hidden path="imageProfile"/>
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!"/><br><br>
     </form:form>
 </div>

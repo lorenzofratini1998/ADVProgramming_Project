@@ -47,7 +47,8 @@
                                 <div class="col-lg">
 									<a class="btn btn-danger"
 											href="<c:url value="/posts/delete/${post.id}"/>"
-                                           	title="Elimina &quot;${post.title}&quot;"> 
+                                           	title="Elimina &quot;${post.title}&quot;"
+                                       onclick='return confirm("Sei sicuro di voler eliminare il post \"${post.title}\"?");'>
 										<i class="fa fa-trash"></i>
 									</a>
 								</div>

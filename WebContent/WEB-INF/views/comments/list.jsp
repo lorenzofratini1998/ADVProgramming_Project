@@ -41,7 +41,8 @@
                                 <div class="col-lg">
 									<a class="btn btn-danger"
 											href="<c:url value="/comments/delete/${comment.id}"/>"
-                                           	title="Elimina &quot;${comment.description}&quot;"> 
+                                           	title="Elimina &quot;${comment.description}&quot;"
+                                       onclick='return confirm("Sei sicuro di voler eliminare il commento?");'>
 										<i class="fa fa-trash"></i>
 									</a>
 								</div>

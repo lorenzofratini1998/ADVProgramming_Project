@@ -12,7 +12,10 @@ import java.util.Set;
         @NamedQuery(
                 name = "Post.getPostByTitle",
                 query = "SELECT p FROM Post p WHERE p.title = :title"
-        )
+        ), @NamedQuery(
+        name = "Post.getPostsByHide",
+        query = "SELECT p FROM Post p WHERE p.hide = :hide"
+)
 })
 
 public class Post implements Serializable {
@@ -77,7 +80,7 @@ public class Post implements Serializable {
      *
      * @return se il post è nascosto o meno
      */
-    @Column(nullable=false)
+    @Column(nullable = false)
     public boolean isHide() {
         return hide;
     }

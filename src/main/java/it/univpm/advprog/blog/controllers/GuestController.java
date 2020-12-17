@@ -13,6 +13,7 @@ import it.univpm.advprog.blog.services.PostService;
 import it.univpm.advprog.blog.services.TagService;
 import it.univpm.advprog.blog.services.UserService;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,11 @@ import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +38,8 @@ public class GuestController {
     private ArchiveService archiveService;
     private PostService postService;
     private UserService userService;
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * Setter per la proprietà riferita al Service dell'entità Tag.
@@ -91,22 +98,19 @@ public class GuestController {
     						Model uiModel) {
     	 logger.info("Listing all the posts...");
     	
-	     List<Post> allPosts = this.postService.getAll();
+	     List<Post> allPosts = this.postService.getAllByHide(false);
 	     List<Tag>allTags=this.tagService.getAll();
 	     List<Archive> allArchives=this.archiveService.getAll();
-	     int numPosts=allPosts.size();
 
-        postsPagination(page, uiModel, allPosts);
+	     postsPagination(page, uiModel, allPosts);
 
-
-        uiModel.addAttribute("archives", allArchives);
+	     uiModel.addAttribute("archives", allArchives);
 	     uiModel.addAttribute("tags",allTags);
-	     //uiModel.addAttribute("posts", allPosts);
-         uiModel.addAttribute("numPosts",numPosts);
+	     uiModel.addAttribute("numPosts",allPosts.size());
 	     uiModel.addAttribute("postsTitle","Tutti i post del blog");
 	     uiModel.addAttribute("message", message);
 	
-	     return "home";
+        return "home";
     }
 
     /**
@@ -161,14 +165,19 @@ public class GuestController {
             String archiveName, Model uiModel) {
     	logger.info("Listing all the posts searched by archive...");
     	Archive selectedArchive = archiveService.getByName(archiveName);
-    	
-    	List<Post> allPostsByArchive = new ArrayList<>(selectedArchive.getPosts());
+
+        List<Post> allPostsByArchive = new ArrayList<>();
+
+        for (Post post:selectedArchive.getPosts()) {
+            if(!post.isHide()) {
+                allPostsByArchive.add(post);
+            }
+        }
 
         postsPagination(page, uiModel, allPostsByArchive);
 
         uiModel.addAttribute("archives", this.archiveService.getAll());
         uiModel.addAttribute("tags",this.tagService.getAll());
-    	uiModel.addAttribute("postByArchive",allPostsByArchive);
         uiModel.addAttribute("postsTitle","Tutti i post dell'archivio \"" + archiveName + "\"");
         uiModel.addAttribute("numPosts",allPostsByArchive.size());
     	
@@ -188,13 +197,18 @@ public class GuestController {
     	logger.info("Listing all the posts searched by tag...");
     	Tag selectedTag = tagService.getByName(tagName);
     	
-    	List<Post> allPostsByTag = new ArrayList<>(selectedTag.getPosts());
+    	List<Post> allPostsByTag = new ArrayList<>();
+
+        for (Post post:selectedTag.getPosts()) {
+            if(!post.isHide()) {
+                allPostsByTag.add(post);
+            }
+        }
 
         postsPagination(page, uiModel, allPostsByTag);
 
         uiModel.addAttribute("archives", this.archiveService.getAll());
         uiModel.addAttribute("tags", this.tagService.getAll());
-    	uiModel.addAttribute("postByTag",allPostsByTag);
         uiModel.addAttribute("postsTitle","Tutti i post con tag \"" + tagName + "\"");
         uiModel.addAttribute("numPosts",allPostsByTag.size());
     	
@@ -214,13 +228,18 @@ public class GuestController {
     	logger.info("Listing all the posts searched by author...");
     	User selectedUser = userService.findUserByUsername(userName);
     	
-    	List<Post> allPostsByAuthor = new ArrayList<>(selectedUser.getPosts());
+    	List<Post> allPostsByAuthor = new ArrayList<>();
+
+        for (Post post:selectedUser.getPosts()) {
+            if(!post.isHide()) {
+                allPostsByAuthor.add(post);
+            }
+        }
 
         postsPagination(page, uiModel, allPostsByAuthor);
 
         uiModel.addAttribute("archives", this.archiveService.getAll());
         uiModel.addAttribute("tags", this.tagService.getAll());
-    	uiModel.addAttribute("postByAuthor", allPostsByAuthor);
         uiModel.addAttribute("postsTitle","Tutti i post dell'autore \"" + userName + "\"");
         uiModel.addAttribute("numPosts",allPostsByAuthor.size());
     	
@@ -236,19 +255,17 @@ public class GuestController {
     public String showPostDetails(@PathVariable("post_id") String post_id, Model uiModel) {
     	logger.info("Show details of a specific post...");
     	Post selectedPost = postService.getById(Long.parseLong(post_id));
-    	
-    	List<Comment> allCommentsOfPost = new ArrayList<>(selectedPost.getComments());
-    	List<Tag> allTagOfPost = new ArrayList<>(selectedPost.getTags());
-    	List<Attachment> attachmentOfPost = new ArrayList<>(selectedPost.getAttachments());
-    	Archive archiveOfPost = selectedPost.getArchive();
-    	User authorOfPost = selectedPost.getAuthor();
-    	String shortDescriptionOfPost = selectedPost.getShortDescription();
-    	String longDescriptionOfPost = selectedPost.getLongDescription();
-    	
-    	uiModel.addAttribute(selectedPost);
-    	
-    	return "post/details";
- 
+
+    	if(selectedPost.isHide()) {
+
+            String strMessage = "Il post specificato non può essere visualizzato.";
+            return "redirect:/?message=" + strMessage;
+
+        } else {
+
+            uiModel.addAttribute(selectedPost);
+            return "post/details";
+        }
     }
     
     /**
@@ -301,10 +318,11 @@ public class GuestController {
      * @return nome della vista da visualizzare
      */
     @GetMapping(value="/sign_up")
-    	public String newUser(Model uiModel) {
+    	public String newUser(Model uiModel, @RequestParam(value="message", required = false) String message) {
     	logger.info("Creating a new user...");
     	
     	uiModel.addAttribute("user", new User());
+    	uiModel.addAttribute("message", message);
     		
     	return "sign_up";
     	}
@@ -315,16 +333,47 @@ public class GuestController {
      * @param newUser utente registrato
      * @return redirect alla vista con la lista di tutti i posts
      */
-    @PostMapping(value="/sign_up/save")
-    public String newUserSave(@ModelAttribute("newUser") User newUser) {
+    @PostMapping(value="/sign_up/save", consumes = "multipart/form-data")
+    public String newUserSave(@ModelAttribute("newUser") User newUser, @RequestParam("image") MultipartFile file) {
     	logger.info("Saving a new user");
-    	
-    	if(newUser.getImageProfile() == null) {
+
+        if (file.isEmpty()) {
     	this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName());   	
-    	}
-    	
-    	else this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName(), newUser.getImageProfile());
-    	
+    	} else {
+            String nameOfFile = null;
+            try {
+                String uploadsDir = "/WEB-INF/files/profile_pictures/";
+                String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
+                if (!new File(realPathtoUploads).exists()) {
+                    logger.info("creating the directory...");
+                    if(!new File(realPathtoUploads).mkdir()){
+                        String strMessage = "ERRORE, impossibile creare la cartella nel server!";
+                        return "redirect:/sign_up?message=" + strMessage;
+                    }
+                }
+
+                logger.info("realPathtoUploads = {}", realPathtoUploads);
+                // rename uploaded file with the username
+                String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+                nameOfFile = newUser.getUsername() + "." + fileExtension;
+                String filePath = realPathtoUploads + nameOfFile;
+                File dest = new File(filePath);
+                // controllo che sia un file immagine
+                String mimetype= new MimetypesFileTypeMap().getContentType(dest);
+                String type = mimetype.split("/")[0];
+                if(!type.equals("image")) {
+                    String strMessage = "ERRORE, il file specificato non è un'immagine!";
+                    return "redirect:/sign_up?message=" + strMessage;
+                }
+                // sposto il file sulla cartella destinazione
+                file.transferTo(dest);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName(), nameOfFile);
+        }
+
     	return "redirect:/login";
     }
 

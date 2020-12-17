@@ -31,6 +31,17 @@ public class PostServiceDefault implements PostService {
     }
 
     /**
+     * Funzione per restituire la lista di tutti i post nascosti/non nascosti.
+     *
+     * @return lista contenente tutti i post nascosti/non nascosti
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> getAllByHide(boolean hide) {
+        return this.postRepository.getAllByHide(hide);
+    }
+
+    /**
      * Funzione per cercare un particolare post specificandone l'ID.
      *
      * @param id id del post da cercare
