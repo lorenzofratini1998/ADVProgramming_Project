@@ -29,7 +29,7 @@
 				<div class="card-body">
 					<h2 class="card-title">${p.title}</h2>
 					<p class="card-text">${p.shortDescription}</p>
-					 <a href="#" class="btn btn-primary">Read More &rarr;</a>
+					 <a href="<c:url value="/blog/post/${p.id}"/>" class="btn btn-primary">Read More &rarr;</a>
 				</div>
 				<div class="card-footer text-muted">
 	    			Posted on ${p.getArchive().name} by <a href="#">${p.getAuthor().username}</a>

@@ -264,7 +264,7 @@ public class GuestController {
         } else {
 
             uiModel.addAttribute(selectedPost);
-            return "post/details";
+            return "post.details";
         }
     }
     

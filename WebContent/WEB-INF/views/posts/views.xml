@@ -15,4 +15,8 @@
         <put-attribute name="body" value="/WEB-INF/views/posts/newPost.jsp"/>
         <put-attribute name="pageTitle" value="Nuovo Post"/>
     </definition>
+    <definition extends="default" name="post.details">
+        <put-attribute name="body" value="/WEB-INF/views/posts/listForGuest.jsp"/>
+        <put-attribute name="pageTitle" value="Dettagli Post"/>
+    </definition>
 </tiles-definitions>
