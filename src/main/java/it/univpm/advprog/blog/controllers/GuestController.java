@@ -274,10 +274,10 @@ public class GuestController {
      * Metodo per la visualizzazione della pagina statica contact_us
      * 
      */
-    @GetMapping(value="/contact_us")
+    @GetMapping(value="/contacts")
     public String showContatcUs() {
     	
-    	return "contatc_us";
+    	return "contact_us";
     }
     
     /**

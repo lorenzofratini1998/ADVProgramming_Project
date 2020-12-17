@@ -16,6 +16,7 @@
 <c:url value="/login" var="login_url"/>
 <c:url value="/logout" var="logout_url"/>
 <c:url value="/sign_up" var="sign_up_url"/>
+<c:url value="/contacts" var="contacts_us_url"/>
  
 <c:if test="${isNoAuth}">
     <!-- Navigation -->
@@ -37,7 +38,7 @@
                         <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="${contacts_us_url}">Contatti</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${login_url}">Login</a>
