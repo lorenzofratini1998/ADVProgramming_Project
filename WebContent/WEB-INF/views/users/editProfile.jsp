@@ -23,7 +23,11 @@
         <input type="file" name="image" class="form-control mt-2"/><br>
         <p>NOTA: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server.</p>
         <p>* Campo obbligatorio.</p>
-        <form:hidden path="imageProfile"/>
+
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!"/><br><br>
+
+        <form:hidden path="imageProfile"/>
+        <form:hidden path="admin"/>
+        <form:hidden path="posts"/>
     </form:form>
 </div>

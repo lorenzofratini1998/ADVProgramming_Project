@@ -11,28 +11,20 @@
         <put-attribute name="body" value="/WEB-INF/views/login.jsp"/>
         <put-attribute name="pageTitle" value="Login"/>
     </definition>
-    <definition extends="default" name="tags.list">
-        <put-attribute name="body" value="/WEB-INF/views/tags/list.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Tag"/>
-    </definition>
-    <definition extends="default" name="tags.new">
-        <put-attribute name="body" value="/WEB-INF/views/tags/newTag.jsp"/>
-        <put-attribute name="pageTitle" value="Inserisci Tag"/>
-    </definition>
-        <definition extends="default" name="archives.list">
-        <put-attribute name="body" value="/WEB-INF/views/archives/list.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Archivi"/>
-    </definition>  
-        <definition extends="default" name="about_us">
-        <put-attribute name="body" value="/WEB-INF/views/about/list.jsp"/>
+    <definition extends="default" name="about_us">
+        <put-attribute name="body" value="/WEB-INF/views/about.jsp"/>
         <put-attribute name="pageTitle" value="Chi Siamo"/>
-    </definition> 
+    </definition>
     <definition extends="default" name="sign_up">
         <put-attribute name="body" value="/WEB-INF/views/sign_up.jsp"/>
         <put-attribute name="pageTitle" value="Registrati"/>
     </definition>
     <definition extends="default" name="contact_us">
-        <put-attribute name="body" value="/WEB-INF/views/contacts/list.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/contacts.jsp"/>
         <put-attribute name="pageTitle" value="Contatti"/>
-    </definition> 
+    </definition>
+    <definition extends="default" name="post.details">
+        <put-attribute name="body" value="/WEB-INF/views/posts/postDetails.jsp"/>
+        <put-attribute name="pageTitle" value="Dettagli Post"/>
+    </definition>
 </tiles-definitions>

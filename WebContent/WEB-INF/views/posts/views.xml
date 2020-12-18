@@ -12,11 +12,11 @@
         <put-attribute name="pageTitle" value="Lista Post Autori"/>
     </definition>
     <definition extends="default" name="posts.new">
-        <put-attribute name="body" value="/WEB-INF/views/posts/newPost.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/posts/form.jsp"/>
         <put-attribute name="pageTitle" value="Nuovo Post"/>
     </definition>
-    <definition extends="default" name="post.details">
-        <put-attribute name="body" value="/WEB-INF/views/posts/listForGuest.jsp"/>
-        <put-attribute name="pageTitle" value="Dettagli Post"/>
+    <definition extends="default" name="posts.edit">
+        <put-attribute name="body" value="/WEB-INF/views/posts/form.jsp"/>
+        <put-attribute name="pageTitle" value="Modifica Post"/>
     </definition>
 </tiles-definitions>

@@ -10,6 +10,7 @@
 <c:url value="/" var="home_url"/>
 <c:url value="/about" var="about_us_url"/>
 <c:url value="/tags" var="tags_url"/>
+<c:url value="/archives" var="archives_url"/>
 <c:url value="/profile" var="profile_url"/>
 <c:url value="/posts" var="my_posts_url"/>
 <c:url value="/comments" var="my_comments_url"/>
@@ -72,7 +73,7 @@
                         <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="${contacts_us_url}">Contatti</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${my_posts_url}">Miei Post</a>
@@ -113,7 +114,7 @@
                         <a class="nav-link" href="${about_us_url}">Su di noi</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="${contacts_us_url}">Contatti</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${my_posts_url}">Miei Post</a>
@@ -122,7 +123,7 @@
                         <a class="nav-link" href="${my_comments_url}">Miei Commenti</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Gestione Archivi</a>
+                        <a class="nav-link" href="${archives_url}">Gestione Archivi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${tags_url}">Gestione Tag</a>

@@ -5,20 +5,30 @@
 
 <c:url value="/comments/edit/${comment.id }/save" var="action_url"/>
 <div class="col">
-   
+
     <form:form action="${action_url}" method="POST" modelAttribute="comment">
         <h1 class="h3 mb-3 font-weight-normals">Modifica il tuo commento</h1>
-		
+
 		<div class="form-group">
-	        <label>Titolo Post</label>
-	        <input type="text" name="post" value="${comment.getPost().title}" readonly="readonly" class="form-control mt-2" />
+	        <label>Titolo Post
+	            <input type="text" name="postTitle" value="${comment.getPost().title}" readonly="readonly" class="form-control mt-2" />
+            </label>
         </div>
-       
+        <div class="form-group">
+            <label>Titolo Commento
+                <input name="title" class="form-control mt-2" value="${comment.title}">
+            </label>
+        </div>
        	<div class="form-group">
-	        <label>Commento</label>
-	        <textarea name="comment" class="form-control mt-2" autofocus>${comment.description}</textarea>
+	        <label>Descrizione Commento
+	            <textarea name="description" class="form-control mt-2" autofocus>${comment.description}</textarea>
+            </label>
         </div>
 
         <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!"/>
+        <form:hidden path="id"/>
+        <form:hidden path="hide"/>
+        <form:hidden path="post.id"/>
+        <form:hidden path="author.username"/>
     </form:form>
 </div>

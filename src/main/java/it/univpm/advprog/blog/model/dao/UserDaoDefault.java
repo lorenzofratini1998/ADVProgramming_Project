@@ -77,7 +77,7 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
     /**
      * Metodo per rimuovere un utente
      * 
-     * @param utente da rimuovere
+     * @param user da rimuovere
      * 
      */
     @Override

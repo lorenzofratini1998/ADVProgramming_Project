@@ -5,7 +5,7 @@
 <c:url value="/profile/edit" var="url" />
 
 <c:if test="${not empty message}">
-    <div style="font-weight: bold; margin: 30px 0;"><h2>${message}</h2></div>
+    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
 </c:if>
 
 <div class = "col">

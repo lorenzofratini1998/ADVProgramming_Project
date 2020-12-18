@@ -92,7 +92,8 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/posts")
-	public String showMyPosts(Authentication authentication, Model uiModel) {
+	public String showMyPosts(Authentication authentication, Model uiModel,
+							  @RequestParam(value="message", required = false) String message) {
 		logger.info("Showing your posts...");
 
 		List<Post> allPosts = new ArrayList<>();
@@ -109,6 +110,7 @@ public class UserController {
 			
 		uiModel.addAttribute("posts", allPosts);
 		uiModel.addAttribute("numPosts", allPosts.size());
+		uiModel.addAttribute("message", message);
 
 		return "posts.list";
 
@@ -129,6 +131,7 @@ public class UserController {
 
 		uiModel.addAttribute("post", new Post());
 		uiModel.addAttribute("allTags", tags);
+		uiModel.addAttribute("titlePageForm", "Inserisci un nuovo post");
 
 		return "posts.new";
 	}
@@ -201,15 +204,21 @@ public class UserController {
 
 		if (post.getAuthor().getUsername().equals(authorUsername)) {
 			List<Tag> tags = tagService.getAll();
+			List<String> postTags = new ArrayList<>();
+			for (Tag tag:post.getTags()) {
+				postTags.add(tag.getName());
+			}
 
 			uiModel.addAttribute("post", post);
 			uiModel.addAttribute("allTags", tags);
-			return "posts.new";
+			uiModel.addAttribute("postTags", postTags);
+			uiModel.addAttribute("titlePageForm", "Modifica il post \"" + post.getTitle() + "\"");
+			return "posts.edit";
 
 		} else {
 
 			String strMessage = "Non sei abilitato a modificare il post specificato.";
-			return "redirect:/?message=" + strMessage;
+			return "redirect:/posts/?message=" + strMessage;
 
 		}
 	}
@@ -242,7 +251,8 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/comments")
-	public String showComments(Authentication authentication, Model uiModel) {
+	public String showComments(Authentication authentication, Model uiModel,
+							   @RequestParam(value="message", required = false) String message) {
 		logger.info("Showing your comments...");
 
 		List<Comment> allComments = new ArrayList<>();
@@ -253,6 +263,7 @@ public class UserController {
 		}
 
 		uiModel.addAttribute("comments", allComments);
+		uiModel.addAttribute("message", message);
 	
 		
 		return "comments.list";
@@ -291,7 +302,6 @@ public class UserController {
 	 * Metodo per la richiesta GET di modifica ad un commento
 	 * 
 	 * @param commId	id del commento da modificare
-	 * @param username	username dell'utente che sta richiedendo l'operazione
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			nome della vista da ritornare
 	 */
@@ -317,19 +327,22 @@ public class UserController {
 	
 	/**
 	 * Metodo per la richiesta POST di salvataggio modifiche ad un commento
-	 * 
+	 *
+	 * @param auth informazioni dell'autenticazione
+	 * @param commentAuthor username dell'autore del commento
+	 * @param commentPostId ID del post a cui si riferisce il commento
 	 * @param comment	commento modificato da rendere persistente
-	 * @param username 	username dell'utente che ha richiesto l'operazione
-	 * @param br		eventuali errori di validazione
-	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@PostMapping(value = "/comments/edit/{commentId}/save")
 	public String saveEditComment (@ModelAttribute("comment") Comment comment, Authentication auth,
-			BindingResult br, Model uiModel) {
+								   @RequestParam("post.id") long commentPostId,
+								   @RequestParam("author.username") String commentAuthor) {
 		logger.info(auth.getName() + "Saving the edited comment...");
 		
 		try {
+			comment.setAuthor(this.userService.findUserByUsername(commentAuthor));
+			comment.setPost(this.postService.getById(commentPostId));
 			this.commentService.update(comment);
 			String strMessage = "Commento: " + comment.getTitle() + " salvato correttamente!";
 			
@@ -366,17 +379,18 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/profile")
-	public String showUserProfile (Authentication auth, Model uiModel) {
+	public String showUserProfile (Authentication auth, Model uiModel,
+								   @RequestParam(value="message", required = false) String message) {
 		logger.info("Showing Profile...");
 		
 		if (auth != null) {
 			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
 			uiModel.addAttribute("user", userLoggedIn);
+			uiModel.addAttribute("message", message);
 		}
 		
 		else {
-			String message = "Nessun utente autenticato";
-			uiModel.addAttribute("message", message);
+			uiModel.addAttribute("message", "Nessun utente autenticato");
 		}
 		
 		return "users.profile";
@@ -454,7 +468,7 @@ public class UserController {
 			profile.setImageProfile(nameOfFile);
 		}
 			try {
-				this.userService.update(profile); //todo verificare se rimane la vecchia immagine profilo
+				this.userService.update(profile);
 				String strMessage = "Il tuo profilo utente è stato salvato correttamente!";
 				uiModel.addAttribute("message", strMessage);
 				return "redirect:/profile?message=" + strMessage;

@@ -9,6 +9,9 @@
 		  $('#myInput').trigger('focus')
 		})
 </script>
+<c:if test="${not empty message}">
+    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
+</c:if>
 <div class="col-md-12 mb-4">
         <div class="overflow-auto">
             <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post</h5>

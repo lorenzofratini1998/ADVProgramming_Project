@@ -6,7 +6,7 @@
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 
 <c:if test="${not empty message}">
-	<div class="btn btn-success">${message}</div>
+    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
 </c:if>
 <div class="col-md-12 mb-4">
         <div class="overflow-auto">
