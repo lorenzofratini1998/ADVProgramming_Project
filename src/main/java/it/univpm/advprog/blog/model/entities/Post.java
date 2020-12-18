@@ -14,7 +14,7 @@ import java.util.Set;
                 query = "SELECT p FROM Post p WHERE p.title = :title"
         ), @NamedQuery(
         name = "Post.getPostsByHide",
-        query = "SELECT p FROM Post p WHERE p.hide = :hide"
+        query = "SELECT p FROM Post p WHERE p.hide = :hide ORDER BY p.id DESC"
 )
 })
 

@@ -16,7 +16,7 @@
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
         <h1 class="font-weight-light">Come contattarci</h1>
-        <div
+        <div>
         <p>Se hai riscontrato qualche problema o semplicemente vuoi chiedere qualche informazione contattaci pure ai seguenti indirizzi!</p>
         </div>
         <div>

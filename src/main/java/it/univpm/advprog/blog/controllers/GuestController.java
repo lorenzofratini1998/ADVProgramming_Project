@@ -337,6 +337,14 @@ public class GuestController {
     public String newUserSave(@ModelAttribute("newUser") User newUser, @RequestParam("image") MultipartFile file) {
     	logger.info("Saving a new user");
 
+    	User u = this.userService.findUserByUsername(newUser.getUsername());
+
+    	if( u != null) {
+    		String notAvailable = "Username non disponibile, scegline un altro!";
+    		return "redirect:/sign_up?message=" + notAvailable;
+    	}
+    	
+    	
         if (file.isEmpty()) {
     	this.userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getFirstName(), newUser.getLastName());   	
     	} else {

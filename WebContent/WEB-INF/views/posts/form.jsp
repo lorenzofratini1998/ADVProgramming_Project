@@ -9,16 +9,16 @@
         <h1 class="h3 mb-3 font-weight-normal">${titlePageForm}</h1>
 
         <form:label path="title">Titolo</form:label>
-        <form:input path="title"/>
+        <form:input path="title" class="form-control mt-2"/><br>
 
         <form:label path="shortDescription">Descrizione breve</form:label>
-        <form:input path="shortDescription"/>
+        <form:input path="shortDescription" class="form-control mt-2"/></br>
 
         <form:label path="longDescription">Descrizione estesa</form:label>
-        <form:textarea path="longDescription"/>
+        <form:textarea path="longDescription" class="form-control mt-2"/><br>
 
         <label>Seleziona il/i Tag
-            <select name="tagsSelected" multiple size="5">
+            <select name="tagsSelected" multiple size="5" class="form-control mt-2" >
                 <c:choose>
                     <c:when test="${not empty postTags}">
                         <c:forEach items="${allTags}" var="tag">
@@ -38,7 +38,7 @@
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>
-            </select>
+            </select><br>
         </label>
 
         <form:hidden path="id"/>
@@ -46,6 +46,6 @@
         <%--        <form:hidden path="author.username"/>--%>
         <form:hidden path="archive.name"/>
 
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block"/><br><br>
     </form:form>
 </div>
