@@ -86,12 +86,12 @@ public class UserServiceDefault implements UserService, UserDetailsService {
 	 * Metodo per aggiornare un utente 
 	 * 
 	 * @param user utente da modificare
-	 * @return utente modificato
+	 * 
 	 */
 	@Transactional
 	@Override
-	public User update(User user) {
-		return this.userRepository.update(user);
+	public void update(User user) {
+		this.userRepository.update(user);
 	}
 	
 	

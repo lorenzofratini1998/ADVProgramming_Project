@@ -20,7 +20,7 @@ public interface UserDao {
 	
 	User create(String username, String password, String firstName, String lastName);
 	
-	User update(User user);
+	void update(User user);
 	
 	void delete(User user);
 

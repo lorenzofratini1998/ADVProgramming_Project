@@ -64,14 +64,14 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
     }
 
     /**
-     * Meetodo per aggiornare un utente 
+     * Metodo per aggiornare un utente 
      * 
      * @param user utente da modificare
-     * @return utente modificato
+     * 
      */
     @Override
-    public User update(User user) {
-        return (User) this.getSession().merge(user);
+    public void update(User user) {
+        this.getSession().update(user);
     }
 
     /**

@@ -379,22 +379,22 @@ public class UserController {
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/profile")
-	public String showUserProfile (Authentication auth, Model uiModel,
-								   @RequestParam(value="message", required = false) String message) {
+	public String showUserProfile (Authentication auth, Model uiModel, @RequestParam(value = "message", required=false)  String message ) {
 		logger.info("Showing Profile...");
 		
 		if (auth != null) {
 			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
 			uiModel.addAttribute("user", userLoggedIn);
 			uiModel.addAttribute("message", message);
+			return "users.profile";
 		}
 		
 		else {
-			uiModel.addAttribute("message", "Nessun utente autenticato");
-		}
-		
-		return "users.profile";
+			String noAuthMessage = "Nessun utente autenticato";
+			return "redirect:/?message=" + noAuthMessage;
+		}		
 	}
+	
 	
 	/**
 	 * Metodo per la richiesta GET di modifica profilo utente
@@ -408,18 +408,16 @@ public class UserController {
 		
 		if (auth != null) {
 			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
-			uiModel.addAttribute("user", userLoggedIn);
+			uiModel.addAttribute("userToEdit", userLoggedIn);
+			return "users.editProfile";
 		}
 		
 		else {
 			String message = "Nessun utente autenticato";
-			uiModel.addAttribute("message", message);
+			return "redirect:/?message=" + message;
 		}
 		
-		
-		return "users.editProfile";
 	}
-	
 	
 	/**
 	 * Metodo per al richiesta POST di salvataggio modifiche al profilo utente
@@ -430,8 +428,8 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@PostMapping(value = "/profile/edit/save", consumes = "multipart/form-data")
-	public String saveProfile(@ModelAttribute("user") User profile, BindingResult br, Model uiModel,
-							  @RequestParam("image") MultipartFile file) {
+	public String saveProfile(@ModelAttribute("userToEdit") User profile, BindingResult br, Model uiModel,
+							  @RequestParam("imageProfile") MultipartFile file) {
 		logger.info("Saving the edited profile...");
 		if (!file.isEmpty()) {
 			String nameOfFile = null;
@@ -469,8 +467,7 @@ public class UserController {
 		}
 			try {
 				this.userService.update(profile);
-				String strMessage = "Il tuo profilo utente è stato salvato correttamente!";
-				uiModel.addAttribute("message", strMessage);
+				String strMessage = "Il tuo profilo utente e' stato salvato correttamente!";
 				return "redirect:/profile?message=" + strMessage;
 			} catch (RuntimeException e) {
 
