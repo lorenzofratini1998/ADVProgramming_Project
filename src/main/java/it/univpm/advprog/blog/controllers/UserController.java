@@ -296,22 +296,22 @@ public class UserController {
 	 * @return			nome della vista da ritornare
 	 */
 	@GetMapping(value="/comments/edit/{commentId}")
-	public String editComment(@PathVariable("commentId") long commId, @PathVariable("username") String username, Model uiModel) {
-		logger.info(username + " :Editing a comment...");
+	public String editComment(@PathVariable("commentId") long commId, Authentication auth, Model uiModel) {
+		logger.info(auth.getName() + " :Editing a comment...");
 
 		Comment c = this.commentService.findCommentById(commId);
-		User u = this.userService.findUserByUsername(username);
+		User u = this.userService.findUserByUsername(auth.getName());
 		
 		//TODO verificare se il controllo seguente può essere evolto con le funzioni di sicurezza
 		
-		if (c.getAuthor() == u) {
+		if (c.getAuthor().getUsername().equals(u.getUsername())) {
 		uiModel.addAttribute("comment", c);
 		
-		return "comments/form";}
+		return "comments.editComment";}
 		
 		else {
 			String strMessage = "Non abilitato";
-			return "redirect:/" + username + "/comments/?message=" + strMessage;
+			return "redirect:/" + u + "/comments/?message=" + strMessage;
 	}}	
 	
 	
@@ -325,19 +325,19 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@PostMapping(value = "/comments/edit/{commentId}/save")
-	public String saveEditComment (@ModelAttribute("comment") Comment comment, @PathVariable("username") String username,
+	public String saveEditComment (@ModelAttribute("comment") Comment comment, Authentication auth,
 			BindingResult br, Model uiModel) {
-		logger.info(username + "Saving the edited comment...");
+		logger.info(auth.getName() + "Saving the edited comment...");
 		
 		try {
 			this.commentService.update(comment);
 			String strMessage = "Commento: " + comment.getTitle() + " salvato correttamente!";
 			
-			return "redirect:/" + username + "/comments/?message=" + strMessage;
+			return "redirect:/comments/?message=" + strMessage;
 			
 		} catch (RuntimeException e) {
 			
-			return "redirect:/" + username + "/comments/?message=" + e.getMessage();
+			return "redirect:/comments/?message=" + e.getMessage();
 		}
 	}
 	

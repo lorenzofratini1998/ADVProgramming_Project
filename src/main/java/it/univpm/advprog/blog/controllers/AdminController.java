@@ -220,7 +220,7 @@ public class AdminController {
 
         uiModel.addAttribute("message", message);
 
-        return "attachments/list";
+        return "attachments.list";
     }
 
     /**
@@ -238,7 +238,25 @@ public class AdminController {
         this.attachmentService.update(selectedAttachment); //TODO: serve?
         String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" è stato nascosto correttamente!";
 
-        return "redirect:/archives/?message=" + strMessage;
+        return "redirect:/attachments/?message=" + strMessage;
+    }
+    
+    /**
+     * Metodo per la richiesta GET per mostrare un allegato.
+     *
+     * @param attachment_id ID dell'allegato da nascondere
+     * @return nome della vista da visualizzare
+     */
+    @GetMapping(value = "/attachments/show/{attachment_id}")
+    public String showAttachment(@PathVariable("attachment_id") String attachment_id) {
+        Attachment selectedAttachment = attachmentService.getById(Long.parseLong(attachment_id));
+        logger.info("Showing the attachment \"" + selectedAttachment.getDescription() + "\"...");
+
+        selectedAttachment.setHide(false);
+        this.attachmentService.update(selectedAttachment); //TODO: serve?
+        String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" è stato nascosto correttamente!";
+
+        return "redirect:/attachments/?message=" + strMessage;
     }
 
     /**
@@ -253,12 +271,17 @@ public class AdminController {
         logger.info("Listing all the users...");
 
         List<User> allUsers = this.userService.findAll();
+        for(User user: allUsers) {
+        	if(user.isAdmin()) {
+        		allUsers.remove(user);
+        	}
+        };
 
         uiModel.addAttribute("users", allUsers);
 
-        uiModel.addAttribute("message", message);
+        uiModel.addAttribute("message", "prova");
 
-        return "users/list";
+        return "users.list";
     }
 
     /**
@@ -268,13 +291,30 @@ public class AdminController {
      * @return nome della vista da visualizzare
      */
     @GetMapping(value = "/users/disable/{username}")
-    public String hideUser(@PathVariable("username") String username) {
+    public String disableUser(@PathVariable("username") String username) {
         User selectedUser = userService.findUserByUsername(username);
         logger.info("Disabling the user \"" + selectedUser.getUsername() + "\"...");
 
         selectedUser.setDisabled(true);
         this.userService.update(selectedUser); //TODO: serve?
         String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" è stato disabilitato correttamente!";
+        return "redirect:/users/?message=" + strMessage;
+    }
+    
+    /**
+     * Metodo per la richiesta GET per abilitare un utente.
+     *
+     * @param username username dell'utente da abilitare
+     * @return nome della vista da visualizzare
+     */
+    @GetMapping(value = "/users/enable/{username}")
+    public String enableUser(@PathVariable("username") String username) {
+        User selectedUser = userService.findUserByUsername(username);
+        logger.info("Enabling the user \"" + selectedUser.getUsername() + "\"...");
+
+        selectedUser.setDisabled(false);
+        this.userService.update(selectedUser); //TODO: serve?
+        String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" è stato abilitato correttamente!";
 
         return "redirect:/users/?message=" + strMessage;
     }
@@ -378,7 +418,7 @@ public class AdminController {
      * @param post_id ID del post da nascondere
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value = "/posts//manage/hide/{post_id}")
+    @GetMapping(value = "/posts/manage/hide/{post_id}")
     public String hidePost(@PathVariable("post_id") String post_id) {
         Post selectedPost = postService.getById(Long.parseLong(post_id));
         logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");
@@ -396,7 +436,7 @@ public class AdminController {
      * @param post_id ID del post da mostrare
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value = "/posts//manage/show/{post_id}")
+    @GetMapping(value = "/posts/manage/show/{post_id}")
     public String showPost(@PathVariable("post_id") String post_id) {
         Post selectedPost = postService.getById(Long.parseLong(post_id));
         logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");

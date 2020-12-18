@@ -1,0 +1,18 @@
+<?xml  version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC  "-//Apache  Software
+   Foundation//DTD Tiles  Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition extends="default" name="users.list">
+        <put-attribute name="body" value="/WEB-INF/views/users/list.jsp"/>
+        <put-attribute name="pageTitle" value="Lista Utenti"/>
+    </definition>
+	<definition extends="default" name="users.profile">
+		<put-attribute name="body" value="/WEB-INF/views/users/profile.jsp" />
+		<put-attribute name="pageTitle" value="Profilo Utente" />
+	</definition>
+	<definition extends="default" name="users.editProfile">
+		<put-attribute name="body" value="/WEB-INF/views/users/editProfile.jsp" />
+		<put-attribute name="pageTitle" value="Nuovo Post" />
+	</definition>
+</tiles-definitions>

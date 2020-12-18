@@ -11,4 +11,8 @@
         <put-attribute name="body" value="/WEB-INF/views/comments/listForAdmin.jsp"/>
         <put-attribute name="pageTitle" value="Lista Commenti Autori"/>
     </definition>
+        <definition extends="default" name="comments.editComment">
+        <put-attribute name="body" value="/WEB-INF/views/comments/editComment.jsp"/>
+        <put-attribute name="pageTitle" value="Modifica commento"/>
+    </definition>
 </tiles-definitions>

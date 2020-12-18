@@ -11,7 +11,8 @@
 <div class="col-md-12 mb-4">
         <div class="overflow-auto">
             <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i commenti</h5>
-            <table class="table table-striped w-75 mx-auto">
+
+		<table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>
                     <th scope="col">Commento</th>
@@ -30,7 +31,9 @@
 						<td>
 							<div class="row">
 								<div class="col-lg">
-									<a class="btn btn-success">
+									<a class="btn btn-success"
+										href="<c:url value="/comments/edit/${comment.id}"/>"
+                                           	title="Modifica &quot;${comment.description}&quot;">
 										<i class="fa fa-pencil-square-o"></i>
 									</a>
 								</div>
