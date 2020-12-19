@@ -282,10 +282,10 @@ public class GuestController {
      * Metodo per la visualizzazione della pagina statica privacy_policy
      * 
      */
-    @GetMapping(value="/privacy_policy")
+    @GetMapping(value="/disclaimer")
     public String showPrivacyPolicy() {
     	
-    	return "privacy_policy";
+    	return "disclaimer";
     }
     /**
      * Metodo per la visualizzazione della pagina statica contact_us

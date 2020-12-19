@@ -27,4 +27,8 @@
         <put-attribute name="body" value="/WEB-INF/views/posts/postDetails.jsp"/>
         <put-attribute name="pageTitle" value="Dettagli Post"/>
     </definition>
+        <definition extends="default" name="disclaimer">
+        <put-attribute name="body" value="/WEB-INF/views/disclaimer.jsp"/>
+        <put-attribute name="pageTitle" value="Disclaimer Blog"/>
+    </definition>
 </tiles-definitions>
