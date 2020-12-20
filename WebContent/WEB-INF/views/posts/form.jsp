@@ -6,13 +6,15 @@
 <div class="col">
     <%--@elvariable id="post" type="it.univpm.advprog.blog.model.entities.Post"--%>
     <form:form class="form-signin" action="${action_url}" method="POST" modelAttribute="post">
-        <h1 class="h3 mb-3 font-weight-normal">${titlePageForm}</h1>
+        <div class="text-center mb-3">
+            <h3 class="font-weight-bold">${titlePageForm}</h3>
+        </div>
 
         <form:label path="title">Titolo</form:label>
         <form:input path="title" class="form-control mt-2"/><br>
 
         <form:label path="shortDescription">Descrizione breve</form:label>
-        <form:input path="shortDescription" class="form-control mt-2"/></br>
+        <form:input path="shortDescription" class="form-control mt-2"/><br>
 
         <form:label path="longDescription">Descrizione estesa</form:label>
         <form:textarea path="longDescription" class="form-control mt-2"/><br>
@@ -45,7 +47,6 @@
         <form:hidden path="hide"/>
         <%--        <form:hidden path="author.username"/>--%>
         <form:hidden path="archive.name"/>
-
-        <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block"/><br><br>
+        <input type="submit" value="Submit" class="mt-3 btn btn-lg btn-primary btn-block"/><br><br>
     </form:form>
 </div>

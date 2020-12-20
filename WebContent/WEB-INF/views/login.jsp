@@ -7,7 +7,7 @@
 </c:if>
 
 <div class="container row h-100">
-	<div class="row h-100 justify-content-center align-items-center">
+	<div class="row h-100 justify-content-center align-items-center mx-auto">
 	<div class="card">
 	    <form action="<c:url value="/login" />" method="POST">
 	        <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"

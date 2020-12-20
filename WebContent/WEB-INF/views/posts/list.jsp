@@ -5,61 +5,73 @@
 
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 <script type="text/javascript">
-	$('#myModal').on('shown.bs.modal', function () {
-		  $('#myInput').trigger('focus')
-		})
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
 </script>
 <c:if test="${not empty message}">
     <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
 </c:if>
 <div class="col-md-12 mb-4">
-        <div class="overflow-auto">
-            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post</h5>
-            <div class="font-weight-bold text-center">Numero post: ${numPosts }</div>
-            <table class="table table-striped w-75 mx-auto">
-                <thead>
+    <div class="overflow-auto">
+        <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post</h5>
+        <div class="font-weight-bold text-center">Numero post: ${numPosts }</div>
+        <table class="table table-striped w-75 mx-auto">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Titolo</th>
+                <th scope="col">Descrizione breve</th>
+                <th scope="col">Archivio</th>
+                <th scope="col">Modifica Post</th>
+                <th scope="col">Gestisci Allegati</th>
+                <th scope="col">Elimina</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${posts}" var="post">
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Titolo</th>
-                    <th scope="col">Descrizione breve</th>
-                    <th scope="col">Archivio</th>
-                    <th scope="col">Modifica</th>
-                    <th scope="col">Elimina</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${posts}" var="post">
-                    <tr>
-                        <td>${post.id}</td>
-                        <td>${post.title}</td>
-                        <td>${post.shortDescription }</td>
-                        <td>${post.getArchive().name }</td>
-						<td>
-							<div class="row">
-								<div class="col-lg">
-									<a class="btn btn-success"
-                                       href="<c:url value="/posts/edit/${post.id}"/>"
-                                       title="Modifica &quot;${post.title}&quot;">
-										<i class="fa fa-pencil-square-o"></i>
-									</a>
-								</div>
-							</div>
-						</td>
-						<td>
-                            <div class="row">
-                                <div class="col-lg">
-									<a class="btn btn-danger"
-											href="<c:url value="/posts/delete/${post.id}"/>"
-                                           	title="Elimina &quot;${post.title}&quot;"
-                                       onclick='return confirm("Sei sicuro di voler eliminare il post \"${post.title}\"?");'>
-										<i class="fa fa-trash"></i>
-									</a>
-								</div>
+                    <td>${post.id}</td>
+                    <td>${post.title}</td>
+                    <td>${post.shortDescription }</td>
+                    <td>${post.getArchive().name }</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-lg">
+                                <a class="btn btn-success"
+                                   href="<c:url value="/posts/edit/${post.id}"/>"
+                                   title="Modifica &quot;${post.title}&quot;">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </a>
                             </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-	</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-lg">
+                                <a class="btn btn-warning"
+                                   href="<c:url value="/posts/${post.id}/attachments"/>"
+                                   title="Modifica allegati del post">
+                                    <i class="fa fa-copy"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-lg">
+                                <a class="btn btn-danger"
+                                   href="<c:url value="/posts/delete/${post.id}"/>"
+                                   title="Elimina &quot;${post.title}&quot;"
+                                   onclick='return confirm("Sei sicuro di voler eliminare il post \"${post.title}\"?");'>
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
+</div>
