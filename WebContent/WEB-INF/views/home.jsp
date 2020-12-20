@@ -26,13 +26,14 @@
 		<div>
 			<c:forEach items="${posts}" var="p">
 				<div class="card mb-4">
+				<img class="card-img-top" src="immagini/contatti.jpg" alt="Card image cap">
 				<div class="card-body">
 					<h2 class="card-title">${p.title}</h2>
 					<p class="card-text">${p.shortDescription}</p>
 					 <a href="<c:url value="/blog/post/${p.id}"/>" class="btn btn-primary">Read More &rarr;</a>
 				</div>
 				<div class="card-footer text-muted">
-	    			Posted on ${p.getArchive().name} by <a href="#">${p.getAuthor().username}</a>
+	    			Postato a ${p.getArchive().name} da <a href="<c:url value="/author/${p.getAuthor().username}"/>">${p.getAuthor().username}</a>
 	          	</div>
 				</div>
 			</c:forEach>
@@ -104,7 +105,7 @@
             	<div class="col-lg-12">
             		<ul class="list-unstyled mb-0">
 	            		<li>
-	                    	<a href="<c:url value="/blog/archive/${a.name}"/>">${a.name}</a>
+	                    	<a href="<c:url value="/archive/${a.name}"/>">${a.name}</a>
 	                  	</li>
 	                </ul>
                 </div>
@@ -125,7 +126,7 @@
             	<div class="col-lg-12">
             		<ul class="list-unstyled mb-0">
 	            		<li>
-	                    	<a href="<c:url value="/blog/tag/${t.name}"/>">${t.name}</a>
+	                    	<a href="<c:url value="/tag/${t.name}"/>">${t.name}</a>
 	                  	</li>
 	                </ul>
                 </div>

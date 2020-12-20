@@ -263,6 +263,7 @@ public class UserController {
 		}
 
 		uiModel.addAttribute("comments", allComments);
+		uiModel.addAttribute("numComments",allComments.size());
 		uiModel.addAttribute("message", message);
 	
 		

@@ -6,20 +6,39 @@
     <div style="color: red; font-weight: bold; margin: 30px 0;">${errorMessage}</div>
 </c:if>
 
-<div class="col">
-    <form class="form-signin" action="<c:url value="/login" />" method="POST">
-        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
-             height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-        <label>
-            <input type="text" name="username" class="form-control mt-2" placeholder="Username" required autofocus>
-        </label>
-
-        <label>
-            <input type="password" name="password" class="form-control mt-2" placeholder="Password" required>
-        </label>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
+<div class="container row h-100">
+	<div class="row h-100 justify-content-center align-items-center">
+	<div class="card">
+	    <form action="<c:url value="/login" />" method="POST">
+	        <!-- <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+	             height="72">  -->
+	        <div class="card-header">
+	        	<h1 class="h3 font-weight-normal text-center">Login</h1>
+	        </div>
+	
+			<div class="card-body">
+		        <div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"> <span class="fa fa-user"></span>
+						</span>
+					</div>
+					<input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+		        </div>
+		    </div>
+			<div class="card-body">
+		       <div class="input-group">
+		       		<div class="input-group-prepend">
+						<span class="input-group-text"> <span class="fa fa-lock"></span>
+						</span>
+					</div>
+		            <input type="password" name="password" class="form-control" placeholder="Password" required>
+		        </div>
+			</div>
+			<div class="card-body">
+	        	<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+	        </div>
+	    </form>
+	</div>
 </div>
+</div>
+

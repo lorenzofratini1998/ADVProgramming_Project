@@ -160,7 +160,7 @@ public class GuestController {
      * @param archiveName nome dell'archivio selezionato
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value="/blog/archive/{archive_name}")
+    @GetMapping(value="/archive/{archive_name}")
     public String showPostByArchive(@RequestParam(required = false) Integer page, @PathVariable("archive_name")
             String archiveName, Model uiModel) {
     	logger.info("Listing all the posts searched by archive...");
@@ -191,7 +191,7 @@ public class GuestController {
      * @param tagName nome del tag selezionato
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value="/blog/tag/{tag_name}")
+    @GetMapping(value="/tag/{tag_name}")
     public String showPostByTag(@RequestParam(required = false) Integer page, @PathVariable("tag_name") String tagName,
                                 Model uiModel) {
     	logger.info("Listing all the posts searched by tag...");
@@ -222,7 +222,7 @@ public class GuestController {
      * @param userName nome dell'author selezionato
      * @return nome della vista da visualizzare
      */
-    @GetMapping(value="/blog/author/{username}")
+    @GetMapping(value="/author/{username}")
     public String showPostByAuthor(@RequestParam(required = false) Integer page, @PathVariable("username") String
             userName, Model uiModel) {
     	logger.info("Listing all the posts searched by author...");
@@ -243,7 +243,7 @@ public class GuestController {
         uiModel.addAttribute("postsTitle","Tutti i post dell'autore \"" + userName + "\"");
         uiModel.addAttribute("numPosts",allPostsByAuthor.size());
     	
-    	return "post/author";
+    	return "home";
    
     }
     

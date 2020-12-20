@@ -11,7 +11,7 @@
 <div class="col-md-12 mb-4">
         <div class="overflow-auto">
             <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i commenti</h5>
-
+	<div class="font-weight-bold text-center">Numero commenti: ${numComments }</div>
 		<table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>

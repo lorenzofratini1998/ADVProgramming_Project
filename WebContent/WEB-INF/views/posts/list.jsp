@@ -15,7 +15,7 @@
 <div class="col-md-12 mb-4">
         <div class="overflow-auto">
             <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post</h5>
-            <div class="font-weight-bold">Numero post: ${numPosts }</div>
+            <div class="font-weight-bold text-center">Numero post: ${numPosts }</div>
             <table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>
