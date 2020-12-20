@@ -409,7 +409,7 @@ public class UserController {
 		if (!uploadedFile.isEmpty()) {
 			String nameOfFile = null;
 			try {
-				String uploadsDir = "/WEB-INF/files/posts_attachment/";
+				String uploadsDir = "/WEB-INF/files/post_attachments/";
 				String realPathtoUploads = request.getServletContext().getRealPath(uploadsDir);
 				if (!new java.io.File(realPathtoUploads).exists()) {
 					logger.info("creating the directory...");
