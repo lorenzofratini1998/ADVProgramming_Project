@@ -15,10 +15,6 @@ public interface AttachmentDao {
 	List<Attachment> getAll();
 	
 	Attachment getById(long id);
-
-	//Attachment create(long id, String description, boolean hide);
-	
-	//Attachment create(long id, String description, boolean hide, Set<Post> posts);
 	
 	Attachment update(Attachment attachment);
 	

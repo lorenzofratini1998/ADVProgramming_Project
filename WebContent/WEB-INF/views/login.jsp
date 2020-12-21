@@ -6,7 +6,7 @@
     <div style="color: red; font-weight: bold; margin: 30px 0;">${errorMessage}</div>
 </c:if>
 
-<div class="container row h-100">
+<div class="container row h-100 mx-auto">
 	<div class="row h-100 justify-content-center align-items-center mx-auto">
 	<div class="card">
 	    <form action="<c:url value="/login" />" method="POST">

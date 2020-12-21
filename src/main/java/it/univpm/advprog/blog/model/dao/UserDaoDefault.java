@@ -85,20 +85,4 @@ public class UserDaoDefault extends DefaultDao implements UserDao {
         this.getSession().delete(user);
     }
 
-    @Override
-    public String encryptPassword(String password) {
-        return this.passwordEncoder.encode(password);
-    }
-
-    @Override
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    @Override
-    public PasswordEncoder getpasswordEncoder() {
-        return this.passwordEncoder;
-    }
-
 }

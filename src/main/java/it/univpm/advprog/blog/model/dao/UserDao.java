@@ -24,10 +24,4 @@ public interface UserDao {
 	
 	void delete(User user);
 
-	String encryptPassword(String password);
-
-	void setPasswordEncoder(PasswordEncoder passwordEncoder);
-
-	PasswordEncoder getpasswordEncoder();
-
 }

@@ -60,12 +60,7 @@ public class LinkDaoDefault extends DefaultDao implements LinkDao {
 	 */
 	@Override
 	public Link create(String description, Post post, String link) {
-		Link newLink =new Link();
-		newLink.setDescription(description);
-		newLink.setPost(post);
-		newLink.setLink(link);
-		this.getSession().save(newLink);
-		return newLink;	
+		return this.create(description, false, post, link);
 	}
 
 	/**

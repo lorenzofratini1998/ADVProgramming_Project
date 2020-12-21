@@ -1,11 +1,9 @@
 package it.univpm.advprog.blog.model.dao;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
-import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.model.entities.File;
 import it.univpm.advprog.blog.model.entities.Post;
 
@@ -50,7 +48,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override //TODO: da rivedere, forse non serve che riceve il parametro in input
 	public List<File> getByNoDownloadable(boolean noDownloadable) {
-		return getSession().createNamedQuery("getFileByDownloadable", File.class).getResultList();
+		return getSession().createNamedQuery("getByDownloadable", File.class).setParameter("noDownloadable", noDownloadable).getResultList();
 	}
 
 	/**
@@ -83,12 +81,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override
 	public File create(String description, Post post, String name) {
-		File file=new File();
-		file.setDescription(description);
-		file.setPost(post);
-		file.setName("post" + post.getId() + "_" + name);
-		this.getSession().save(file);
-		return file;
+		return this.create(description, false, post, name, false);
 	}
 
 	/**
@@ -101,13 +94,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override
 	public File create(String description, boolean hide, Post post, String name) {
-		File file=new File();
-		file.setDescription(description);
-		file.setHide(hide);
-		file.setPost(post);
-		file.setName("post" + post.getId() + "_" + name);
-		this.getSession().save(file);
-		return file;
+		return this.create(description, hide, post, name, false);
 	}
 
 	/**
@@ -119,13 +106,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override
 	public File create(String description, Post post, String name, boolean noDownloadable) {
-		File file=new File();
-		file.setDescription(description);
-		file.setPost(post);
-		file.setName("post" + post.getId() + "_" + name);
-		file.setNoDownloadable(noDownloadable);
-		this.getSession().save(file);
-		return file;
+		return this.create(description, false, post, name, noDownloadable);
 	}
 
 	/**
