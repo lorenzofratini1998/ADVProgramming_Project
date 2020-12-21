@@ -24,7 +24,7 @@
         <put-attribute name="pageTitle" value="Contatti"/>
     </definition>
     <definition extends="default" name="post.details">
-        <put-attribute name="body" value="/WEB-INF/views/posts/postDetails.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/postDetails.jsp"/>
         <put-attribute name="pageTitle" value="Dettagli Post"/>
     </definition>
         <definition extends="default" name="disclaimer">
