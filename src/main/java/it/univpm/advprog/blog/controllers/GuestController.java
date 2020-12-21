@@ -321,14 +321,7 @@ public class GuestController {
     	public String newUser(Model uiModel, @RequestParam(value="message", required = false) String message) {
     	logger.info("Creating a new user...");
     	
-    	List<User> allUsers = this.userService.findAll();
-    	String[] user_names = new String[allUsers.size()];
-    	int indice = 0;
-    	for (User singleUser: allUsers) {
-    		user_names[indice] = singleUser.getUsername();
-    		indice++;
-    	}
-    	uiModel.addAttribute("allUsers", user_names);
+    	
     	uiModel.addAttribute("user", new User());
     	uiModel.addAttribute("message", message);
     		
