@@ -19,5 +19,10 @@
       <!-- NB the url-pattern is the prefix pattern "catched" by this servlet; it is *not* the server path where the .war is deployed -->
       <url-pattern>/</url-pattern>
    </servlet-mapping>
+   
+   <!-- Setting session expiration time -->
+   <session-config>
+    	<session-timeout>15</session-timeout>
+   </session-config>
  
 </web-app>

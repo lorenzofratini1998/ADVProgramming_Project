@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/tags").permitAll().
                 antMatchers("/archives").permitAll().
                 antMatchers("/tags/?**").hasAnyRole("admin").
+                antMatchers("/profile/**").hasAnyRole("user","admin").
                 antMatchers("/attachments/**").hasAnyRole("admin").
                 antMatchers("/posts/manage/**").hasAnyRole("admin").
                 antMatchers("/posts/**").hasAnyRole("user", "admin").
