@@ -199,8 +199,8 @@ public class Post implements Serializable {
      * @param tag tag da aggiungere
      */
     public void addTag(Tag tag) {
-        tag.addPost(this);
         this.tags.add(tag);
+        tag.getPosts().add(this);
     }
 
     /**

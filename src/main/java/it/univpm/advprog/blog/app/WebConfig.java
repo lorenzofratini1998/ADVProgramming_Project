@@ -73,9 +73,7 @@ public class WebConfig implements WebMvcConfigurer {
 		tilesViewResolver.setViewClass(TilesView.class);
 		return tilesViewResolver;
 	}
-	
-	//TODO decommentare quando avremo definito il layout
-	
+
 	//Configuratore dei tiles, necessario per il precedente
 	@Bean
 	TilesConfigurer tilesConfigurer() {

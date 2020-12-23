@@ -48,7 +48,6 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	 * Metodo per eliminare un allegato
 	 * @param attachment: allegato da eliminare
 	 * 
-	 * @return allegato eliminato
 	 */
 	@Override
 	public void delete(Attachment attachment) {

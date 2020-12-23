@@ -51,5 +51,7 @@ import java.util.Set;
 	}
 	
 	void addPost(Post post) {
+		this.posts.add(post);
+		post.getTags().add(this);
 	}
 }

@@ -46,5 +46,9 @@ import java.util.Set;
 	public void setPosts(Set<Post> posts) {
 		this.posts=posts;
 	}
-	
+
+	public void addPost(Post post) {
+		this.posts.add(post);
+		post.setArchive(this);
+	}
 	}

@@ -1,5 +1,6 @@
 package it.univpm.advprog.blog.model.dao;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -28,7 +29,11 @@ public abstract class DefaultDao {
         Session session = this.session;
         if (session == null) {
             // if the session does not exist, create it
-            session = this.sessionFactory.getCurrentSession();
+            try {
+                session = this.sessionFactory.getCurrentSession();
+            } catch (HibernateException ex) {
+                session = this.sessionFactory.openSession();
+            }
         }
         return session;
     }

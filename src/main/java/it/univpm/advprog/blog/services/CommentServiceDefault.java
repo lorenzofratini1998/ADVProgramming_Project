@@ -17,8 +17,6 @@ import it.univpm.advprog.blog.model.entities.User;
 public class CommentServiceDefault implements CommentService {
 
 	private CommentDao commentRepository;
-	private PostDao postRepository;
-	private UserDao userRepository;
 	
 	/**
 	 * Setter della proprietà commentRepository
@@ -28,26 +26,6 @@ public class CommentServiceDefault implements CommentService {
 	@Autowired
 	public void setCommentRepository(CommentDao commentDao) {
 		this.commentRepository = commentDao;
-	}
-	
-	/**
-	 * Setter della proprietà postRepository
-	 * 
-	 * @param postDao bean della classe Dao relativa ai post
-	 */
-	@Autowired
-	public void setPostRepository(PostDao postDao) {
-		this.postRepository = postDao;
-	}
-	
-	/**
-	 * Setter della proprietà userRepository
-	 * 
-	 * @param userDao bean della classe Dao relativa agli utenti
-	 */
-	@Autowired
-	public void setUserRepository(UserDao userDao) {
-		this.userRepository = userDao;
 	}
 
 	/**
@@ -98,8 +76,8 @@ public class CommentServiceDefault implements CommentService {
 	
 	/**
 	 * Metodo per rimuovere un commento
-	 * 
-	 * @return null
+	 *
+	 * @param comment commento da eliminare
 	 */
 	@Transactional
 	@Override

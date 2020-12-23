@@ -16,6 +16,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	 * 
 	 * @return lista contenente tutti gli archivi
 	 */
+	@Override
 	public List<Archive> getAll() {
 	     return getSession().
 	             createQuery("from Archive a", Archive.class).
@@ -28,6 +29,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	 * @param name dell'archivio da trovare
 	 * @return archivio eventualmente trovato
 	 */
+	@Override
 	public Archive getByName(String name) {
         return getSession().find(Archive.class, name);
     }
@@ -62,6 +64,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	 * 
 	 * @param name nome dell'archivio da cancellare
 	 */
+	@Override
 	public void delete(String name) {
 		Archive archive = this.getByName(name);
 		this.delete(archive);
@@ -70,7 +73,7 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 	 * Funzione per update di un archivio specificato
 	 * 
 	 */
-	
+	@Override
 	public Archive update(Archive archive) {
 		return (Archive)this.getSession().merge(archive);
 	}

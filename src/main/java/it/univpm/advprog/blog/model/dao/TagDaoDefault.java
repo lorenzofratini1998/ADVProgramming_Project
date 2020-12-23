@@ -13,7 +13,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
      *
      * @return lista dei tag
      */
-
+    @Override
     public List<Tag> getAll() {
         return getSession().
                 createQuery("from Tag t", Tag.class).
@@ -26,7 +26,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
      * @param name del tag da trovare
      * @return tag eventualmente trovato
      */
-
+    @Override
     public Tag getByName(String name) {
         return getSession().find(Tag.class, name);
     }
@@ -37,7 +37,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
      * @param name del tag
      * @return tag creato
      */
-
+    @Override
     public Tag create(String name) {
         Tag tag = new Tag();
         tag.setName(name);
@@ -48,6 +48,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
     /**
      * Funzione per aggiornare un tag specifico
      */
+    @Override
     public Tag update(Tag tag) {
         return (Tag) this.getSession().merge(tag);
     }
@@ -55,6 +56,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
     /**
      * Funzione per cancellare un tag specifico
      */
+    @Override
     public void delete(Tag tag) {
         this.getSession().delete(tag);
 
@@ -65,6 +67,7 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
      *
      * @param name nome del tag da cancellare
      */
+    @Override
     public void delete(String name) {
         Tag tag = this.getByName(name);
         this.delete(tag);

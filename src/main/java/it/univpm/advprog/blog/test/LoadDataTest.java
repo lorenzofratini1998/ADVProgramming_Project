@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static org.hibernate.resource.transaction.spi.TransactionStatus.NOT_ACTIVE;
+
 public class LoadDataTest {
     private final static String SHORTDESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
             "tempus magna vel posuere cursus. Sed ultricies nunc purus, et maximus eros accumsan sit amet. Donec " +
@@ -337,6 +339,10 @@ public class LoadDataTest {
                     session.getTransaction().commit();
                 } catch (Exception e) {
                     // ConstraintViolationException... OK!!
+                } finally {
+                    if (session.getTransaction().getStatus() != NOT_ACTIVE) {
+                        session.getTransaction().commit();
+                    }
                 }
 
                 Tag tagFound = tagDao.getByName(tag2.getName());
@@ -365,6 +371,10 @@ public class LoadDataTest {
                     session.getTransaction().commit();
                 } catch (Exception e) {
                     // ConstraintViolationException... OK!!
+                } finally {
+                    if (session.getTransaction().getStatus() != NOT_ACTIVE) {
+                        session.getTransaction().commit();
+                    }
                 }
 
                 Tag archiveFound = tagDao.getByName(archive2.getName());

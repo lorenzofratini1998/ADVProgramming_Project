@@ -147,8 +147,6 @@ public class User implements Serializable {
 	 */
 	
 	public void setImageProfile(String imgprofile) {
-		//TODO: impostare il caricamento di un file immagine da qualche parte nel server ed il solo salvataggio del nome
-        // del file in questo campo "image"
 		this.imageProfile = imgprofile;
 	}
 	
