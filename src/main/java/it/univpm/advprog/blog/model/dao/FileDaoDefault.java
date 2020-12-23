@@ -38,7 +38,7 @@ public class FileDaoDefault extends DefaultDao implements FileDao  {
 	 */
 	@Override
 	public File getByName(String name) {
-		return getSession().createNamedQuery("getFileByName", File.class).setParameter("name", name).getSingleResult();
+		return getSession().createNamedQuery("getFileByName", File.class).setParameter("name", name).uniqueResult();
 	}
 
 	/**

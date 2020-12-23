@@ -267,7 +267,7 @@ public class LoadDataTest {
                 attachmentDao.update(attachment);
 
                 file3.setNoDownloadable(false);
-                attachmentDao.update(file3);
+                fileDao.update(file3);
 
                 session.getTransaction().commit();
 //**********************************************************************************************************************
