@@ -82,6 +82,9 @@
                         <a class="nav-link" href="${contacts_us_url}">Contatti</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="${disclaimer_url}">Disclaimer</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="${my_posts_url}">Miei Post</a>
                     </li>
                     <li class="nav-item">
@@ -122,6 +125,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${contacts_us_url}">Contatti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${disclaimer_url}">Disclaimer</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${my_posts_url}">Miei Post</a>
