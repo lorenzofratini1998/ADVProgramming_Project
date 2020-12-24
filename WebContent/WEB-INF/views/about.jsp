@@ -11,7 +11,7 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="immagini/blog.jpg" alt="">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/blog.jpg"/>" alt="">
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">

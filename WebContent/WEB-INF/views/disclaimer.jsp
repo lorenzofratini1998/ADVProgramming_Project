@@ -11,7 +11,7 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="immagini/warning.jpg" alt="">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/warning.jpg"/>" alt="">
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
@@ -23,5 +23,6 @@ Alcuni testi o immagini inserite in questo blog sono tratte da internet e, perta
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
+  </div>
 </body>
 </html>

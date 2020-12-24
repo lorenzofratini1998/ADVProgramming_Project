@@ -14,8 +14,7 @@
     <!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven/>
     <context:component-scan base-package="it.univpm.advprog"/>
-    <mvc:resources location="/WEB-INF/immagini/" mapping="/immagini/**" />
-    <mvc:resources location="/WEB-INF/files/" mapping="/files/**" />
-    <mvc:resources location="/WEB-INF/files/post_attachments/" mapping="/files/post_attachments/**" />
+<!--    <mvc:resources location="/WEB-INF/immagini/" mapping="/immagini/**" />-->
+<!--    <mvc:resources location="/WEB-INF/files/post_attachments/" mapping="/files/post_attachments/**" />-->
 
 </beans:beans>

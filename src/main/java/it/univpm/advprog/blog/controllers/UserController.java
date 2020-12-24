@@ -521,25 +521,27 @@ public class UserController {
 	 * Metodo per la richiesta POST di salvataggio nuovo commento 
 	 *
 	 * @param comment	commento da rendere persistente
-	 * @param username	username dell'utente che ah richiesto l'operazione
-	 * @param br 		eventuali errori di validazione
-	 * @param uiModel	modello associato alla vista
+	 * @param authentication informazioni dell'autenticazione corrente
 	 * @return			nome della vista da visualizzare
 	 */
-	@PostMapping(value = "/posts/{postId}/newcomment/save")
-	public String saveComment (@ModelAttribute("comment") Comment comment, @PathVariable("username") String username,
-							   BindingResult br, Model uiModel) {
+	@PostMapping(value = "/blog/post/{postID}/comment/new/save")
+	public String saveComment (@ModelAttribute("comment") Comment comment, Authentication authentication,
+							   @PathVariable("postID") long postId) {
 		logger.info("Saving a new comment...");
 
 		try {
+			User author = userService.findUserByUsername(authentication.getName());
+			comment.setAuthor(author);
+			Post post = postService.getById(postId);
+			comment.setPost(post);
 			this.commentService.update(comment);
-			String strMessage = "Commento: " + comment.getTitle() + " salvato correttamente!";
+			String strMessage = "Il commento è stato salvato correttamente!";
 
-			return "redirect:/" + username + "/posts/{postId}?message=" + strMessage;
+			return "redirect:/blog/post/" + postId + "?message=" + strMessage;
 
 		} catch (RuntimeException e) {
 
-			return "redirect:/" + username + "/posts/{postId}?message=" + e.getMessage();
+			return "redirect:/blog/post/" + postId + "?message=" + e.getMessage();
 		}
 	}
 

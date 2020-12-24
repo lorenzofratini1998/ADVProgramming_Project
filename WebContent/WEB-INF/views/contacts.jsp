@@ -11,7 +11,7 @@
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="immagini/contatti.jpg" alt="">
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/contatti.jpg"/>" alt="">
       </div>
       <!-- /.col-lg-8 -->
       <div class="col-lg-5">
@@ -34,11 +34,11 @@
         <b>Seguici anche sui nostri social</b>
         </div>
         <div style='margin-top:5px'>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="immagini/facebook.png" width="33" height="33" style="float:left;margin:5px" >
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/facebook.jpg"/>" width="33" height="33" style="float:left;margin:5px" >
         <p>BlogAdvprog</p>
         </div>
         <div>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="immagini/instagram.jpg" width="40" height="40" style="float:left;margin:3px" >
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/instagram.jpg"/>" width="40" height="40" style="float:left;margin:3px" >
         <p>BlogAdvprog</p>
         </div>
         </div>

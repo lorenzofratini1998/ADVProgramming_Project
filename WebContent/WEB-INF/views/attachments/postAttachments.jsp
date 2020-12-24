@@ -26,8 +26,8 @@
             <tbody>
             <c:forEach items="${filesPost}" var="file">
                 <tr>
-                    <td><i class="fa fa-file"> <!-- TODO: cambiare attributo href qui sotto, non funziona il download...  -->
-                        <a href="/files/post_attachments/${file.name}"
+                    <td><i class="fa fa-file">
+                        <a href="<c:url value="/files/post_attachments/${file.name}"/>"
                            title="Scarica ${file.description}" download>${file.description}</a>
                     </i></td>
                     <td><a class="btn btn-success"

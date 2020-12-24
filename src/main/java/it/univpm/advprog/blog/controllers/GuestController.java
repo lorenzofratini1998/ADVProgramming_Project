@@ -8,7 +8,6 @@ import it.univpm.advprog.blog.model.entities.Comment;
 import it.univpm.advprog.blog.model.entities.Attachment;
 import it.univpm.advprog.blog.services.ArchiveService;
 import it.univpm.advprog.blog.services.AttachmentService;
-import it.univpm.advprog.blog.services.CommentService;
 import it.univpm.advprog.blog.services.PostService;
 import it.univpm.advprog.blog.services.TagService;
 import it.univpm.advprog.blog.services.UserService;
@@ -252,7 +251,8 @@ public class GuestController {
      * 
      */
     @GetMapping(value="/blog/post/{post_id}")
-    public String showPostDetails(@PathVariable("post_id") String post_id, Model uiModel) {
+    public String showPostDetails(@PathVariable("post_id") String post_id, Model uiModel,
+                                  @RequestParam(value="message", required = false) String message) {
     	logger.info("Show details of a specific post...");
     	Post selectedPost = postService.getById(Long.parseLong(post_id));
 
@@ -262,8 +262,9 @@ public class GuestController {
             return "redirect:/?message=" + strMessage;
 
         } else {
-
+    	    uiModel.addAttribute("message", message);
             uiModel.addAttribute(selectedPost);
+            uiModel.addAttribute("comment", new Comment());
             return "post.details";
         }
     }

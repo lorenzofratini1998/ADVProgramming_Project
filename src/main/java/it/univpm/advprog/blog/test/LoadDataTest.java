@@ -5,7 +5,6 @@ import it.univpm.advprog.blog.model.entities.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.hibernate.resource.transaction.spi.TransactionStatus.NOT_ACTIVE;
 
