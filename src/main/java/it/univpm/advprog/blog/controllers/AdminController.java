@@ -114,13 +114,18 @@ public class AdminController {
     public String saveTag(@ModelAttribute("tag") Tag tag, BindingResult bindingResult, Model uiModel) {
         logger.info("Saving a new tag...");
 
+        if(tag.getName() == null || tag.getName().equals("")) {
+            String strMessage = "Non hai inserito alcun nome per il tag!";
+
+            return "redirect:/tags/?message=" + strMessage;
+        }
+
         try {
             //this.sanitizeId(tag.getName());
 
             this.tagService.update(tag);
 
             String strMessage = "Il tag \"" + tag.getName() + "\" è stato salvato correttamente!";
-//			uiModel.addAttribute("message", strMessage);
 
             return "redirect:/tags/?message=" + strMessage;
 

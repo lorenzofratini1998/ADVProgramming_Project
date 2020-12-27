@@ -53,13 +53,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/").permitAll().
                 antMatchers("/tags").permitAll().
                 antMatchers("/archives").permitAll().
-                antMatchers("/tags/?**").hasAnyRole("admin").
+                antMatchers("/tags/?**/**").hasAnyRole("admin").
+                antMatchers("/archives/?**/**").hasAnyRole("admin").
                 antMatchers("/profile/**").hasAnyRole("user","admin").
                 antMatchers("/attachments/**").hasAnyRole("admin").
                 antMatchers("/posts/manage/**").hasAnyRole("admin").
                 antMatchers("/posts/**").hasAnyRole("user", "admin").
                 antMatchers("/comments/manage/**").hasAnyRole("admin").
                 antMatchers("/comments/**").hasAnyRole("user", "admin").
+                antMatchers("/users/**").hasAnyRole("admin").
                 and().formLogin().loginPage("/login").defaultSuccessUrl("/")
                 .failureUrl("/login?error=true").permitAll().
                 and().logout().logoutSuccessUrl("/")

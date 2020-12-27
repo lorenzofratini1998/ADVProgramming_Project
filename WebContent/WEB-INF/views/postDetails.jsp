@@ -39,12 +39,14 @@
         </div>
     </div>
 
-    <h4>Allegati</h4> <!-- TODO: si può migliorare -->
+    <h4>Allegati</h4> <!-- TODO: da migliorare -->
     <div class="row">
         <div class="3u 12u$(small)">
             <ul class="actions vertical">
                 <c:forEach items="${post.attachments}" var="attachment">
-                    <li>${attachment.description}</li>
+                    <c:if test="${not attachment.hide}">
+                        <li>${attachment.description}</li>
+                    </c:if>
                 </c:forEach>
             </ul>
         </div>

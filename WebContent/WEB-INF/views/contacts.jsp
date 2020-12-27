@@ -34,7 +34,7 @@
         <b>Seguici anche sui nostri social</b>
         </div>
         <div style='margin-top:5px'>
-        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/facebook.jpg"/>" width="33" height="33" style="float:left;margin:5px" >
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/facebook.png"/>" width="33" height="33" style="float:left;margin:5px" >
         <p>BlogAdvprog</p>
         </div>
         <div>
@@ -48,15 +48,12 @@
     <!-- /.row -->
 
     <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-      <div class="card-body">
-        <p class="text-white m-0">Qualcosa qui in mezzo ci si metterà</p>
-      </div>
-    </div>
+<%--    <div class="card text-white bg-secondary my-5 py-4 text-center">--%>
+<%--      <div class="card-body">--%>
+<%--        <p class="text-white m-0">Qualcosa qui in mezzo ci si metterà</p>--%>
+<%--      </div>--%>
+<%--    </div>--%>
     </div>
   <!-- /.container -->
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

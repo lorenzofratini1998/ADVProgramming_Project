@@ -165,22 +165,4 @@
 			}
 			else document.modulo.submit();
 		}
-		</script>
-		
-	
-	 
-	 
-	 
-	 
-	 
-	 
-	  
-		
-	  
-	
-	
-	
 </script>
-	
-	
-

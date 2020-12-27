@@ -11,40 +11,40 @@
     </c:if>
 </div>
 
-<div class="row">
-    <div class="col-md-6 mb-4">
-        <div class="overflow-auto">
-            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti gli archivi</h5>
-            <table class="table table-striped w-75 mx-auto">
-                <thead>
-                <tr>
+<div class="col-md-12 mb-4">
+    <div class="overflow-auto">
+        <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti gli archivi</h5>
+        <table class="table table-striped w-75 mx-auto">
+            <thead>
+            <tr>
                 <c:if test="${isAdmin}">
                     <th scope="col">Elimina</th>
                 </c:if>
-                    <th scope="col">Archivi</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${archives}" var="archives">
-                    <tr>
+                <th scope="col">Archivi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${archives}" var="archive">
+                <tr>
+                    <c:if test="${isAdmin}">
                         <td>
                             <div class="row">
                                 <div class="col-lg">
-                                <c:if test="${isAdmin}">
+
                                     <a class="btn btn-danger"
-                                       href="<c:url value="/archives/delete/${archives.name}"/>"
-                                       title="Elimina &quot;${archives.name}&quot;"
-                                       onclick='return confirm("Sei sicuro di voler eliminare l\"archivio \"${archives.name}\"?");'>
+                                       href="<c:url value="/archives/delete/${archive.name}"/>"
+                                       title="Elimina &quot;${archive.name}&quot;"
+                                       onclick='return confirm("Sei sicuro di voler eliminare \"${archive.name}\"?");'>
                                         <i class="fa fa-trash"></i></a>
-                                </c:if>
+
                                 </div>
                             </div>
                         </td>
-                        <td>${archives.name}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                    </c:if>
+                    <td>${archive.name}</td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
 </div>
