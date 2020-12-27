@@ -19,7 +19,7 @@
     <header>
         <h1>${post.title}</h1>
         <p class="info">Postato in <a href="<c:url value="/archive/${post.archive.name}"/>">${post.archive.name}</a> da
-            <a href="<a href="<c:url value="/author/${post.author.username}"/>">${post.author.username}</a></p>
+            <a href="<c:url value="/author/${post.author.username}"/>">${post.author.username}</a></p>
     </header>
     <blockquote class="blockquote">
         <p><b>${post.shortDescription}</b></p>

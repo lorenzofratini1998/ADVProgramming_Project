@@ -3,6 +3,7 @@ package it.univpm.advprog.blog.controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import it.univpm.advprog.blog.model.entities.*;
 import it.univpm.advprog.blog.services.*;
@@ -187,6 +188,7 @@ public class UserController {
 				archive = archiveService.getByName(currentArchive);
 			}
 			post.setArchive(archive);
+			
 
 			User author = userService.findUserByUsername(authentication.getName());
 			post.setAuthor(author);
@@ -200,9 +202,9 @@ public class UserController {
 				post.addTag(tagService.getByName(tagName));
 			}
 
-			this.postService.update(post);
+			Post updated_post = this.postService.update(post);
 
-			String strMessage = "Post \"" + post.getTitle() + "\" salvato correttamente";
+			String strMessage = "Post \"" + updated_post.getTitle() + "\" salvato correttamente";
 			return "redirect:/?message=" + strMessage;
 
 		} catch (RuntimeException e) {
@@ -212,6 +214,8 @@ public class UserController {
 		}
 
 	}
+	
+	
 
 
 	/**
@@ -232,10 +236,15 @@ public class UserController {
 		if (post.getAuthor().getUsername().equals(authorUsername)) {
 			List<Tag> tags = tagService.getAll();
 			List<String> postTags = new ArrayList<>();
+//			//Da passare alla vista per rendere consistente la modifica
+//	    	List<Comment> post_comments = (List<Comment>) post.getComments();
+//	    	Set<Attachment> post_attachments = post.getAttachments();
+	    	
 			for (Tag tag:post.getTags()) {
 				postTags.add(tag.getName());
 			}
-
+			
+		
 			uiModel.addAttribute("post", post);
 			uiModel.addAttribute("allTags", tags);
 			uiModel.addAttribute("postTags", postTags);

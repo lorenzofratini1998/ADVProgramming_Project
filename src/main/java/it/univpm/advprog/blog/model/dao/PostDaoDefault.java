@@ -17,8 +17,9 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      */
     @Override
     public List<Post> getAll() {
+  	
         return getSession().
-                createQuery("from Post p", Post.class).
+                createQuery("from Post p order by p.id desc", Post.class).
                 getResultList();
     }
 
@@ -138,7 +139,12 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      */
     @Override
     public Post update(Post post) {
-        return (Post) this.getSession().merge(post);
+    	
+    	 
+         this.getSession().update(post);
+         Post updated_post = this.getById(post.getId());
+         return updated_post;
+         
     }
 
     /**

@@ -42,9 +42,13 @@
                 </c:choose>
             </select><br>
         </label>
-
+        
+        
         <form:hidden path="id"/>
         <form:hidden path="hide"/>
+        
+
+        
         <%--        <form:hidden path="author.username"/>--%>
         <form:hidden path="archive.name"/>
         <input type="submit" value="Submit" class="mt-3 btn btn-lg btn-primary btn-block"/><br><br>
