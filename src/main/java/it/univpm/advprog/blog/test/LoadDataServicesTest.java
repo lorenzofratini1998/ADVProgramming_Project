@@ -87,55 +87,57 @@ public class LoadDataServicesTest {
             assert archive1.getPosts().size() == 10;
 //**********************************************************************************************************************
             // INSERIMENTO COMMENTI
-            Comment comment1 = commentService.create(user1, post5, TITLE, DESCRIPTION);
-            Comment comment2 = commentService.create(user2, post4, TITLE, DESCRIPTION);
-            Comment comment3 = commentService.create(user3, post3, TITLE, DESCRIPTION);
-            Comment comment4 = commentService.create(user4, post2, TITLE, DESCRIPTION);
-            Comment comment5 = commentService.create(user5, post1, TITLE, DESCRIPTION);
-            Comment comment6 = commentService.create(user1, post3, TITLE, DESCRIPTION);
-            Comment comment7 = commentService.create(user2, post1, TITLE, DESCRIPTION);
-            Comment comment8 = commentService.create(user3, post2, TITLE, DESCRIPTION);
-            Comment comment9 = commentService.create(user4, post5, TITLE, DESCRIPTION);
-            Comment comment10 = commentService.create(user5, post4, TITLE, DESCRIPTION);
+            commentService.create(user1, post5, TITLE, DESCRIPTION);
+            commentService.create(user2, post4, TITLE, DESCRIPTION);
+            commentService.create(user3, post3, TITLE, DESCRIPTION);
+            commentService.create(user4, post2, TITLE, DESCRIPTION);
+            commentService.create(user5, post1, TITLE, DESCRIPTION);
+            commentService.create(user1, post3, TITLE, DESCRIPTION);
+            commentService.create(user2, post1, TITLE, DESCRIPTION);
+            commentService.create(user3, post2, TITLE, DESCRIPTION);
+            commentService.create(user4, post5, TITLE, DESCRIPTION);
+            commentService.create(user5, post4, TITLE, DESCRIPTION);
 
             assert commentService.getAll().size() == 10;
 //**********************************************************************************************************************
             // INSERIMENTO ALLEGATI
-            File file1 = fileService.create(DESCRIPTION, post1, "file1.jpg", true);
-            File file2 = fileService.create(DESCRIPTION, post1, "file2.jpg");
-            File file3 = fileService.create(DESCRIPTION, post2, "file1.jpg", true);
-            File file4 = fileService.create(DESCRIPTION, post2, "file2.jpg");
-            File file5 = fileService.create(DESCRIPTION, true, post1, "file3.jpg", true);
+            fileService.create(DESCRIPTION, post1, "file1.jpg", true);
+            fileService.create(DESCRIPTION, post1, "file2.jpg");
+            fileService.create(DESCRIPTION, post2, "file1.jpg", true);
+            fileService.create(DESCRIPTION, post2, "file2.jpg");
+            fileService.create(DESCRIPTION, true, post1, "file3.jpg", true);
 
-            Link link1 = linkService.create(DESCRIPTION, post1, "https://www.univpm.it");
-            Link link2 = linkService.create(DESCRIPTION, true, post2, "https://www.univpm.it");
-            Link link3 = linkService.create(DESCRIPTION, post3, "https://www.univpm.it");
-            Link link4 = linkService.create(DESCRIPTION, true, post1, "https://www.univpm.it");
-            Link link5 = linkService.create(DESCRIPTION, post2, "https://www.univpm.it");
+            linkService.create(DESCRIPTION, post1, "https://www.univpm.it");
+            linkService.create(DESCRIPTION, true, post2, "https://www.univpm.it");
+            linkService.create(DESCRIPTION, post3, "https://www.univpm.it");
+            linkService.create(DESCRIPTION, true, post1, "https://www.univpm.it");
+            linkService.create(DESCRIPTION, post2, "https://www.univpm.it");
 
             assert attachmentService.getAll().size() == 10;
 //**********************************************************************************************************************
             // CONTROLLI
+            post1 = postService.getById(1);
             assert post1.getAttachments().size() == 5;
             assert post1.getComments().size() == 2;
             assert post1.getTags().size() == 1;
 
+            user1 = userService.findUserByUsername("mario98");
             assert user1.getComments().size() == 2;
             assert user1.getPosts().size() == 2;
 
-            assert user2.getPosts().size() == 2;
+            assert userService.findUserByUsername("luca78").getPosts().size() == 2;
 
-            assert post2.getTags().size() == 1;
+            assert postService.getById(2).getTags().size() == 1;
 
-            assert tag1.getPosts().size() == 2;
+            assert tagService.getByName("Office 2021").getPosts().size() == 2;
 
-            assert tag2.getPosts().size() == 2;
+            assert tagService.getByName("Teams").getPosts().size() == 2;
 
             assert archive1.getPosts().size() == 10;
 //**********************************************************************************************************************
             // AGGIORNAMENTO DATI POST
-            assert tag1.getPosts().size() == 2;
-            assert tag3.getPosts().size() == 2;
+            assert tagService.getByName("Office 2021").getPosts().size() == 2;
+            assert tagService.getByName("GitHub").getPosts().size() == 2;
 
             // aggiungo un altro tag
             post3.addTag(tag1);
@@ -143,8 +145,8 @@ public class LoadDataServicesTest {
             // faccio l'update del post
             post3 = postService.update(post3);
 
-            assert tag1.getPosts().size() == 3;
-            assert tag3.getPosts().size() == 2;
+            assert tagService.getByName("Office 2021").getPosts().size() == 3;
+            assert tagService.getByName("GitHub").getPosts().size() == 2;
 //**********************************************************************************************************************
             // AGGIORNAMENTO DATI ALLEGATI
             Attachment attachment = attachmentService.getById(8);
@@ -152,13 +154,14 @@ public class LoadDataServicesTest {
             attachmentService.update(attachment);
             assert attachmentService.getById(8).getDescription().equals("Descrizione link aggiornata");
 
+            File file3 = fileService.getById(3);
             file3.setNoDownloadable(false);
             attachmentService.update(file3);
             assert !fileService.getById(3).isNoDownloadable();
 //**********************************************************************************************************************
             // ELIMINAZIONE UTENTE (implica -> eliminazione di tutti i SUOI POST comprese le associazioni dei
             // POST [cioè associazioni con TAG, ALLEGATI, COMMENTI] e l'eliminazione di tutti i SUOI COMMENTI)
-
+            user2 = userService.findUserByUsername("luca78");
             assert user2.getPosts().size() == 2;
 
             userService.delete(user2);
@@ -168,17 +171,19 @@ public class LoadDataServicesTest {
             assert userFound == null; // userFound is NULL... OK!
 //**********************************************************************************************************************
             // ELIMINAZIONE POST (implica: cancellazione dei suoi COMMENTI, ALLEGATI e associazioni con i tag)
-            assert user1.getPosts().size() == 2;
-            assert archive1.getPosts().size() == 8;
+            assert userService.findUserByUsername("mario98").getPosts().size() == 2;
+            assert archiveService.getByName(new SimpleDateFormat("MMMMM yyyy").format(Calendar.getInstance().getTime())).getPosts().size() == 8;
 
-            postService.delete(post1);
+            postService.delete(postService.getById(1));
 
-            assert user1.getPosts().size() == 1;
+            assert userService.findUserByUsername("mario98").getPosts().size() == 1;
+            archive1 = archiveService.getByName(new SimpleDateFormat("MMMMM yyyy").format(Calendar.getInstance().getTime()));
             assert archive1.getPosts().size() == 7;
 //**********************************************************************************************************************
             // ELIMINAZIONE TAG (implica: 1) TAG VUOTO     -> viene ELIMINATO
             //                            2) TAG NON VUOTO -> ERRORE (NON permettiamo la cancellazione di tag a cui
             //                                                sono associati dei post.
+            tag4 = tagService.getByName("Google Calendar");
             assert tag2.getPosts().size() == 0;
             assert tag4.getPosts().size() == 2;
 
@@ -203,11 +208,11 @@ public class LoadDataServicesTest {
             assert archive1.getPosts().size() == 7;
 
             // create an empty archive
-            Archive archive = archiveService.create("archivio-prova");
+            Archive archive = archiveService.create("dicembre 1990");
 
-            assert archiveService.getByName("archivio-prova").getPosts().size() == 0;
+            assert archiveService.getByName("dicembre 1990").getPosts().size() == 0;
 
-            archiveService.delete("archivio-prova");
+            archiveService.delete("dicembre 1990");
 
             try {
                 archiveService.delete(archive1);
@@ -223,12 +228,12 @@ public class LoadDataServicesTest {
 
 //**********************************************************************************************************************
             // ELIMINAZIONE DI UN COMMENTO
-            assert post4.getComments().size() == 1;
+            assert postService.getById(4).getComments().size() == 1;
 
-            comment10 = commentService.findCommentById(10);
+            Comment comment10 = commentService.findCommentById(10);
             commentService.delete(comment10);
 
-            assert post4.getComments().size() == 0;
+            assert postService.getById(4).getComments().size() == 0;
 
             Comment commentFound = commentService.findCommentById(comment10.getId());
 
@@ -237,14 +242,14 @@ public class LoadDataServicesTest {
 //**********************************************************************************************************************
             // ELIMINAZIONE di un ALLEGATO (implica: cancellazione dello stesso nella tabella padre
             // dell'ereditarietà)
-            assert post3.getAttachments().size() == 1;
+            assert postService.getById(3).getAttachments().size() == 1;
 
             assert attachmentService.getAll().size() == 1;
 
-            link3 = linkService.getById(8);
+            Link link3 = linkService.getById(8);
             linkService.delete(link3);
 
-            assert post3.getAttachments().size() == 0;
+            assert postService.getById(3).getAttachments().size() == 0;
 
             assert attachmentService.getAll().size() == 0;
 
