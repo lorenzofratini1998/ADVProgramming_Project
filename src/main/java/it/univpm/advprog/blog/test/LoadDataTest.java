@@ -47,7 +47,6 @@ public class LoadDataTest {
                 userDao.setSession(session);
                 postDao.setSession(session);
                 archiveDao.setSession(session);
-                userDao.setSession(session);
                 tagDao.setSession(session);
                 commentDao.setSession(session);
                 fileDao.setSession(session);
@@ -131,16 +130,16 @@ public class LoadDataTest {
                 // INSERIMENTO COMMENTI
                 session.beginTransaction();
 
-                Comment comment1 = commentDao.create(user1, post5, TITLE, DESCRIPTION);
-                Comment comment2 = commentDao.create(user2, post4, TITLE, DESCRIPTION);
-                Comment comment3 = commentDao.create(user3, post3, TITLE, DESCRIPTION);
-                Comment comment4 = commentDao.create(user4, post2, TITLE, DESCRIPTION);
-                Comment comment5 = commentDao.create(user5, post1, TITLE, DESCRIPTION);
-                Comment comment6 = commentDao.create(user1, post3, TITLE, DESCRIPTION);
-                Comment comment7 = commentDao.create(user2, post1, TITLE, DESCRIPTION);
-                Comment comment8 = commentDao.create(user3, post2, TITLE, DESCRIPTION);
-                Comment comment9 = commentDao.create(user4, post5, TITLE, DESCRIPTION);
-                Comment comment10 = commentDao.create(user5, post4, TITLE, DESCRIPTION);
+                commentDao.create(user1, post5, TITLE, DESCRIPTION);
+                commentDao.create(user2, post4, TITLE, DESCRIPTION);
+                commentDao.create(user3, post3, TITLE, DESCRIPTION);
+                commentDao.create(user4, post2, TITLE, DESCRIPTION);
+                commentDao.create(user5, post1, TITLE, DESCRIPTION);
+                commentDao.create(user1, post3, TITLE, DESCRIPTION);
+                commentDao.create(user2, post1, TITLE, DESCRIPTION);
+                commentDao.create(user3, post2, TITLE, DESCRIPTION);
+                commentDao.create(user4, post5, TITLE, DESCRIPTION);
+                commentDao.create(user5, post4, TITLE, DESCRIPTION);
 
                 session.getTransaction().commit();
 
@@ -151,17 +150,17 @@ public class LoadDataTest {
 
                 session.beginTransaction();
 
-                File file1 = fileDao.create(DESCRIPTION, post1, "file1.jpg", true);
-                File file2 = fileDao.create(DESCRIPTION, post1, "file2.jpg");
-                File file3 = fileDao.create(DESCRIPTION, post2, "file1.jpg", true);
-                File file4 = fileDao.create(DESCRIPTION, post2, "file2.jpg");
-                File file5 = fileDao.create(DESCRIPTION, true, post1, "file3.jpg", true);
+                fileDao.create(DESCRIPTION, post1, "file1.jpg", true);
+                fileDao.create(DESCRIPTION, post1, "file2.jpg");
+                fileDao.create(DESCRIPTION, post2, "file1.jpg", true);
+                fileDao.create(DESCRIPTION, post2, "file2.jpg");
+                fileDao.create(DESCRIPTION, true, post1, "file3.jpg", true);
 
-                Link link1 = linkDao.create(DESCRIPTION, post1, "https://www.univpm.it");
-                Link link2 = linkDao.create(DESCRIPTION, true, post2, "https://www.univpm.it");
-                Link link3 = linkDao.create(DESCRIPTION, post3, "https://www.univpm.it");
-                Link link4 = linkDao.create(DESCRIPTION, true, post1, "https://www.univpm.it");
-                Link link5 = linkDao.create(DESCRIPTION, post2, "https://www.univpm.it");
+                linkDao.create(DESCRIPTION, post1, "https://www.univpm.it");
+                linkDao.create(DESCRIPTION, true, post2, "https://www.univpm.it");
+                linkDao.create(DESCRIPTION, post3, "https://www.univpm.it");
+                linkDao.create(DESCRIPTION, true, post1, "https://www.univpm.it");
+                linkDao.create(DESCRIPTION, post2, "https://www.univpm.it");
 
                 session.getTransaction().commit();
 
@@ -267,6 +266,7 @@ public class LoadDataTest {
                 attachment.setDescription("Descrizione link aggiornata");
                 attachmentDao.update(attachment);
 
+                File file3 = fileDao.getById(3);
                 file3.setNoDownloadable(false);
                 fileDao.update(file3);
 
@@ -283,9 +283,9 @@ public class LoadDataTest {
                 session.beginTransaction();
 
                 // NON SERVONO, viene gestito automaticamente da Hibernate (tramite i orphanRemoval)
-                //user2.getPosts().clear();
-                //user2.getComments().clear();
-                //user2 = userDao.update(user2);
+//                user2.getPosts().clear();
+//                user2.getComments().clear();
+//                user2 = userDao.update(user2);
                 userDao.delete(user2);
 
                 session.getTransaction().commit();
@@ -384,14 +384,14 @@ public class LoadDataTest {
 
 //**********************************************************************************************************************
                 // ELIMINAZIONE DI UN COMMENTO
-                session.refresh(post4);
-                session.refresh(comment10);
+//                session.refresh(post4);
+                post4 = postDao.getById(4);
 
                 assert post4.getComments().size() == 1;
 
                 session.beginTransaction();
 
-                commentDao.delete(comment10);
+                commentDao.delete(commentDao.findCommentById(10));
 
                 session.getTransaction().commit();
 
@@ -399,21 +399,20 @@ public class LoadDataTest {
 
                 assert post4.getComments().size() == 0;
 
-                Comment commentFound = commentDao.findCommentById(comment10.getId());
+                Comment commentFound = commentDao.findCommentById(10);
 
                 assert commentFound == null; // commentFound is NULL... OK!
 
 //**********************************************************************************************************************
                 // ELIMINAZIONE di un ALLEGATO (implica: cancellazione dello stesso nella tabella padre
                 // dell'ereditarietà)
-                session.refresh(post3);
-                session.refresh(link3);
+                post3 = postDao.getById(3);
 
                 assert post3.getAttachments().size() == 1;
                 assert attachmentDao.getAll().size() == 1;
 
                 session.beginTransaction();
-                linkDao.delete(link3);
+                linkDao.delete(linkDao.getById(8));
                 session.getTransaction().commit();
 
                 session.refresh(post3);
