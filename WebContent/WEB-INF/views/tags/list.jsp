@@ -6,15 +6,18 @@
 <sec:authorize access="hasRole('admin')" var="isAdmin"/>
 <c:url value="/tags/new" var="newTag_url"/>
 
-<div class="row">
-    <c:if test="${fn:length(message) > 0}">
-        <p class="mx-auto">${message}</p>
-    </c:if>
-</div>
-
 <div class="col-md-12 mb-4">
+    <div class="row">
+        <c:if test="${fn:length(successMessage) > 0}">
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+        </c:if>
+        <c:if test="${fn:length(errorMessage) > 0}">
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+        </c:if>
+    </div>
     <div class="overflow-auto">
         <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i tag</h5>
+        <div class="font-weight-bold text-center">Numero tag: ${numTags}</div>
         <table class="table table-striped w-75 mx-auto">
             <thead>
             <tr>

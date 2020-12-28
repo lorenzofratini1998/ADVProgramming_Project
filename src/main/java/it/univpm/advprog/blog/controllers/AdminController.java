@@ -117,7 +117,7 @@ public class AdminController {
         if(tag.getName() == null || tag.getName().equals("")) {
             String strMessage = "Non hai inserito alcun nome per il tag!";
 
-            return "redirect:/tags/?message=" + strMessage;
+            return "redirect:/tags/?errorMessage=" + strMessage;
         }
 
         try {
@@ -125,13 +125,13 @@ public class AdminController {
 
             this.tagService.update(tag);
 
-            String strMessage = "Il tag \"" + tag.getName() + "\" è stato salvato correttamente!";
+            String strMessage = "Il tag \"" + tag.getName() + "\" %C3%A8 stato salvato correttamente!";
 
-            return "redirect:/tags/?message=" + strMessage;
+            return "redirect:/tags/?successMessage=" + strMessage;
 
         } catch (RuntimeException e) {
 
-            return "redirect:/tags/?message=" + e.getMessage();
+            return "redirect:/tags/?errorMessage=" + e.getMessage();
         }
     }
 
@@ -150,13 +150,13 @@ public class AdminController {
 
         if (selectedTag.getPosts().size() == 0) {
             this.tagService.delete(selectedTag);
-            strMessage = "Il tag \"" + selectedTag.getName() + "\" è stato cancellato correttamente!";
+            strMessage = "Il tag \"" + selectedTag.getName() + "\" %C3%A8 stato cancellato correttamente!";
+            return "redirect:/tags/?successMessage=" + strMessage;
         } else {
             strMessage = "Il tag \"" + selectedTag.getName() + "\" contiene dei post... " +
-                    "Non può essere cancellato!";
+                    "Non pu%C3%B2 essere cancellato!";
+            return "redirect:/tags/?errorMessage=" + strMessage;
         }
-
-        return "redirect:/tags/?message=" + strMessage;
     }
 
     /**
@@ -174,13 +174,13 @@ public class AdminController {
 
         if (selectedArchive.getPosts().size() == 0) {
             this.archiveService.delete(selectedArchive);
-            strMessage = "L'archivio \"" + selectedArchive.getName() + "\" è stato cancellato correttamente!";
+            strMessage = "L'archivio \"" + selectedArchive.getName() + "\" %C3%A8 stato cancellato correttamente!";
+            return "redirect:/archives/?successMessage=" + strMessage;
         } else {
             strMessage = "L'archivio \"" + selectedArchive.getName() + "\" contiene dei post... " +
-                    "Non può essere cancellato!";
+                    "Non pu%C3%B2 essere cancellato!";
+            return "redirect:/archives/?errorMessage=" + strMessage;
         }
-
-        return "redirect:/archives/?message=" + strMessage;
     }
 
     /**
@@ -216,8 +216,8 @@ public class AdminController {
         logger.info("Hiding the attachment \"" + selectedAttachment.getDescription() + "\"...");
 
         selectedAttachment.setHide(true);
-        this.attachmentService.update(selectedAttachment); //TODO: serve?
-        String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" è stato nascosto correttamente!";
+        this.attachmentService.update(selectedAttachment);
+        String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
         return "redirect:/attachments/?message=" + strMessage;
     }
@@ -234,8 +234,8 @@ public class AdminController {
         logger.info("Showing the attachment \"" + selectedAttachment.getDescription() + "\"...");
 
         selectedAttachment.setHide(false);
-        this.attachmentService.update(selectedAttachment); //TODO: serve?
-        String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" è stato nascosto correttamente!";
+        this.attachmentService.update(selectedAttachment);
+        String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
         return "redirect:/attachments/?message=" + strMessage;
     }
@@ -243,12 +243,15 @@ public class AdminController {
     /**
      * Metodo per la richiesta GET per la visualizzazione della lista di tutti gli utenti.
      *
-     * @param message eventuale messaggio da mostrare
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
      * @param uiModel modello associato alla vista
      * @return nome della vista da visualizzare
      */
     @GetMapping(value = "/users")
-    public String showUsers(@RequestParam(value = "message", required = false) String message, Model uiModel) {
+    public String showUsers(@RequestParam(value = "successMessage", required = false) String successMessage,
+                            @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                            Model uiModel) {
         logger.info("Listing all the users...");
 
         List<User> allUsers = this.userService.findAll();
@@ -259,8 +262,9 @@ public class AdminController {
         };
 
         uiModel.addAttribute("users", allUsers);
-
-        uiModel.addAttribute("message", "prova");
+        uiModel.addAttribute("numUsers", allUsers.size());
+        uiModel.addAttribute("successMessage", successMessage);
+        uiModel.addAttribute("errorMessage", errorMessage);
 
         return "users.list";
     }
@@ -277,9 +281,9 @@ public class AdminController {
         logger.info("Disabling the user \"" + selectedUser.getUsername() + "\"...");
 
         selectedUser.setDisabled(true);
-        this.userService.update(selectedUser); //TODO: serve?
-        String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" è stato disabilitato correttamente!";
-        return "redirect:/users/?message=" + strMessage;
+        this.userService.update(selectedUser);
+        String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" %C3%A8 stato disabilitato correttamente!";
+        return "redirect:/users/?successMessage=" + strMessage;
     }
     
     /**
@@ -294,10 +298,10 @@ public class AdminController {
         logger.info("Enabling the user \"" + selectedUser.getUsername() + "\"...");
 
         selectedUser.setDisabled(false);
-        this.userService.update(selectedUser); //TODO: serve?
-        String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" è stato abilitato correttamente!";
+        this.userService.update(selectedUser);
+        String strMessage = "L'utente \"" + selectedUser.getUsername() + "\" %C3%A8 stato abilitato correttamente!";
 
-        return "redirect:/users/?message=" + strMessage;
+        return "redirect:/users/?successMessage=" + strMessage;
     }
     
     /**
@@ -336,8 +340,8 @@ public class AdminController {
         logger.info("Hiding the comment \"" + selectedComment.getDescription() + "\"...");
 
         selectedComment.setHide(true);
-        this.commentService.update(selectedComment); //TODO: serve?
-        String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" è stato nascosto correttamente!";
+        this.commentService.update(selectedComment);
+        String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
         return "redirect:/comments/manage";
     }
@@ -354,8 +358,8 @@ public class AdminController {
         logger.info("Hiding the comment \"" + selectedComment.getDescription() + "\"...");
 
         selectedComment.setHide(false);
-        this.commentService.update(selectedComment); //TODO: serve?
-        String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" è stato mostrato correttamente!";
+        this.commentService.update(selectedComment);
+        String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" %C3%A8 stato mostrato correttamente!";
         
         uiModel.addAttribute("showMessage", strMessage);
 
@@ -405,8 +409,8 @@ public class AdminController {
         logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");
 
         selectedPost.setHide(true);
-        this.postService.update(selectedPost); //TODO: serve?
-        String strMessage = "Il post \"" + selectedPost.getTitle() + "\" è stato nascosto correttamente!";
+        this.postService.update(selectedPost);
+        String strMessage = "Il post \"" + selectedPost.getTitle() + "\" %C3%A8 stato nascosto correttamente!";
 
         return "redirect:/posts/manage?message=" + strMessage;
     }
@@ -423,8 +427,8 @@ public class AdminController {
         logger.info("Hiding the post \"" + selectedPost.getTitle() + "\"...");
 
         selectedPost.setHide(false);
-        this.postService.update(selectedPost); //TODO: serve?
-        String strMessage = "Il post \"" + selectedPost.getTitle() + "\" è stato mostrato correttamente!";
+        this.postService.update(selectedPost);
+        String strMessage = "Il post \"" + selectedPost.getTitle() + "\" %C3%A8 stato mostrato correttamente!";
 
         return "redirect:/posts/manage?message=" + strMessage;
     }

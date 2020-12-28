@@ -115,40 +115,46 @@ public class GuestController {
     /**
      * Metodo per la richiesta GET per la visualizzazione della lista di tags.
      *
-     * @param message eventuale messaggio da mostrare
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
      * @param uiModel modello associato alla vista
      * @return nome della vista da visualizzare
      */
     @GetMapping(value = "/tags")
-    public String showTags(@RequestParam(value = "message", required = false) String message, Model uiModel) {
+    public String showTags(@RequestParam(value = "successMessage", required = false) String successMessage,
+                           @RequestParam(value = "errorMessage", required = false) String errorMessage, Model uiModel) {
         logger.info("Listing all the tags...");
 
         List<Tag> allTags = this.tagService.getAll();
 
         uiModel.addAttribute("tags", allTags);
-
-        uiModel.addAttribute("message", message);
+        uiModel.addAttribute("numTags", allTags.size());
+        uiModel.addAttribute("successMessage", successMessage);
+        uiModel.addAttribute("errorMessage", errorMessage);
 
         return "tags.list";
     }
     
     /**
      * Metodo per la richiesta GET per la visualizzazione degli archivi
-     * 
-     * @param message  eventuale messaggio da mostrare
+     *
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
      * @param uiModel  modello associato alla vista
      * @return nome nome della vista da visualizzare
      */
     
     @GetMapping(value="/archives")
-    public String showArchives(@RequestParam(value="message", required = false) String message, Model uiModel) {
+    public String showArchives(@RequestParam(value = "successMessage", required = false) String successMessage,
+                               @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                               Model uiModel) {
     	logger.info("Listing all the archives...");
     	
 	     List<Archive> allArchives = this.archiveService.getAll();
-	
 	     uiModel.addAttribute("archives", allArchives);
-	
-	     uiModel.addAttribute("message", message);
+	     uiModel.addAttribute("numArchives", allArchives.size());
+	     uiModel.addAttribute("successMessage", successMessage);
+	     uiModel.addAttribute("errorMessage", errorMessage);
 	
 	     return "archives.list";
     }
@@ -258,7 +264,7 @@ public class GuestController {
 
     	if(selectedPost.isHide()) {
 
-            String strMessage = "Il post specificato non può essere visualizzato.";
+            String strMessage = "Il post specificato non pu%C3%B2 essere visualizzato.";
             return "redirect:/?message=" + strMessage;
 
         } else {
@@ -372,7 +378,7 @@ public class GuestController {
                 String mimetype= new MimetypesFileTypeMap().getContentType(dest);
                 String type = mimetype.split("/")[0];
                 if(!type.equals("image")) {
-                    String strMessage = "ERRORE, il file specificato non è un'immagine!";
+                    String strMessage = "ERRORE, il file specificato non %C3%A8 un'immagine!";
                     return "redirect:/sign_up?message=" + strMessage;
                 }
                 // sposto il file sulla cartella destinazione

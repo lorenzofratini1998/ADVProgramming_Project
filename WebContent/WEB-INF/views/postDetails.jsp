@@ -39,7 +39,8 @@
         </div>
     </div>
 
-    <h4>Allegati</h4> <!-- TODO: da migliorare -->
+    <h4>Allegati</h4>
+    <!-- TODO: distinguere il caso in cui è un file (distinguere se è SCARICABILE o NO) e il caso in cui è un link -->
     <div class="row">
         <div class="3u 12u$(small)">
             <ul class="actions vertical">

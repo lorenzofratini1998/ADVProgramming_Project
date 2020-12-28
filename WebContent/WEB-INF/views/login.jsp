@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${not empty errorMessage}">
-    <div style="color: red; font-weight: bold; margin: 30px 0;">${errorMessage}</div>
+    <div class="text-center" style="color: red; font-weight: bold; margin: 30px 0;">${errorMessage}</div>
 </c:if>
 
 <div class="container row h-100 mx-auto">

@@ -21,6 +21,8 @@
 <c:url value="/disclaimer" var="disclaimer_url"/>
 <c:url value="/users" var="users_url"/>
 <c:url value="/attachments" var="attachments_url"/>
+<c:url value="/posts/manage" var="all_posts_url"/>
+<c:url value="/comments/manage" var="all_comments_url"/>
 
 <c:if test="${isNoAuth}">
     <!-- Navigation -->
@@ -153,6 +155,10 @@
                                 <a class="dropdown-item" href="${attachments_url}">Gestisci Allegati</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="${archives_url}">Gestisci Archivi</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="${all_comments_url}">Gestisci Commenti</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="${all_posts_url}">Gestisci Post</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="${tags_url}">Gestisci Tag</a>
                                 <div class="dropdown-divider"></div>

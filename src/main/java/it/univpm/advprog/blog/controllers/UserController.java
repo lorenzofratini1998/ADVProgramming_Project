@@ -116,12 +116,15 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di mosrare tutti i post scritti dall'utente
 	 *
+	 * @param errorMessage eventuale messaggio di errore
+	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/posts")
 	public String showMyPosts(Authentication authentication, Model uiModel,
-							  @RequestParam(value="message", required = false) String message) {
+							  @RequestParam(value = "successMessage", required = false) String successMessage,
+							  @RequestParam(value = "errorMessage", required = false) String errorMessage) {
 		logger.info("Showing your posts...");
 
 		List<Post> allPosts = new ArrayList<>();
@@ -138,7 +141,8 @@ public class UserController {
 
 		uiModel.addAttribute("posts", allPosts);
 		uiModel.addAttribute("numPosts", allPosts.size());
-		uiModel.addAttribute("message", message);
+		uiModel.addAttribute("successMessage", successMessage);
+		uiModel.addAttribute("errorMessage", errorMessage);
 
 		return "posts.list";
 
@@ -254,7 +258,7 @@ public class UserController {
 		} else {
 
 			String strMessage = "Non sei abilitato a modificare il post specificato.";
-			return "redirect:/posts/?message=" + strMessage;
+			return "redirect:/posts/?errorMessage=" + strMessage;
 
 		}
 	}
@@ -263,17 +267,16 @@ public class UserController {
 	 * Metodo per la richiesta GET di eliminazione post
 	 *
 	 * @param id		id del commento da rimuovere
-	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/posts/delete/{postId}")
-	public String deletePost (@PathVariable("postId") long id, Model uiModel) {
+	public String deletePost (@PathVariable("postId") long id) {
 		logger.info("Deleting a post...");
 
 		Post p = this.postService.getById(id);
 		this.postService.delete(p);
-		String message = "Post" + p.getTitle() + "eliminato correttamente!";
-		return "redirect:" + "/posts/?message=" + message;
+		String message = "Post \"" + p.getTitle() + "\" eliminato correttamente!";
+		return "redirect:" + "/posts/?successMessage=" + message;
 	}
 
 	/**
@@ -392,12 +395,12 @@ public class UserController {
 		try {
 			link.setPost(this.postService.getById(postId));
 			this.linkService.update(link);
-			String message = "Il link \"" + link.getDescription() + "\" è stato salvato correttamente!";
+			String message = "Il link \"" + link.getDescription() + "\" %C3%A8 stato salvato correttamente!";
 
-			return "redirect:" + "/posts/?message=" + message;
+			return "redirect:" + "/posts/?successMessage=" + message;
 
 		} catch (RuntimeException e) {
-			return "redirect:" + "/posts/?message=" + e.getMessage();
+			return "redirect:" + "/posts/?errorMessage=" + e.getMessage();
 		}
 	}
 
@@ -424,7 +427,7 @@ public class UserController {
 					logger.info("creating the directory...");
 					if (!new java.io.File(realPathtoUploads).mkdir()) {
 						String strMessage = "ERRORE, impossibile creare la cartella nel server!";
-						return "redirect:/posts?message=" + strMessage;
+						return "redirect:/posts?errorMessage=" + strMessage;
 					}
 				}
 
@@ -443,17 +446,17 @@ public class UserController {
 			newFile.setName(nameOfFile);
 		} else {
 			String message = "ERRORE, non hai caricato alcun file!";
-			return "redirect:/posts?message=" + message;
+			return "redirect:/posts?errorMessage=" + message;
 		}
 
 		try {
 			newFile.setPost(postService.getById(postId));
 			this.fileService.update(newFile);
 			String strMessage = "Il file e' stato caricato correttamente!";
-			return "redirect:/posts?message=" + strMessage;
+			return "redirect:/posts?successMessage=" + strMessage;
 		} catch (RuntimeException e) {
 
-			return "redirect:/posts?message=" + e.getMessage();
+			return "redirect:/posts?errorMessage=" + e.getMessage();
 
 		}
 	}
@@ -473,12 +476,12 @@ public class UserController {
 		try {
 			file.setPost(this.postService.getById(postId));
 			this.fileService.update(file);
-			String message = "Il file \"" + file.getDescription() + "\" è stato salvato correttamente!";
+			String message = "Il file \"" + file.getDescription() + "\" %C3%A8 stato salvato correttamente!";
 
-			return "redirect:" + "/posts/?message=" + message;
+			return "redirect:" + "/posts/?successMessage=" + message;
 
 		} catch (RuntimeException e) {
-			return "redirect:" + "/posts/?message=" + e.getMessage();
+			return "redirect:" + "/posts/?errorMessage=" + e.getMessage();
 		}
 	}
 
@@ -494,19 +497,22 @@ public class UserController {
 
 		Attachment attachment = attachmentService.getById(id);
 		this.attachmentService.delete(attachment);
-		String message = "L'allegato \"" + attachment.getDescription() + "\" è stato eliminato correttamente!";
-		return "redirect:" + "/posts/?message=" + message;
+		String message = "L'allegato \"" + attachment.getDescription() + "\" %C3%A8 stato eliminato correttamente!";
+		return "redirect:" + "/posts/?successMessage=" + message;
 	}
 
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dei commenti
 	 *
+	 * @param errorMessage eventuale messaggio di errore
+	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/comments")
 	public String showComments(Authentication authentication, Model uiModel,
-							   @RequestParam(value="message", required = false) String message) {
+							   @RequestParam(value = "successMessage", required = false) String successMessage,
+							   @RequestParam(value = "errorMessage", required = false) String errorMessage) {
 		logger.info("Showing your comments...");
 
 		List<Comment> allComments = new ArrayList<>();
@@ -518,7 +524,8 @@ public class UserController {
 
 		uiModel.addAttribute("comments", allComments);
 		uiModel.addAttribute("numComments",allComments.size());
-		uiModel.addAttribute("message", message);
+		uiModel.addAttribute("successMessage", successMessage);
+		uiModel.addAttribute("errorMessage", errorMessage);
 
 
 		return "comments.list";
@@ -544,7 +551,7 @@ public class UserController {
 			Post post = postService.getById(postId);
 			comment.setPost(post);
 			this.commentService.update(comment);
-			String strMessage = "Il commento è stato salvato correttamente!";
+			String strMessage = "Il commento %C3%A8 stato salvato correttamente!";
 
 			return "redirect:/blog/post/" + postId + "?message=" + strMessage;
 
@@ -578,7 +585,7 @@ public class UserController {
 
 		else {
 			String strMessage = "Non abilitato";
-			return "redirect:/" + u + "/comments/?message=" + strMessage;
+			return "redirect:/" + u + "/comments/?errorMessage=" + strMessage;
 		}}
 
 
@@ -603,11 +610,11 @@ public class UserController {
 			this.commentService.update(comment);
 			String strMessage = "Commento: " + comment.getTitle() + " salvato correttamente!";
 
-			return "redirect:/comments/?message=" + strMessage;
+			return "redirect:/comments/?successMessage=" + strMessage;
 
 		} catch (RuntimeException e) {
 
-			return "redirect:/comments/?message=" + e.getMessage();
+			return "redirect:/comments/?errorMessage=" + e.getMessage();
 		}
 	}
 
@@ -615,17 +622,16 @@ public class UserController {
 	 * Metodo per la richiesta GET di eliminazione commento
 	 *
 	 * @param id		id del commento da rimuovere
-	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/comments/delete/{commentId}")
-	public String deleteComment (/*@PathVariable("username") String username,*/ @PathVariable("commentId") long id, Model uiModel) {
+	public String deleteComment (@PathVariable("commentId") long id) {
 		//logger.info(username + "Deleting a comment...");
 
 		Comment c = this.commentService.findCommentById(id);
 		this.commentService.delete(c);
-		String message = "Commento: " + c.getTitle() + "eliminato correttamente!";
-		return "redirect:/" + "comments?message=" + message;
+		String message = "Commento \"" + c.getTitle() + "\" eliminato correttamente!";
+		return "redirect:/comments?successMessage=" + message;
 	}
 
 
@@ -711,7 +717,7 @@ public class UserController {
 				String mimetype = new MimetypesFileTypeMap().getContentType(dest);
 				String type = mimetype.split("/")[0];
 				if (!type.equals("image")) {
-					String strMessage = "ERRORE, il file specificato non è un'immagine!";
+					String strMessage = "ERRORE, il file specificato non %C3%A8 un'immagine!";
 					return "redirect:/profile?message=" + strMessage;
 				}
 				// sposto il file sulla cartella destinazione

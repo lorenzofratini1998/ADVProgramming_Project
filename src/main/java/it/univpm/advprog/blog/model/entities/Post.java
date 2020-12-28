@@ -2,18 +2,12 @@ package it.univpm.advprog.blog.model.entities;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.SelectBeforeUpdate;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
-@DynamicUpdate
-@SelectBeforeUpdate
 @Table(name = "posts")
 @NamedQueries({
         @NamedQuery(
@@ -215,7 +209,7 @@ public class Post implements Serializable {
      *
      * @return allegati del post
      */
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "post", cascade=CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, mappedBy = "post")
     public Set<Attachment> getAttachments() {
         return attachments;
     }

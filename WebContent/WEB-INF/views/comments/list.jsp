@@ -5,10 +5,15 @@
 
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 
-<c:if test="${not empty message}">
-    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
-</c:if>
 <div class="col-md-12 mb-4">
+    <div class="row">
+        <c:if test="${fn:length(successMessage) > 0}">
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+        </c:if>
+        <c:if test="${fn:length(errorMessage) > 0}">
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+        </c:if>
+    </div>
         <div class="overflow-auto">
             <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i commenti</h5>
 	<div class="font-weight-bold text-center">Numero commenti: ${numComments }</div>
