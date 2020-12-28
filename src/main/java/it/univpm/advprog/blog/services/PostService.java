@@ -23,7 +23,7 @@ public interface PostService {
     Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags);
 
     Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
-                Set<Tag> tags, Set<Attachment> attachments, Set<Comment> comments);
+                Set<Tag> tags);
 
     Post update(Post post);
 

@@ -73,8 +73,7 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
                        Archive archive) {
         Set<Tag> tags = new HashSet<>();
         tags.add(tag);
-        return this.create(title, author, false, shortDescription, longDescription, tags, archive, null,
-                null);
+        return this.create(title, author, false, shortDescription, longDescription, tags, archive);
     }
 
     /**
@@ -91,8 +90,8 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags,
                        Archive archive) {
-        return this.create(title, author, false, shortDescription, longDescription, tags, archive, null,
-                null);
+        return this.create(title, author, false, shortDescription, longDescription, tags, archive);
+                
     }
 
     /**
@@ -111,7 +110,7 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      */
     @Override
     public Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
-                       Set<Tag> tags, Archive archive, Set<Attachment> attachments, Set<Comment> comments) {
+                       Set<Tag> tags, Archive archive) {
         // create a new post
         Post post = new Post();
         // set params
@@ -124,8 +123,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         post.setArchive(archive);
         // faccio i controlli sul valore null almeno posso fare getComments().size() anche quando non ho alcun commento,
         // altrimenti se era null non potevo fare .size()
-        if (comments != null) post.setComments(comments);
-        if (attachments != null) post.setAttachments(attachments);
         // save the new post
         this.getSession().save(post);
         return post;

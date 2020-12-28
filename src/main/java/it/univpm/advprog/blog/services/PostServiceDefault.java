@@ -119,8 +119,7 @@ public class PostServiceDefault implements PostService {
         Set<Tag> tags = new HashSet<>();
         tags.add(tag);
 
-        return this.create(title, author, false, shortDescription, longDescription, tags, null,
-                null);
+        return this.create(title, author, false, shortDescription, longDescription, tags);
     }
 
     /**
@@ -136,8 +135,7 @@ public class PostServiceDefault implements PostService {
     @Transactional
     @Override
     public Post create(String title, User author, String shortDescription, String longDescription, Set<Tag> tags) {
-        return this.create(title, author, false, shortDescription, longDescription, tags, null,
-                null);
+        return this.create(title, author, false, shortDescription, longDescription, tags);
     }
 
     /**
@@ -156,11 +154,10 @@ public class PostServiceDefault implements PostService {
     @Transactional
     @Override
     public Post create(String title, User author, boolean hide, String shortDescription, String longDescription,
-                       Set<Tag> tags, Set<Attachment> attachments, Set<Comment> comments) {
+                       Set<Tag> tags) {
         Archive archive = createCurrentArchive();
 
-        return this.postRepository.create(title, author, hide, shortDescription, longDescription, tags, archive,
-                attachments, comments);
+        return this.postRepository.create(title, author, hide, shortDescription, longDescription, tags, archive);
     }
 
     /**

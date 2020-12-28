@@ -26,7 +26,7 @@ public interface PostDao {
                 Archive archive);
 
     Post create(String title, User author, boolean hide, String shortDescription, String longDescription, Set<Tag> tags,
-                Archive archive, Set<Attachment> attachments, Set<Comment> comments);
+                Archive archive);
 
     Post update(Post post);
 
