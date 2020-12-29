@@ -179,36 +179,50 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@PostMapping(value="/posts/save")
-	public String saveNewPost(@RequestParam("archive.name") String currentArchive, @RequestParam(value = "tagsSelected", required = false) String[] tags,
+	public String savePost(@RequestParam("archive.name") String currentArchive, @RequestParam(value = "tagsSelected", required = false) String[] tags,
 							  Authentication authentication, @ModelAttribute("post") Post post) {
+		
 		logger.info("Saving the post");
+		Post found_post = this.postService.getById(post.getId());
+		User author = userService.findUserByUsername(authentication.getName());
+		
+		
 		try {
-			Archive archive;
-			if (currentArchive.equals("")) {
-				// sto CREANDO il POST, quindi devo IMPOSTARE l'ARCHIVIO
-				archive = postService.createCurrentArchive();
-			} else {
-				// sto EDITANDO il POST, quindi lascio il VECCHIO ARCHIVIO
-				archive = archiveService.getByName(currentArchive);
-			}
+		
+		post.setAuthor(author);
+		if(tags == null || tags.length == 0) {
+			String strMessage = "ERRORE, il post deve contenere almeno un tag.";
+			return "redirect:/?errorMessage=" + strMessage;
+		}
+
+		for (String tagName : tags) {
+			post.addTag(tagService.getByName(tagName));
+		}
+		
+		
+		//Nessun post con l'id specificato dal model attribute: CREAZIONE NUOVO POST
+		if (found_post==null) {
+			
+			// sto CREANDO il POST, quindi devo IMPOSTARE l'ARCHIVIO
+			Archive archive = this.postService.createCurrentArchive();
 			post.setArchive(archive);
 			
+			
+			
+			
+			this.postService.create(post.getTitle(), post.getAuthor(), post.isHide(), post.getShortDescription(), post.getLongDescription(), post.getTags());
+			
+		}
+		
+		//L'inoltro del form è per la MODIFICA DI UN POST GIA' ESISTENTE
+		else {
+			
+			this.postService.update(post);
+			
+			 }
+		
 
-			User author = userService.findUserByUsername(authentication.getName());
-			post.setAuthor(author);
-
-			if(tags == null || tags.length == 0) {
-				String strMessage = "ERRORE, il post deve contenere almeno un tag.";
-				return "redirect:/?errorMessage=" + strMessage;
-			}
-
-			for (String tagName : tags) {
-				post.addTag(tagService.getByName(tagName));
-			}
-
-			Post updated_post = this.postService.update(post);
-
-			String strMessage = "Post \"" + updated_post.getTitle() + "\" salvato correttamente";
+			String strMessage = "Post \"" + post.getTitle() + "\" salvato correttamente";
 			return "redirect:/posts?successMessage=" + strMessage;
 
 		} catch (RuntimeException e) {

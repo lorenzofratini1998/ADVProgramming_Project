@@ -123,7 +123,8 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         this.getSession().save(post);
         return post;
     }
-
+    
+    
     /**
      * Funzione per aggiornare il post specificato.
      *
