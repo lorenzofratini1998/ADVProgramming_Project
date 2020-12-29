@@ -115,7 +115,7 @@ public class AdminController {
         logger.info("Saving a new tag...");
 
         if(tag.getName() == null || tag.getName().equals("")) {
-            String strMessage = "Non hai inserito alcun nome per il tag!";
+            String strMessage = "Non hai inserito alcun nome per il nuovo tag!";
 
             return "redirect:/tags/?errorMessage=" + strMessage;
         }
@@ -186,20 +186,24 @@ public class AdminController {
     /**
      * Metodo per la richiesta GET per la visualizzazione della lista di allegati.
      *
-     * @param message eventuale messaggio da mostrare
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
      * @param uiModel modello associato alla vista
      * @return nome della vista da visualizzare
      */
     @GetMapping(value = "/attachments")
-    public String showAttachments(@RequestParam(value = "message", required = false) String message, Model uiModel) {
+    public String showAttachments(@RequestParam(value = "successMessage", required = false) String successMessage,
+                                  @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                                  Model uiModel) {
         logger.info("Listing all the attachments...");
 
         List<Attachment> allAttachments = this.attachmentService.getAll();
 
         uiModel.addAttribute("attachments", allAttachments);
-//		uiModel.addAttribute("numberOfAttachments", allAttachments.size());
+		uiModel.addAttribute("numAttachments", allAttachments.size());
 
-        uiModel.addAttribute("message", message);
+        uiModel.addAttribute("successMessage", successMessage);
+        uiModel.addAttribute("errorMessage", errorMessage);
 
         return "attachments.list";
     }
@@ -219,7 +223,7 @@ public class AdminController {
         this.attachmentService.update(selectedAttachment);
         String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
-        return "redirect:/attachments/?message=" + strMessage;
+        return "redirect:/attachments/?successMessage=" + strMessage;
     }
     
     /**
@@ -237,7 +241,7 @@ public class AdminController {
         this.attachmentService.update(selectedAttachment);
         String strMessage = "L'allegato \"" + selectedAttachment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
-        return "redirect:/attachments/?message=" + strMessage;
+        return "redirect:/attachments/?successMessage=" + strMessage;
     }
 
     /**
@@ -307,11 +311,15 @@ public class AdminController {
     /**
 	 * Metodo per la richiesta GET di visualizzazione dei commenti di tutti gli autori
 	 *
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/comments/manage")
-	public String showComments(Authentication authentication, Model uiModel) {
+	public String showComments(@RequestParam(value = "successMessage", required = false) String successMessage,
+                               @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                               Model uiModel) {
 		logger.info("Showing all comments...");
 
 		List<Comment> allComments = new ArrayList<>();
@@ -323,6 +331,9 @@ public class AdminController {
 			}
 		}
 		uiModel.addAttribute("comments", allComments);
+		uiModel.addAttribute("numComments", allComments.size());
+		uiModel.addAttribute("successMessage", successMessage);
+		uiModel.addAttribute("errorMessage", errorMessage);
 	
 		
 		return "comments.listforAdmin";
@@ -343,7 +354,7 @@ public class AdminController {
         this.commentService.update(selectedComment);
         String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" %C3%A8 stato nascosto correttamente!";
 
-        return "redirect:/comments/manage";
+        return "redirect:/comments/manage?successMessage=" + strMessage;
     }
     
     /**
@@ -360,21 +371,23 @@ public class AdminController {
         selectedComment.setHide(false);
         this.commentService.update(selectedComment);
         String strMessage = "Il commento \"" + selectedComment.getDescription() + "\" %C3%A8 stato mostrato correttamente!";
-        
-        uiModel.addAttribute("showMessage", strMessage);
 
-        return "redirect:/comments/manage";
+        return "redirect:/comments/manage?successMessage=" + strMessage;
     }
 
     /**
 	 * Metodo per la richiesta GET di mosrare tutti i post scritti dall'utente
 	 *
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/posts/manage")
-	public String showMyPosts(Authentication authentication, Model uiModel) {
-		logger.info("Showing your posts...");
+	public String showMyPosts(@RequestParam(value = "successMessage", required = false) String successMessage,
+                              @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                              Model uiModel) {
+		logger.info("Showing all posts...");
 
 		List<Post> allPosts = new ArrayList<>();
 		List<User> allAuthor= this.userService.findAll();
@@ -387,11 +400,13 @@ public class AdminController {
 		
 		if(allPosts.isEmpty()) {
 			String strMessage = "Non ci sono post scritti dagli utenti!";
-			return "redirect:/?message=" + strMessage ;
+			return "redirect:/?errorMessage=" + strMessage ;
 		}
 			
 		uiModel.addAttribute("posts", allPosts);
 		uiModel.addAttribute("numPosts", allPosts.size());
+		uiModel.addAttribute("successMessage", successMessage);
+		uiModel.addAttribute("errorMessage", errorMessage);
 
 		return "posts.listForAdmin";
 
@@ -412,7 +427,7 @@ public class AdminController {
         this.postService.update(selectedPost);
         String strMessage = "Il post \"" + selectedPost.getTitle() + "\" %C3%A8 stato nascosto correttamente!";
 
-        return "redirect:/posts/manage?message=" + strMessage;
+        return "redirect:/posts/manage?successMessage=" + strMessage;
     }
     
     /**
@@ -430,6 +445,6 @@ public class AdminController {
         this.postService.update(selectedPost);
         String strMessage = "Il post \"" + selectedPost.getTitle() + "\" %C3%A8 stato mostrato correttamente!";
 
-        return "redirect:/posts/manage?message=" + strMessage;
+        return "redirect:/posts/manage?successMessage=" + strMessage;
     }
 }

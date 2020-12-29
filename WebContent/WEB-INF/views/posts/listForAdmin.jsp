@@ -6,9 +6,17 @@
 <sec:authorize access="hasRole('admin')" var="isAdmin"/>
 
 <div class="col-md-12 mb-4">
+    <div class="row">
+        <c:if test="${fn:length(successMessage) > 0}">
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+        </c:if>
+        <c:if test="${fn:length(errorMessage) > 0}">
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+        </c:if>
+    </div>
         <div class="overflow-auto">
-            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post di tutti gli autori</h5>
-            <div class="font-weight-bold">Numero post: ${numPosts }</div>
+            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i post degli utenti non admin</h5>
+            <div class="font-weight-bold text-center">Numero post: ${numPosts}</div>
             <table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>

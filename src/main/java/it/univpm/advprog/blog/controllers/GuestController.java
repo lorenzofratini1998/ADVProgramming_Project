@@ -85,16 +85,18 @@ public class GuestController {
     
     /**
      * Metodo per la richiesta GET per la visualizzazione della lista di tutti i post
-     * 
-     * @param message eventuale messaggio da mostrare
+     *
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
      * @param uiModel modello associato alla vista
      * @return nome della vista da ritornare
      */
     
     @GetMapping(value="/")
-    public String showPost(	@RequestParam(value="message", required = false) String message, 
-    						@RequestParam(required = false) Integer page, 
-    						Model uiModel) {
+    public String showPost(@RequestParam(value = "successMessage", required = false) String successMessage,
+                           @RequestParam(value = "errorMessage", required = false) String errorMessage,
+                           @RequestParam(required = false) Integer page,
+                           Model uiModel) {
     	 logger.info("Listing all the posts...");
     	
 	     List<Post> allPosts = this.postService.getAllByHide(false);
@@ -107,7 +109,8 @@ public class GuestController {
 	     uiModel.addAttribute("tags",allTags);
 	     uiModel.addAttribute("numPosts",allPosts.size());
 	     uiModel.addAttribute("postsTitle","Tutti i post del blog");
-	     uiModel.addAttribute("message", message);
+	     uiModel.addAttribute("successMessage", successMessage);
+        uiModel.addAttribute("errorMessage", errorMessage);
 	
         return "home";
     }
@@ -171,6 +174,11 @@ public class GuestController {
     	logger.info("Listing all the posts searched by archive...");
     	Archive selectedArchive = archiveService.getByName(archiveName);
 
+        if(selectedArchive == null) {
+            String strMessage = "L'archivio specificato non esiste!";
+            return "redirect:/?errorMessage=" + strMessage;
+        }
+
         List<Post> allPostsByArchive = new ArrayList<>();
 
         for (Post post:selectedArchive.getPosts()) {
@@ -201,7 +209,12 @@ public class GuestController {
                                 Model uiModel) {
     	logger.info("Listing all the posts searched by tag...");
     	Tag selectedTag = tagService.getByName(tagName);
-    	
+
+        if(selectedTag == null) {
+            String strMessage = "Il tag specificato non esiste!";
+            return "redirect:/?errorMessage=" + strMessage;
+        }
+
     	List<Post> allPostsByTag = new ArrayList<>();
 
         for (Post post:selectedTag.getPosts()) {
@@ -232,7 +245,12 @@ public class GuestController {
             userName, Model uiModel) {
     	logger.info("Listing all the posts searched by author...");
     	User selectedUser = userService.findUserByUsername(userName);
-    	
+
+        if(selectedUser == null) {
+            String strMessage = "L'autore specificato non esiste!";
+            return "redirect:/?errorMessage=" + strMessage;
+        }
+
     	List<Post> allPostsByAuthor = new ArrayList<>();
 
         for (Post post:selectedUser.getPosts()) {
@@ -261,11 +279,15 @@ public class GuestController {
                                   @RequestParam(value="message", required = false) String message) {
     	logger.info("Show details of a specific post...");
     	Post selectedPost = postService.getById(Long.parseLong(post_id));
+    	if(selectedPost == null) {
+    	    String strMessage = "Il post specificato non esiste!";
+            return "redirect:/?errorMessage=" + strMessage;
+        }
 
     	if(selectedPost.isHide()) {
 
-            String strMessage = "Il post specificato non pu%C3%B2 essere visualizzato.";
-            return "redirect:/?message=" + strMessage;
+            String strMessage = "Il post specificato non pu%C3%B2 essere visualizzato, %C3%A8 stato nascosto dall'admin.";
+            return "redirect:/?errorMessage=" + strMessage;
 
         } else {
     	    uiModel.addAttribute("message", message);
@@ -403,7 +425,7 @@ public class GuestController {
     private void postsPagination(@RequestParam(required = false) Integer page, Model uiModel, List<Post>
             posts) {
         PagedListHolder<Post> pagedListHolder = new PagedListHolder<>(posts);
-        pagedListHolder.setPageSize(4);
+        pagedListHolder.setPageSize(2);
         uiModel.addAttribute("maxPages",pagedListHolder.getPageCount());
 
         if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;

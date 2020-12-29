@@ -7,21 +7,30 @@
 
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 
-<div class="row">
-	<c:if test="${fn:length(message) > 0}">
-		<p class="mx-auto">${message}</p>
-	</c:if>
-</div>
-
  <div class="container">
-
     <div class="row">
 
       <!-- Blog Entries Column -->
       <div class="col-md-8">
 
-		  <h2 class="my-4">${postsTitle}</h2>
-		  <h5 class="my-4">Numero post: ${numPosts}</h5>
+		  <div class="row">
+			  <c:if test="${fn:length(successMessage) > 0}">
+				  <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+			  </c:if>
+			  <c:if test="${fn:length(errorMessage) > 0}">
+				  <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+			  </c:if>
+		  </div>
+
+		  <h2 class="my-4 text-center">${postsTitle}</h2>
+		  <c:choose>
+			  <c:when test="${numPosts != 0}">
+				  <div class="font-weight-bold text-center">Numero post: ${numPosts}</div>
+			  </c:when>
+			  <c:otherwise>
+				  <div class="font-weight-bold text-center">Nessun post presente!</div>
+			  </c:otherwise>
+		  </c:choose>
 
 		<div>
 			<c:forEach items="${posts}" var="p">
@@ -39,6 +48,7 @@
 			</c:forEach>
 		</div>
 
+		  <c:if test="${numPosts != 0}">
 			<div id="pagination" class="pagination justify-content-center mb-4">
 
 				<c:url value="/" var="prev">
@@ -76,6 +86,7 @@
 					<li class="page-item">
 				</c:if>
 			</div>
+		  </c:if>
 
 			<!-- Pagination 
         <ul class="pagination justify-content-center mb-4">

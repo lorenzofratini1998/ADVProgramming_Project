@@ -6,11 +6,17 @@
 <sec:authorize access="hasRole('admin')" var="isAdmin"/>
 
 <div class="col-md-12 mb-4">
+    <div class="row">
+        <c:if test="${fn:length(successMessage) > 0}">
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+        </c:if>
+        <c:if test="${fn:length(errorMessage) > 0}">
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+        </c:if>
+    </div>
         <div class="overflow-auto">
-            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i commenti di tutti gli autori</h5>
-			<c:if test="${not empty showMessage}">
-				<div class="btn btn-success">${showMessage}</div>
-			</c:if>
+            <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti i commenti degli utenti non admin</h5>
+            <div class="font-weight-bold text-center">Numero commenti: ${numComments}</div>
 		<table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>

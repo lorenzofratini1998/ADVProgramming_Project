@@ -136,7 +136,7 @@ public class UserController {
 
 		/*if(allPosts.isEmpty()) {
 			String strMessage = "Non hai scritto alcun post!";
-			return "redirect:/?message=" + strMessage ;
+			return "redirect:/?errorMessage=" + strMessage ;
 		}*/
 
 		uiModel.addAttribute("posts", allPosts);
@@ -199,7 +199,7 @@ public class UserController {
 
 			if(tags == null || tags.length == 0) {
 				String strMessage = "ERRORE, il post deve contenere almeno un tag.";
-				return "redirect:/?message=" + strMessage;
+				return "redirect:/?errorMessage=" + strMessage;
 			}
 
 			for (String tagName : tags) {
@@ -209,12 +209,12 @@ public class UserController {
 			Post updated_post = this.postService.update(post);
 
 			String strMessage = "Post \"" + updated_post.getTitle() + "\" salvato correttamente";
-			return "redirect:/?message=" + strMessage;
+			return "redirect:/posts?successMessage=" + strMessage;
 
 		} catch (RuntimeException e) {
 
 			String strMessage = "ERRORE: " + e.getMessage();
-			return "redirect:/?message=" + strMessage;
+			return "redirect:/?errorMessage=" + strMessage;
 		}
 
 	}
@@ -452,7 +452,7 @@ public class UserController {
 		try {
 			newFile.setPost(postService.getById(postId));
 			this.fileService.update(newFile);
-			String strMessage = "Il file e' stato caricato correttamente!";
+			String strMessage = "Il file \"" + newFile.getDescription() + "\" %C3%A8 stato salvato correttamente!";
 			return "redirect:/posts?successMessage=" + strMessage;
 		} catch (RuntimeException e) {
 
@@ -608,7 +608,7 @@ public class UserController {
 			comment.setAuthor(this.userService.findUserByUsername(commentAuthor));
 			comment.setPost(this.postService.getById(commentPostId));
 			this.commentService.update(comment);
-			String strMessage = "Commento: " + comment.getTitle() + " salvato correttamente!";
+			String strMessage = "Commento \"" + comment.getTitle() + "\" salvato correttamente!";
 
 			return "redirect:/comments/?successMessage=" + strMessage;
 
@@ -638,23 +638,28 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dettagli profilo
 	 *
+	 * @param errorMessage eventuale messaggio di errore
+	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			nome della vista da renderizzare
 	 */
 	@GetMapping(value = "/profile")
-	public String showUserProfile (Authentication auth, Model uiModel, @RequestParam(value = "message", required=false)  String message ) {
+	public String showUserProfile (Authentication auth, Model uiModel,
+								   @RequestParam(value = "successMessage", required = false) String successMessage,
+								   @RequestParam(value = "errorMessage", required = false) String errorMessage) {
 		logger.info("Showing Profile...");
 
 		if (auth != null) {
 			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
 			uiModel.addAttribute("user", userLoggedIn);
-			uiModel.addAttribute("message", message);
+			uiModel.addAttribute("successMessage", successMessage);
+			uiModel.addAttribute("errorMessage", errorMessage);
 			return "users.profile";
 		}
 
 		else {
-			String noAuthMessage = "Nessun utente autenticato";
-			return "redirect:/?message=" + noAuthMessage;
+			String noAuthMessage = "Nessun utente autenticato.";
+			return "redirect:/?errorMessage=" + noAuthMessage;
 		}
 	}
 
@@ -676,8 +681,8 @@ public class UserController {
 		}
 
 		else {
-			String message = "Nessun utente autenticato";
-			return "redirect:/?message=" + message;
+			String message = "Nessun utente autenticato.";
+			return "redirect:/?errorMessage=" + message;
 		}
 
 	}
@@ -703,7 +708,7 @@ public class UserController {
 					logger.info("creating the directory...");
 					if (!new java.io.File(realPathtoUploads).mkdir()) {
 						String strMessage = "ERRORE, impossibile creare la cartella nel server!";
-						return "redirect:/profile?message=" + strMessage;
+						return "redirect:/profile?errorMessage=" + strMessage;
 					}
 				}
 
@@ -718,7 +723,7 @@ public class UserController {
 				String type = mimetype.split("/")[0];
 				if (!type.equals("image")) {
 					String strMessage = "ERRORE, il file specificato non %C3%A8 un'immagine!";
-					return "redirect:/profile?message=" + strMessage;
+					return "redirect:/profile?errorMessage=" + strMessage;
 				}
 				// sposto il file sulla cartella destinazione
 				file.transferTo(dest);
@@ -730,11 +735,11 @@ public class UserController {
 		}
 		try {
 			this.userService.update(profile);
-			String strMessage = "Il tuo profilo utente e' stato salvato correttamente!";
-			return "redirect:/profile?message=" + strMessage;
+			String strMessage = "Il tuo profilo utente %C3%A8 stato salvato correttamente!";
+			return "redirect:/profile?successMessage=" + strMessage;
 		} catch (RuntimeException e) {
 
-			return "redirect:/profile?message=" + e.getMessage();
+			return "redirect:/profile?errorMessage=" + e.getMessage();
 
 		}
 	}

@@ -147,8 +147,6 @@ public class PostServiceDefault implements PostService {
      * @param shortDescription descrizione breve del post
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
-     * @param attachments      allegati del post
-     * @param comments         commenti del post
      * @return nuovo post creato
      */
     @Transactional

@@ -12,7 +12,7 @@
         </c:if>
     </div>
     <div class="overflow-auto">
-        <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti gli utenti</h5>
+        <h5 class="text-center font-weight-bold mt-4 mb-4">Lista di tutti gli utenti non admin</h5>
         <div class="font-weight-bold text-center">Numero utenti: ${numUsers}</div>
         <table class="table table-striped w-75 mx-auto">
             <thead>

@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:url value="/profile/edit" var="url" />
 
-<c:if test="${not empty message}">
-    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
-</c:if>
+<div class="row">
+    <c:if test="${fn:length(successMessage) > 0}">
+        <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+    </c:if>
+    <c:if test="${fn:length(errorMessage) > 0}">
+        <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+    </c:if>
+</div>
 
 <div class = "col">
 	

@@ -104,8 +104,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
      * @param longDescription  descrizione estesa del post
      * @param tags             tag del post
      * @param archive          archivio del post
-     * @param attachments      allegati del post
-     * @param comments         commenti del post
      * @return nuovo post creato
      */
     @Override
@@ -121,8 +119,6 @@ public class PostDaoDefault extends DefaultDao implements PostDao {
         post.setLongDescription(longDescription);
         post.setTags(tags);
         post.setArchive(archive);
-        // faccio i controlli sul valore null almeno posso fare getComments().size() anche quando non ho alcun commento,
-        // altrimenti se era null non potevo fare .size()
         // save the new post
         this.getSession().save(post);
         return post;

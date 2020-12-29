@@ -6,11 +6,11 @@
 <div class="col">
     <%--@elvariable id="tag" type="it.univpm.advprog.blog.model.entities.Tag"--%>
     <form:form class="form-signin" action="${action_url}" method="POST" modelAttribute="tag">
-        <h1 class="h3 mb-3 font-weight-normal">Inserisci un nuovo tag</h1>
+        <h3 class="font-weight-bold text-center mb-3">Inserisci un nuovo tag</h3>
 
         <form:label path="name">Nome Tag</form:label>
-        <form:input path="name"/>
+        <form:input path="name" class="form-control mt-2"/><br>
 
-        <input type="submit" value="Submit"/>
+        <input type="submit" value="Submit" class="mt-3 btn btn-lg btn-primary btn-block"/><br><br>
     </form:form>
 </div>
