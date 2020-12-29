@@ -125,7 +125,7 @@ public class TestCommentDao {
 			}
 			try {
 				Comment notFound=commentDao.findCommentById(999);
-				assertEquals(notFound,null);
+				assertNull(notFound);
 			} catch(Exception e) {
 				assertTrue(true);
 			}
@@ -180,6 +180,7 @@ public class TestCommentDao {
 			try {
 				assertEquals(commentDao.getAll().size(),1);
 				assertEquals(commentDao.findCommentById(1), comment1);
+				assertEquals(commentDao.findCommentById(1).getTitle(), "Commento Modificato");
 			} catch(Exception e) {
 				fail("Exception not excepted: "+e.getMessage());
 			}
@@ -224,11 +225,14 @@ public class TestCommentDao {
 			
 			try {
 				assertEquals(commentDao.getAll().size(),0);
-				assertEquals(commentDao.findCommentById(1),null);
+				assertNull(commentDao.findCommentById(1));
 			} catch(Exception e) {
 				fail("Exception not excepted: "+e.getMessage());
 			}
    		}
    	}
+
+	//TODO: inserire un test che mostri che è possibile inserire due commenti con lo stesso titolo (si possono inserire
+	//      due commenti con le informazioni identiche ma che cambiano nell'ID)
 
 }

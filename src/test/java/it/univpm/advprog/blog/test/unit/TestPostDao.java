@@ -1,9 +1,5 @@
 package it.univpm.advprog.blog.test.unit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +21,8 @@ import it.univpm.advprog.blog.model.entities.Post;
 import it.univpm.advprog.blog.model.entities.Tag;
 import it.univpm.advprog.blog.model.entities.User;
 import it.univpm.advprog.blog.test.DataServiceConfigTest;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPostDao {
 	
@@ -85,13 +83,13 @@ public class TestPostDao {
 			
 			try {
 				postDao.getById(post1.getId());
-				assertEquals(postDao.getById(post1.getId()).isHide(),false);
+				assertFalse(postDao.getById(post1.getId()).isHide());
 			} catch(Exception e) {
 				fail("Exception not expected: " + e.getMessage());
 			}
 			try {
 				Post notFound=postDao.getById(999);
-				assertEquals(notFound,null);
+				assertNull(notFound);
 			} catch(Exception e) {
 				assertTrue(true);
 			}
@@ -163,7 +161,7 @@ public class TestPostDao {
 			
 			try {
 				postDao.getById(post1.getId());
-				assertEquals(postDao.getById(post1.getId()).isHide(),false);
+				assertFalse(postDao.getById(post1.getId()).isHide());
 				assertEquals(postDao.getAllByHide(false).size(),1);
 			} catch(Exception e) {
 				fail("Exception not expected: " + e.getMessage());
@@ -244,10 +242,14 @@ public class TestPostDao {
 			
 			try {
 				assertEquals(postDao.getAll().size(),0);
-				assertEquals(postDao.getById(1),null);
+				assertNull(postDao.getById(1));
 			} catch(Exception e) {
 				fail("Exception not excepted: "+e.getMessage());
 			}
    		}
 	}
+
+	//TODO: inserire un test che mostri che NON è possibile inserire due post con lo stesso titolo
+
+	//TODO: utilizzare anche il getByTitle()
 }
