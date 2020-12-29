@@ -123,7 +123,8 @@ public class AdminController {
         try {
             //this.sanitizeId(tag.getName());
 
-            this.tagService.update(tag);
+        	//Controllare riga 127
+            this.tagService.create(tag.getName());
 
             String strMessage = "Il tag \"" + tag.getName() + "\" %C3%A8 stato salvato correttamente!";
 

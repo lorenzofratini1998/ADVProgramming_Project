@@ -52,17 +52,6 @@ public class ArchiveServiceDefault implements ArchiveService {
 	}
 
 	/**
-	 * Funzione per fare update di uno specifico archivio
-	 * 
-	 * @param archive    archivio da aggiornare
-	 */
-	@Transactional
-	@Override
-	public Archive update(Archive archive) {
-		return this.archiveRepository.update(archive);
-	}
-
-	/**
 	 * Funzione per elimiare l'archivio specificato
 	 * 
 	 * @param archive archivio da eliminare

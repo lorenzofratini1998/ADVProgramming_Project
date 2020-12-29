@@ -69,13 +69,5 @@ public class ArchiveDaoDefault extends DefaultDao implements ArchiveDao {
 		Archive archive = this.getByName(name);
 		this.delete(archive);
 	}
-	/**
-	 * Funzione per update di un archivio specificato
-	 * 
-	 */
-	@Override
-	public Archive update(Archive archive) {
-		return (Archive)this.getSession().merge(archive);
-	}
 	
 }

@@ -1,7 +1,10 @@
 package it.univpm.advprog.blog.test.unit;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +14,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import it.univpm.advprog.blog.model.dao.ArchiveDao;
+import it.univpm.advprog.blog.model.dao.PostDao;
+import it.univpm.advprog.blog.model.dao.TagDao;
+import it.univpm.advprog.blog.model.dao.UserDao;
 import it.univpm.advprog.blog.model.entities.Archive;
+import it.univpm.advprog.blog.model.entities.Post;
+import it.univpm.advprog.blog.model.entities.User;
+import it.univpm.advprog.blog.model.entities.Tag;
 import it.univpm.advprog.blog.test.DataServiceConfigTest;
 
 public class TestArchiveDao {
@@ -47,34 +56,7 @@ public class TestArchiveDao {
 			archiveDao.setSession(s);
 			assertEquals(archiveDao.getAll().size(), 0);
    			}
-   	}
-   	
-//   	//penso vada tolto perchè quando si modifica un archivio?
-//   	@Test //TODO: sì, non ha senso... è da togliere il metodo update in ArchiveDao, ArchiveService e anche in TagDao, TagService
-//   	public void createAndUpdate() {
-//		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-//			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-//			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
-//
-//			Session s=sf.openSession();
-//			archiveDao.setSession(s);
-//
-//			s.beginTransaction();
-//			Archive archive1 = archiveDao.create("dicembre 2020");
-//			s.getTransaction().commit();
-//
-//			assertEquals(archiveDao.getAll().size(),1);
-//			assertEquals(archiveDao.getByName("dicembre 2020").getName(),"dicembre 2020");
-//
-//			s.beginTransaction();
-//			archive1.setName("luglio 2021");
-//			archiveDao.update(archive1);
-//			s.getTransaction().commit();
-//
-//			assertEquals(archiveDao.getAll().size(),1);
-//			assertEquals(archiveDao.getByName("luglio 2021").getName(),"luglio 2021");
-//		}
-//   	}
+   	}  	
    	
    	@Test
    	public void createAndDeleteByArchive() {
@@ -125,8 +107,66 @@ public class TestArchiveDao {
 			assertNull(archiveDao.getByName("dicembre 2020"));
 		}
    	}
+   	
+   	@Test
+   	public void cannotInsertArchiveWithSameName() {
+		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
+			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
+			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
+			
+			Session s=sf.openSession();
+			archiveDao.setSession(s);
+			
+			s.beginTransaction();
+			Archive archive1 = archiveDao.create("dicembre 2020");
+			s.getTransaction().commit();
+			
+			assertEquals(archiveDao.getAll().size(),1);
+			
+			try {
+				Archive archive2 = archiveDao.create("dicembre 2020");
+				fail("Exception expected when creating two archives with same name");
+			} catch(Exception e) {
+				assertTrue(true);
+			}
+		}
+   	}
+   	
+   	@Test
+   	public void cannotDeleteArchiveWithPost() {
+		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
+			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
+			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
+			UserDao userDao=ctx.getBean("userDao",UserDao.class);
+			PostDao postDao = ctx.getBean("postDao",PostDao.class);
+			TagDao tagDao = ctx.getBean("tagDao",TagDao.class);
+			
+			Session s=sf.openSession();
+			archiveDao.setSession(s);
+			userDao.setSession(s);
+			tagDao.setSession(s);
+			postDao.setSession(s);
 
-   	//TODO: inserire un test che mostri che NON è possibile inserire due archivi con lo stesso nome
-
-	//TODO: inserire un test che mostri che NON è possibile cancellare un archivio che contiene un post
+			
+			s.beginTransaction();
+			User user1 = userDao.create("alessandro02", "12345678", "Alessandro", "Bianchi");
+			Archive archive1 = archiveDao.create("dicembre 2020");
+			Tag tag1 = tagDao.create("Tag del test");
+			Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
+			s.getTransaction().commit();
+			
+			assertEquals(archiveDao.getAll().size(),1);
+			assertEquals(postDao.getAll().size(),1);
+			assertEquals(postDao.getById(1).getArchive().getName(),"dicembre 2020");
+			
+			try {
+				s.beginTransaction();
+				archiveDao.delete(archive1);
+				s.getTransaction().commit();
+				fail("Exception expected when deleting archive related with posts");
+			} catch(Exception e) {
+				assertTrue(true);
+			}
+		}
+   	}
 }

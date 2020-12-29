@@ -249,7 +249,71 @@ public class TestPostDao {
    		}
 	}
 
-	//TODO: inserire un test che mostri che NON è possibile inserire due post con lo stesso titolo
+	@Test
+	public void testGetByTitle() {
+   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
+   			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
+			PostDao postDao=ctx.getBean("postDao",PostDao.class);
+			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
+			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
+			UserDao userDao=ctx.getBean("userDao",UserDao.class);
+			
+			Session s=sf.openSession();
 
-	//TODO: utilizzare anche il getByTitle()
+			postDao.setSession(s);
+			archiveDao.setSession(s);
+			tagDao.setSession(s);
+			userDao.setSession(s);
+
+			
+			s.beginTransaction();
+			User user1 = userDao.create("mario98", "12345678", "Mario", "Rossi");
+			Archive archive1 = archiveDao.create("settembre 2020");
+			Tag tag1 = tagDao.create("Office 2021");
+			Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
+			s.getTransaction().commit();
+			
+			try {
+				assertSame(postDao.getById(1),postDao.getByTitle("Installazione Office 2021"));
+			} catch(Exception e) {
+				fail("Exception not excepted: "+e.getMessage());
+			}
+			
+   		}
+	}
+	
+	@Test
+	public void cannotInsertPostWithSameTitle() {
+   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
+   			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
+			PostDao postDao=ctx.getBean("postDao",PostDao.class);
+			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
+			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
+			UserDao userDao=ctx.getBean("userDao",UserDao.class);
+			
+			Session s=sf.openSession();
+
+			postDao.setSession(s);
+			archiveDao.setSession(s);
+			tagDao.setSession(s);
+			userDao.setSession(s);
+
+			
+			s.beginTransaction();
+			User user1 = userDao.create("mario98", "12345678", "Mario", "Rossi");
+			User user2 = userDao.create("mario97", "12345678", "Mario", "Verdi");
+			Archive archive1 = archiveDao.create("settembre 2020");
+			Tag tag1 = tagDao.create("Office 2021");
+			Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
+			s.getTransaction().commit();
+			
+			try {
+				Post post2 = postDao.create("Installazione Office 2021", user2, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
+				fail("Exception expected when creating two posts with same title");
+			} catch(Exception e) {
+				assertTrue(true);
+			}
+			
+   		}
+	}
 }

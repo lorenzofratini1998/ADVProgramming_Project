@@ -46,14 +46,6 @@ public class TagDaoDefault extends DefaultDao implements TagDao {
     }
 
     /**
-     * Funzione per aggiornare un tag specifico
-     */
-    @Override
-    public Tag update(Tag tag) {
-        return (Tag) this.getSession().merge(tag);
-    }
-
-    /**
      * Funzione per cancellare un tag specifico
      */
     @Override

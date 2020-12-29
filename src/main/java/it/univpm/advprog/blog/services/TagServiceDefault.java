@@ -49,17 +49,6 @@ public class TagServiceDefault implements TagService {
 	}
 
 	/**
-	 * Funzione per aggiornare un tag specificato
-	 * 
-	 * @param tag tag specificato
-	 */
-	@Transactional 
-	@Override
-	public Tag update(Tag tag) {
-		return this.tagRepository.update(tag);
-	}
-
-	/**
 	 * Funzione per cancellare un tag specifico
 	 * 
 	 * @param tag tag da cancellare

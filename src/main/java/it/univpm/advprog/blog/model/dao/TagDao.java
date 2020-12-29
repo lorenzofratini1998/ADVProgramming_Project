@@ -17,8 +17,6 @@ public interface TagDao {
 	
 	Tag create(String name);
 	
-	Tag update(Tag tag);
-	
 	void delete(Tag tag);
 	
 	void delete(String name);

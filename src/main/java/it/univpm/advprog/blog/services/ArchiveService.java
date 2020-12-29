@@ -12,8 +12,6 @@ public interface ArchiveService {
 	    
 	    Archive create(String name);
 	    
-	    Archive update(Archive archive);
-	    
 	    void delete(Archive archive);
 	    
 	    void delete(String name);
