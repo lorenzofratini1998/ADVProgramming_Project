@@ -567,11 +567,11 @@ public class UserController {
 			this.commentService.update(comment);
 			String strMessage = "Il commento %C3%A8 stato salvato correttamente!";
 
-			return "redirect:/blog/post/" + postId + "?message=" + strMessage;
+			return "redirect:/blog/post/" + postId + "?successMessage=" + strMessage;
 
 		} catch (RuntimeException e) {
 
-			return "redirect:/blog/post/" + postId + "?message=" + e.getMessage();
+			return "redirect:/blog/post/" + postId + "?errorMessage=" + e.getMessage();
 		}
 	}
 

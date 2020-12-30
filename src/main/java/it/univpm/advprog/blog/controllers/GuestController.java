@@ -1,11 +1,6 @@
 package it.univpm.advprog.blog.controllers;
 
-import it.univpm.advprog.blog.model.entities.Tag;
-import it.univpm.advprog.blog.model.entities.Archive;
-import it.univpm.advprog.blog.model.entities.Post;
-import it.univpm.advprog.blog.model.entities.User;
-import it.univpm.advprog.blog.model.entities.Comment;
-import it.univpm.advprog.blog.model.entities.Attachment;
+import it.univpm.advprog.blog.model.entities.*;
 import it.univpm.advprog.blog.services.ArchiveService;
 import it.univpm.advprog.blog.services.AttachmentService;
 import it.univpm.advprog.blog.services.PostService;
@@ -269,15 +264,22 @@ public class GuestController {
     	return "home";
    
     }
-    
+
     /**
      * Metodo per la visualizzazione dei dettagli di uno specifico post
-     * 
+     *
+     * @param post_id ID del post da visualizzare
+     * @param uiModel modello associato alla vista
+     * @param errorMessage eventuale messaggio di errore
+     * @param successMessage eventuale messaggio di successo
+     * @return nome della vista da ritornare
      */
     @GetMapping(value="/blog/post/{post_id}")
     public String showPostDetails(@PathVariable("post_id") String post_id, Model uiModel,
-                                  @RequestParam(value="message", required = false) String message) {
+                                  @RequestParam(value = "successMessage", required = false) String successMessage,
+                                  @RequestParam(value = "errorMessage", required = false) String errorMessage) {
     	logger.info("Show details of a specific post...");
+
     	Post selectedPost = postService.getById(Long.parseLong(post_id));
     	if(selectedPost == null) {
     	    String strMessage = "Il post specificato non esiste!";
@@ -285,13 +287,26 @@ public class GuestController {
         }
 
     	if(selectedPost.isHide()) {
-
             String strMessage = "Il post specificato non pu%C3%B2 essere visualizzato, %C3%A8 stato nascosto dall'admin.";
             return "redirect:/?errorMessage=" + strMessage;
 
         } else {
-    	    uiModel.addAttribute("message", message);
+    	    List<Attachment> files = new ArrayList<>();
+            List<Attachment> links = new ArrayList<>();
+
+            for(Attachment attachment : selectedPost.getAttachments()) {
+                if(!attachment.isHide()) {
+                    if (attachment instanceof it.univpm.advprog.blog.model.entities.File) files.add(attachment);
+
+                    if (attachment instanceof Link) links.add(attachment);
+                }
+            }
+
+    	    uiModel.addAttribute("successMessage", successMessage);
+            uiModel.addAttribute("errorMessage", errorMessage);
             uiModel.addAttribute(selectedPost);
+            uiModel.addAttribute("filesList", files);
+            uiModel.addAttribute("linksList", links);
             uiModel.addAttribute("comment", new Comment());
             return "post.details";
         }

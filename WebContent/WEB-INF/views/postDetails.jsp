@@ -8,11 +8,16 @@
 
 <c:url value="/blog/post/${post.id}/comment/new/save" var="new_comment_url"/>
 
-<c:if test="${not empty message}">
-    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
-</c:if>
-
 <div class="inner">
+    <div class="row">
+        <c:if test="${fn:length(successMessage) > 0}">
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+        </c:if>
+        <c:if test="${fn:length(errorMessage) > 0}">
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+        </c:if>
+    </div>
+
     <div class="image fit">
         <img src="<c:url value="/immagini/pic.jpg"/>" alt="Copertina post" class="img-fluid"/>
     </div>
@@ -31,23 +36,36 @@
         <div class="3u 12u$(small)">
             <ul class="pl-4">
                 <c:forEach items="${post.tags}" var="tag">
-                    <li style="display: inline;"><a href="<c:url value="/tag/${tag.name}"/>"
-                                                    class="button special">${tag.name}</a></li>
-                    &nbsp;&nbsp;&nbsp;
+                    <li class="mr-3" style="display: inline;"><a href="<c:url value="/tag/${tag.name}"/>"
+                                                                 class="button special">${tag.name}</a></li>
                 </c:forEach>
             </ul>
         </div>
     </div>
 
     <h4>Allegati</h4>
-    <!-- TODO: distinguere il caso in cui è un file (distinguere se è SCARICABILE o NO) e il caso in cui è un link -->
     <div class="row">
         <div class="3u 12u$(small)">
             <ul class="actions vertical">
-                <c:forEach items="${post.attachments}" var="attachment">
-                    <c:if test="${not attachment.hide}">
-                        <li>${attachment.description}</li>
-                    </c:if>
+                <c:forEach items="${filesList}" var="file">
+                    <c:choose>
+                        <c:when test="${not file.noDownloadable}">
+                            <i class="fa fa-file">
+                                <a href="<c:url value="/files/post_attachments/${file.name}"/>"
+                                   title="Scarica ${file.description}" download>${file.description}</a>
+                            </i>
+                        </c:when>
+                        <c:otherwise>
+                            <i class="fa fa-file">
+                                <p style="display:inline;">${file.description}</p>
+                            </i>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:forEach items="${linksList}" var="link">
+                    <i class="fa fa-link">
+                        <a href="${link.link}" title="Vai a ${link.description}" target="_blank">${link.description}</a>
+                    </i>
                 </c:forEach>
             </ul>
         </div>
