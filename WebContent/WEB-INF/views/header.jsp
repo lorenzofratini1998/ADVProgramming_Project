@@ -73,7 +73,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="${home_url}">Home
                             <span class="sr-only">(current)</span>
                         </a>
@@ -122,7 +122,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive3">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="${home_url}">Home
                             <span class="sr-only">(current)</span>
                         </a>

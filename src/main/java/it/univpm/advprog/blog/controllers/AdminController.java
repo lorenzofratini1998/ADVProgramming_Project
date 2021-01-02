@@ -260,14 +260,17 @@ public class AdminController {
         logger.info("Listing all the users...");
 
         List<User> allUsers = this.userService.findAll();
-        for(User user: allUsers) {
+        List<User> allAdmins = new ArrayList<>();
+        
+        for(User user: allUsers) {   
         	if(user.isAdmin()) {
-        		allUsers.remove(user);
+        		allAdmins.add(user);
         	}
         };
-
+        
         uiModel.addAttribute("users", allUsers);
         uiModel.addAttribute("numUsers", allUsers.size());
+        uiModel.addAttribute("numAdmins",allAdmins.size());
         uiModel.addAttribute("successMessage", successMessage);
         uiModel.addAttribute("errorMessage", errorMessage);
 

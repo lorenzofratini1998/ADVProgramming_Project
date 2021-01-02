@@ -214,7 +214,7 @@ public class UserController {
 			
 		}
 		
-		//L'inoltro del form è per la MODIFICA DI UN POST GIA' ESISTENTE
+		//MODIFICA DI UN POST GIA' ESISTENTE
 		else {
 			
 			this.postService.update(post);
@@ -254,9 +254,7 @@ public class UserController {
 		if (post.getAuthor().getUsername().equals(authorUsername)) {
 			List<Tag> tags = tagService.getAll();
 			List<String> postTags = new ArrayList<>();
-//			//Da passare alla vista per rendere consistente la modifica
-//	    	List<Comment> post_comments = (List<Comment>) post.getComments();
-//	    	Set<Attachment> post_attachments = post.getAttachments();
+
 	    	
 			for (Tag tag:post.getTags()) {
 				postTags.add(tag.getName());

@@ -12,7 +12,7 @@
 <c:url value="/sign_up/save" var="action_url"/>
 
 <c:if test="${not empty message}">
-    <div style="color: red; font-weight: bold; margin: 30px 0;">${message}</div>
+    <div class="alert alert-danger mx-auto" role="alert">${message}</div>
 </c:if>
 
 <div class="col">
