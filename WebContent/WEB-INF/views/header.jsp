@@ -35,7 +35,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive1">
                 <ul class="navbar-nav ml-auto">
-                    <li class="">
+                    <li class="nav-item">
                         <a class="nav-link" href="${home_url}">Home
                             <span class="sr-only">(current)</span>
                         </a>

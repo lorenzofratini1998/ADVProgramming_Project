@@ -11,13 +11,6 @@
     <name>blog</name>
     <description>Advanced programming project</description>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -77,14 +70,9 @@
             <version>5.2.10.RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.3.5.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.3.5.RELEASE</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.5.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -120,11 +108,11 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.xml.bind</groupId>-->
+<!--            <artifactId>jaxb-api</artifactId>-->
+<!--            <version>2.3.1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-jsp</artifactId>
@@ -149,6 +137,7 @@
             <artifactId>tiles-el</artifactId>
             <version>3.0.5</version>
         </dependency>
+
         <!-- Dipendenze richieste per il caricamento dei file -->
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -166,7 +155,6 @@
     <build>
         <plugins>
             <!-- Spring Framework plugin -->
-            
             <plugin>
             	<artifactId>maven-compiler-plugin</artifactId>
             	<version>3.6.1</version>
@@ -182,8 +170,16 @@
                     <warSourceDirectory>WebContent</warSourceDirectory>
                 </configuration>
             </plugin>
-            
-            <!-- Plugins per l'automatizzazione del deploy sul server Tomcat -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin per l'automatizzazione del deploy sul server Tomcat -->
             <plugin>
             	<groupId>org.apache.tomcat.maven</groupId>
             	<artifactId>tomcat7-maven-plugin</artifactId>
@@ -204,14 +200,6 @@
             			</goals>
             		</execution>
             	</executions>
-            </plugin>
-            <plugin>
-            	<groupId>org.apache.maven.plugins</groupId>
-            	<artifactId>maven-install-plugin</artifactId>
-            	<version>2.4</version>
-            	<configuration>
-            		<skip>true</skip>
-            	</configuration>
             </plugin>
         </plugins>
         <finalName>${project.artifactId}</finalName>

@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import it.univpm.advprog.blog.model.dao.ArchiveDao;

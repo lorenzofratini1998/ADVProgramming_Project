@@ -12,7 +12,13 @@
 <c:url value="/sign_up/save" var="action_url"/>
 
 <c:if test="${not empty message}">
-    <div class="alert alert-danger mx-auto" role="alert">${message}</div>
+    <div class="row">
+        <div class="alert alert-danger mx-auto" role="alert">${message}
+            <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="font-size: 1.4rem;">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
 </c:if>
 
 <div class="col">

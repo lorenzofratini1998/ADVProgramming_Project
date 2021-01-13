@@ -3,7 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${not empty errorMessage}">
-	<div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+	<div class="row">
+		<div class="alert alert-danger mx-auto" role="alert">${errorMessage}
+			<button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="font-size: 1.4rem;">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
 </c:if>
 
 <div class="container row h-100 mx-auto">
