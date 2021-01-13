@@ -203,6 +203,14 @@
             		</execution>
             	</executions>
             </plugin>
+            <plugin>
+	            <groupId>org.codehaus.mojo</groupId>
+	            <artifactId>exec-maven-plugin</artifactId>
+	            <version>3.0.0</version>
+	            <configuration>
+	                <mainClass>it.univpm.advprog.blog.test.LoadDataTest</mainClass>
+	            </configuration>
+        </plugin>
         </plugins>
         <finalName>${project.artifactId}</finalName>
     </build>
