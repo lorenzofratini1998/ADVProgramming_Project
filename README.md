@@ -10,6 +10,23 @@ L'idea di blog che abbiamo è quella di una ***community*** (ad esempio la commu
 
 Quindi tutti gli utenti che si sono registrati ad autenticati possono scrivere post e/o commenti. Ci sarà poi un utente ***admin*** che avrà la funzione di moderatore. 
 
+## *Installazione*
+1. Installare Tomcat, MySQL, Maven e JDK;
+2. Creare un nuovo utente in **phpMyAdmin** con le seguenti informazioni, `username: user `e` password: user` (**ALL PRIVILEGES**);
+3. Creare un nuovo utente **Tomcat** con le seguenti informazioni, `username: tomcat`,` password: tomcat `e` roles: manager-script`;
+4. Avviare i servizi tomcat e mysql;
+5. Posizionarsi nella directory di root del progetto;
+6. Eseguire il comando `mvn install`;
+7. Fine.
+
+**NOTE**: 
+- Le fasi di building del progetto sono state **automatizzate**, è sufficiente quindi eseguire la configurazione descritta precedentemente ed il comando `mvn install`.
+- L'installazione precedente è stata testata con le seguenti **versioni**:
+	1. Tomcat 9.0.41
+	2. MySQL 8.0.18
+	3. Maven 3.6.3
+	4. JDK 15.0.1
+
 ## Funzioni per tipologia di utenti
 
 ### Utenti non autenticati al sito, possono:
