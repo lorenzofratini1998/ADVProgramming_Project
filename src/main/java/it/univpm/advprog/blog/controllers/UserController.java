@@ -755,4 +755,18 @@ public class UserController {
 
 		}
 	}
+	
+	@GetMapping(value="/profile/delete")
+	public String deleteProfile(Authentication auth, Model uiModel) {
+		if (auth != null) {
+			User userLoggedIn = this.userService.findUserByUsername(auth.getName());
+			this.userService.delete(userLoggedIn);
+			return "redirect:/logout";
+		}
+
+		else {
+			String message = "Nessun utente autenticato.";
+			return "redirect:/?errorMessage=" + message;
+		}
+	}
 }

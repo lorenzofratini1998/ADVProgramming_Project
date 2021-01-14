@@ -4,6 +4,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:url value="/profile/edit" var="url" />
+<c:url value="/profile/delete" var="delete_url" />
 
 <div class="row">
     <c:if test="${fn:length(successMessage) > 0}">
@@ -33,8 +34,11 @@
          <label>Immagine Profilo</label>
          <input type="text" name="image" class="form-control mt-2" placeholder="${user.imageProfile}" disabled="disabled"><br>
 
-        <a href="${url}"><div class="btn btn-lg btn-primary btn-block">Modifica</div></a><br><br>
-
+		<div class="row justify-content-between">
+	        <a href="${url}" class="btn btn-primary col-6" role="button">Modifica</a>
+	        <a href="${delete_url}" class="btn btn-danger col-2" role="button" onclick='return confirm("Sei sicuro di eliminare il tuo account?");'>Elimina</a>
+		</div>
+		
     <c:if test="${not empty user.imageProfile}">
         <div class="md-form mt-4 mb-4">
             <h5 class="font-weight-normal"> Immagine del profilo attualmente caricata sul server: </h5>
