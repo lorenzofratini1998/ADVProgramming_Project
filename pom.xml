@@ -239,6 +239,15 @@
                 <configuration>
                     <mainClass>it.univpm.advprog.blog.test.LoadDataTest</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>tomcat-deploy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <finalName>${project.artifactId}</finalName>

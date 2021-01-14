@@ -6,7 +6,9 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -26,6 +28,16 @@ import it.univpm.advprog.blog.test.DataServiceConfigTest;
 
 public class TestCommentDao {
 	
+	private AnnotationConfigApplicationContext ctx;
+	private CommentDao commentDao;
+	private SessionFactory sf;
+	private PostDao postDao;
+	private ArchiveDao archiveDao;
+	private TagDao tagDao;
+	private UserDao userDao;
+	private FileDao fileDao;
+	
+	
 	private final static String SHORTDESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
             "tempus magna vel posuere cursus. Sed ultricies nunc purus, et maximus eros accumsan sit amet. Donec " +
             "diam nisl, consectetur non nisl vel, condimentum finibus est.";
@@ -40,35 +52,51 @@ public class TestCommentDao {
     private final static String DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras " +
         "tempus magna vel posuere cursus.";
 	
+    @BeforeAll
+	static void setup() {
+		System.out.println("Prepare the test suite environment");
+		
+	}
+
+	@AfterAll
+	static void tearDown() {
+		System.out.println("Clean-up the test suite environment");
+		
+	}
+    
     @BeforeEach
-   	void setUp() throws Exception {
-   	}
+   	 void openContext() {
+    	
+    	ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class);
+    	sf = ctx.getBean("sessionFactory", SessionFactory.class);
+    	commentDao = ctx.getBean("commentDao", CommentDao.class);
+    	postDao=ctx.getBean("postDao",PostDao.class);
+		archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
+		tagDao=ctx.getBean("tagDao",TagDao.class);
+		userDao=ctx.getBean("userDao",UserDao.class);
+		fileDao=ctx.getBean("fileDao",FileDao.class);
+    	
+    	}
+    
+	
 
    	@AfterEach
-   	void tearDown() throws Exception {
+   	 void closeContext() {
+   		ctx.close();
    	}
    	
    	@Test
-   	public void noCommentsAtBeginning() {
-   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			CommentDao commentDao=ctx.getBean("commentDao",CommentDao.class);
+   	 void noCommentsAtBeginning() {
+   		
 			Session s  = sf.openSession();
 			commentDao.setSession(s);
 			assertEquals(commentDao.getAll().size(), 0);
-   			}
+   			
    	}
    	
    	@Test
-   	public void findCommentById() {
-   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-   			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			PostDao postDao=ctx.getBean("postDao",PostDao.class);
-			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
-			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
-			UserDao userDao=ctx.getBean("userDao",UserDao.class);
-			CommentDao commentDao=ctx.getBean("commentDao",CommentDao.class);
-			
+   	 void findCommentById() {
+   		
 			Session s=sf.openSession();
 			postDao.setSession(s);
 			archiveDao.setSession(s);
@@ -91,17 +119,11 @@ public class TestCommentDao {
 				fail("Exception not excepted: "+e.getMessage());
 			}
    		}
-   	}
+   	
    	
    	@Test
-   	public void createAndFind() {
-   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			PostDao postDao=ctx.getBean("postDao",PostDao.class);
-			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
-			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
-			UserDao userDao=ctx.getBean("userDao",UserDao.class);
-			CommentDao commentDao = ctx.getBean("commentDao",CommentDao.class);
+   	 void createAndFind() {
+   		
 			
 			Session s=sf.openSession();
 			postDao.setSession(s);
@@ -132,18 +154,11 @@ public class TestCommentDao {
 			List<Comment> allcomments=commentDao.getAll();
 			assertEquals(allcomments.size(), 1);
 			}
-   	}
+   	
    	
    	@Test
-   	public void updateComment() {
-   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-   			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
-			FileDao fileDao=ctx.getBean("fileDao",FileDao.class);
-			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
-			UserDao userDao=ctx.getBean("userDao",UserDao.class);
-			CommentDao commentDao = ctx.getBean("commentDao",CommentDao.class);
-			PostDao postDao=ctx.getBean("postDao",PostDao.class);
+   	 void updateComment() {
+   		
 			
 			Session s=sf.openSession();
 			archiveDao.setSession(s);
@@ -185,17 +200,11 @@ public class TestCommentDao {
 				fail("Exception not excepted: "+e.getMessage());
 			}
    		}
-   	}
+   	
    	
    	@Test
-   	public void deleteComment() {
-   		try (AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(DataServiceConfigTest.class)) {
-   			SessionFactory sf = ctx.getBean("sessionFactory", SessionFactory.class);
-			PostDao postDao=ctx.getBean("postDao",PostDao.class);
-			ArchiveDao archiveDao=ctx.getBean("archiveDao", ArchiveDao.class);
-			TagDao tagDao=ctx.getBean("tagDao",TagDao.class);
-			UserDao userDao=ctx.getBean("userDao",UserDao.class);
-			CommentDao commentDao = ctx.getBean("commentDao",CommentDao.class);
+   	 void deleteComment() {
+   		
 			
 			Session s=sf.openSession();
 			postDao.setSession(s);
@@ -230,9 +239,55 @@ public class TestCommentDao {
 				fail("Exception not excepted: "+e.getMessage());
 			}
    		}
+   	
+
+	
+   	
+   	@Test
+   	 void testDuplicateCommentsDoNotCauseError() {
+   		
+   	
+   		
+   		Session s = sf.openSession();
+   		
+   		commentDao.setSession(s);
+   		postDao.setSession(s);
+   		archiveDao.setSession(s);
+   		tagDao.setSession(s);
+   		userDao.setSession(s);
+   		
+   		s.beginTransaction();
+   		User user1 = userDao.create("mario98", "12345678", "Mario", "Rossi");
+		Archive archive1 = archiveDao.create("settembre 2020");
+		Tag tag1 = tagDao.create("Office 2021");
+		Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
+		Comment comment1 = commentDao.create(user1, post1, "Commento Prova", "Lorem Ipsum");
+		s.getTransaction().commit();
+		
+		try {
+			assertEquals(1,commentDao.getAll().size());
+		}
+		catch(Exception e) {
+			fail("Exception not excepted: "+e.getMessage());
+		}
+		
+		s.beginTransaction();
+		Comment comment2 = commentDao.create(user1, post1, "Commento Prova", "Lorem Ipsum");
+		s.getTransaction().commit();
+		
+		try {
+			assertEquals(2,commentDao.getAll().size());
+			assertEquals(comment1.getTitle(),comment2.getTitle());
+			assertSame(comment1.getPost(),comment2.getPost());
+			assertSame(comment1.getAuthor(), comment2.getAuthor());
+			assertFalse(comment1.getId() == comment2.getId());
+			
+			
+		}
+		catch(Exception e) {
+			fail("Exception not excepted: "+e.getMessage());
+		}
+   		
+   		
+   	 }
    	}
-
-	//TODO: inserire un test che mostri che è possibile inserire due commenti con lo stesso titolo (si possono inserire
-	//      due commenti con le informazioni identiche ma che cambiano nell'ID)
-
-}
