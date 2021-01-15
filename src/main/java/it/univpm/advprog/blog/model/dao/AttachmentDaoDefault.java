@@ -19,7 +19,7 @@ public class AttachmentDaoDefault extends DefaultDao implements AttachmentDao {
 	@Override
 	public List<Attachment> getAll() {
 		 return getSession().
-	                createQuery("from Attachment p", Attachment.class).
+	                createQuery("from Attachment a order by a.id desc", Attachment.class).
 	                getResultList();
 	}
 

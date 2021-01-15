@@ -104,7 +104,7 @@
       <!-- Sidebar Widgets Column -->
       <div class="col-md-4">
 		<c:if test="${isAuth}">
-		  <a href="<c:url value="/posts/new"/>">Scrivi un nuovo post</a>
+			<a type="button" class="btn btn-success" href="<c:url value="/posts/new"/>">Scrivi un nuovo post</a>
 		</c:if>
         <!-- Achieves Widget -->
         

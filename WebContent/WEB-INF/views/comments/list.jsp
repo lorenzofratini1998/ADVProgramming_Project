@@ -20,6 +20,7 @@
 		<table class="table table-striped w-75 mx-auto">
                 <thead>
                 <tr>
+                    <th scope="col">Id</th>
                     <th scope="col">Commento</th>
                     <th scope="col">Post</th>
                     <th scope="col">Archivio</th>
@@ -30,6 +31,7 @@
                 <tbody>
                 <c:forEach items="${comments}" var="comment">
                     <tr>
+                        <td>${comment.id}</td>
                         <td>${comment.description}</td>
                         <td>${comment.getPost().title}</td>
                         <td>${comment.getPost().getArchive().name }</td>

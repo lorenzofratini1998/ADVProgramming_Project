@@ -29,6 +29,6 @@
     </definition>
         <definition extends="default" name="disclaimer">
         <put-attribute name="body" value="/WEB-INF/views/disclaimer.jsp"/>
-        <put-attribute name="pageTitle" value="Disclaimer Blog"/>
+        <put-attribute name="pageTitle" value="Disclaimer"/>
     </definition>
 </tiles-definitions>

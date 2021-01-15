@@ -21,7 +21,8 @@ public class CommentDaoDefault extends DefaultDao implements CommentDao {
 	@Override
 	public List<Comment> getAll() {
 		return getSession().
-				createQuery("from Comment c", Comment.class).
+				createQuery("from Comment c order by c.id desc", Comment.class).
+
 				getResultList();
 	}
 

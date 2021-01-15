@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 
 import javax.annotation.Resource;
 
-public abstract class DefaultDao {
+abstract class DefaultDao {
 
     private SessionFactory sessionFactory;
     private Session session;

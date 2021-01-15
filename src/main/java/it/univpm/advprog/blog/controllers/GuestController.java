@@ -2,7 +2,6 @@ package it.univpm.advprog.blog.controllers;
 
 import it.univpm.advprog.blog.model.entities.*;
 import it.univpm.advprog.blog.services.ArchiveService;
-import it.univpm.advprog.blog.services.AttachmentService;
 import it.univpm.advprog.blog.services.PostService;
 import it.univpm.advprog.blog.services.TagService;
 import it.univpm.advprog.blog.services.UserService;
@@ -12,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
@@ -342,11 +341,16 @@ public class GuestController {
     }
     
     /**
-     * Metodo per il login (copiato da spegni)
+     * Metodo per il login
      */
     @GetMapping(value = "/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error, 
+    public String loginPage(Authentication authentication, @RequestParam(value = "error", required = false) String error,
                             Model model) {
+        if(authentication != null) {
+            // user is already logged in
+            String message = "Sei gi%C3%A0 autenticato!";
+            return "redirect:/?successMessage=" + message;
+        }
         String errorMessage = null;
         if(error != null) {
         	errorMessage = "Username o Password errati !!";

@@ -3,7 +3,6 @@ package it.univpm.advprog.blog.controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import it.univpm.advprog.blog.model.entities.*;
 import it.univpm.advprog.blog.services.*;
@@ -30,7 +29,6 @@ public class UserController {
 	private CommentService commentService;
 	private UserService userService;
 	private TagService tagService;
-	private ArchiveService archiveService;
 	private LinkService linkService;
 	private FileService fileService;
 	private AttachmentService attachmentService;
@@ -59,16 +57,6 @@ public class UserController {
 	@Autowired
 	public void setFileService(FileService fileService) {
 		this.fileService = fileService;
-	}
-
-	/**
-	 * Setter per la proprietà riferita al Service dell'entità Archive.
-	 *
-	 * @param archiveService Service dell'entità Archive da settare
-	 */
-	@Autowired
-	public void setArchiveService(ArchiveService archiveService) {
-		this.archiveService = archiveService;
 	}
 
 	/**

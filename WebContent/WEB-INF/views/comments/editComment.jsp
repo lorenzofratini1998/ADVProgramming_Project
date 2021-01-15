@@ -10,18 +10,18 @@
         <h1 class="h3 mb-3 font-weight-normals">Modifica il tuo commento</h1>
 
 		<div class="form-group">
-	        <label>Titolo Post
+	        <label style="display: block;">Titolo Post
 	            <input type="text" name="postTitle" value="${comment.getPost().title}" readonly="readonly" class="form-control mt-2" />
             </label>
         </div>
         <div class="form-group">
-            <label>Titolo Commento
+            <label style="display: block;">Titolo Commento
                 <input name="title" class="form-control mt-2" value="${comment.title}">
             </label>
         </div>
        	<div class="form-group">
-	        <label>Descrizione Commento
-	            <textarea name="description" class="form-control mt-2" autofocus>${comment.description}</textarea>
+	        <label style="display: block;">Descrizione Commento
+	            <textarea name="description" class="form-control mt-2" rows="3" autofocus>${comment.description}</textarea>
             </label>
         </div>
 
