@@ -13,6 +13,6 @@
 	</definition>
 	<definition extends="default" name="users.editProfile">
 		<put-attribute name="body" value="/WEB-INF/views/users/editProfile.jsp" />
-		<put-attribute name="pageTitle" value="Nuovo Post" />
+		<put-attribute name="pageTitle" value="Modifica Profilo Utente" />
 	</definition>
 </tiles-definitions>

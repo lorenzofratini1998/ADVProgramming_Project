@@ -6,7 +6,7 @@
 
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 
-<c:url value="/blog/post/${post.id}/comment/new/save" var="new_comment_url"/>
+<c:url value="/post/${post.id}/comment/new/save" var="new_comment_url"/>
 
 <div class="inner">
     <div class="row">

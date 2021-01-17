@@ -540,7 +540,7 @@ public class UserController {
 	 * @param authentication informazioni dell'autenticazione corrente
 	 * @return			nome della vista da visualizzare
 	 */
-	@PostMapping(value = "/blog/post/{postID}/comment/new/save")
+	@PostMapping(value = "/post/{postID}/comment/new/save")
 	public String saveComment (@ModelAttribute("comment") Comment comment, Authentication authentication,
 							   @PathVariable("postID") long postId) {
 		logger.info("Saving a new comment...");
@@ -553,11 +553,11 @@ public class UserController {
 			this.commentService.update(comment);
 			String strMessage = "Il commento %C3%A8 stato salvato correttamente!";
 
-			return "redirect:/blog/post/" + postId + "?successMessage=" + strMessage;
+			return "redirect:/post/" + postId + "?successMessage=" + strMessage;
 
 		} catch (RuntimeException e) {
 
-			return "redirect:/blog/post/" + postId + "?errorMessage=" + e.getMessage();
+			return "redirect:/post/" + postId + "?errorMessage=" + e.getMessage();
 		}
 	}
 

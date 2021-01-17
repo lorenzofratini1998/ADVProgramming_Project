@@ -273,7 +273,7 @@ public class GuestController {
      * @param successMessage eventuale messaggio di successo
      * @return nome della vista da ritornare
      */
-    @GetMapping(value="/blog/post/{post_id}")
+    @GetMapping(value="/post/{post_id}")
     public String showPostDetails(@PathVariable("post_id") String post_id, Model uiModel,
                                   @RequestParam(value = "successMessage", required = false) String successMessage,
                                   @RequestParam(value = "errorMessage", required = false) String errorMessage) {

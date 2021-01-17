@@ -55,7 +55,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/tags/?**/**").hasAnyRole("admin").
                 antMatchers("/archives/?**/**").hasAnyRole("admin").
                 antMatchers("/profile/**").hasAnyRole("user","admin").
-                antMatchers("/attachments/**").hasAnyRole("admin").
+                antMatchers("/attachments").hasAnyRole("admin").
+                antMatchers("/attachments/hide/**").hasAnyRole("admin").
+                antMatchers("/attachments/show/**").hasAnyRole("admin").
+                antMatchers("/attachments/?**").permitAll().
                 antMatchers("/posts/manage/**").hasAnyRole("admin").
                 antMatchers("/posts/**").hasAnyRole("user", "admin").
                 antMatchers("/comments/manage/**").hasAnyRole("admin").

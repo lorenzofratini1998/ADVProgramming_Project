@@ -5,7 +5,7 @@
 <tiles-definitions>
     <definition extends="default" name="comments.list">
         <put-attribute name="body" value="/WEB-INF/views/comments/list.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Commenti"/>
+        <put-attribute name="pageTitle" value="Lista Tuoi Commenti"/>
     </definition>
     <definition extends="default" name="comments.listforAdmin">
         <put-attribute name="body" value="/WEB-INF/views/comments/listForAdmin.jsp"/>
@@ -13,6 +13,6 @@
     </definition>
         <definition extends="default" name="comments.editComment">
         <put-attribute name="body" value="/WEB-INF/views/comments/editComment.jsp"/>
-        <put-attribute name="pageTitle" value="Modifica commento"/>
+        <put-attribute name="pageTitle" value="Modifica Commento"/>
     </definition>
 </tiles-definitions>

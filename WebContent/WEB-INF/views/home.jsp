@@ -39,7 +39,7 @@
 				<div class="card-body">
 					<h2 class="card-title">${p.title}</h2>
 					<p class="card-text">${p.shortDescription}</p>
-					 <a href="<c:url value="/blog/post/${p.id}"/>" class="btn btn-primary">Dettagli post &rarr;</a>
+					 <a href="<c:url value="/post/${p.id}"/>" class="btn btn-primary">Dettagli post &rarr;</a>
 				</div>
 				<div class="card-footer text-muted">
 	    			Postato in <a href="<c:url value="/archive/${p.getArchive().name}"/>">${p.getArchive().name}</a> da <a href="<c:url value="/author/${p.getAuthor().username}"/>">${p.getAuthor().username}</a>
