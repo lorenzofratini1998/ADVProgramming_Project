@@ -327,6 +327,8 @@ public class UserController {
 
 		uiModel.addAttribute("link", new Link());
 		uiModel.addAttribute("postID", postId);
+		uiModel.addAttribute("pageTitle","Inserisci Link");
+
 
 		return "link.new";
 	}
@@ -343,6 +345,7 @@ public class UserController {
 
 		uiModel.addAttribute("file", new it.univpm.advprog.blog.model.entities.File());
 		uiModel.addAttribute("postID", postId);
+		uiModel.addAttribute("pageTitle","Inserisci File");
 
 		return "file.new";
 	}

@@ -13,18 +13,18 @@
     </definition>
     <definition extends="default" name="link.new">
         <put-attribute name="body" value="/WEB-INF/views/attachments/formLink.jsp"/>
-        <put-attribute name="titlePageForm" value="Aggiungi Allegato Link"/>
+        <put-attribute name="pageTitle" value="Aggiungi Allegato Link"/>
     </definition>
     <definition extends="default" name="link.edit">
         <put-attribute name="body" value="/WEB-INF/views/attachments/formLink.jsp"/>
-        <put-attribute name="titlePageForm" value="Modifica Allegato Link"/>
+        <put-attribute name="pageTitle" value="Modifica Allegato Link"/>
     </definition>
     <definition extends="default" name="file.new">
         <put-attribute name="body" value="/WEB-INF/views/attachments/newFile.jsp"/>
-        <put-attribute name="titlePageForm" value="Aggiungi Allegato File"/>
+        <put-attribute name="pageTitle" value="Aggiungi Allegato File"/>
     </definition>
     <definition extends="default" name="file.edit">
         <put-attribute name="body" value="/WEB-INF/views/attachments/editFile.jsp"/>
-        <put-attribute name="titlePageForm" value="Modifica Allegato File"/>
+        <put-attribute name="pageTitle" value="Modifica Allegato File"/>
     </definition>
 </tiles-definitions>

@@ -3,6 +3,8 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
+
 <sec:authorize access="isAuthenticated()" var="isAuth"/>
 <script type="text/javascript">
     $('#myModal').on('shown.bs.modal', function () {
@@ -37,7 +39,7 @@
             <c:forEach items="${posts}" var="post">
                 <tr>
                     <td>${post.id}</td>
-                    <td>${post.title}</td>
+                    <td><a href="<c:url value="/post/${post.id}"/>"> ${post.title}</a></td>
                     <td>${post.shortDescription }</td>
                     <td>${post.getArchive().name }</td>
                     <td>

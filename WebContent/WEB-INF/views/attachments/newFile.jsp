@@ -9,7 +9,7 @@
            enctype="multipart/form-data">
 
     <div class="text-center mb-3">
-        <h3 class="font-weight-bold">Aggiungi file</h3>
+        <h3 class="font-weight-bold">${pageTitle}</h3>
     </div>
 
     <label for="fileAttachment">Seleziona il file</label>
