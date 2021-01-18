@@ -5,7 +5,7 @@
 <tiles-definitions>
     <definition extends="default" name="attachments.list">
         <put-attribute name="body" value="/WEB-INF/views/attachments/listForAdmin.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Allegati"/>
+        <put-attribute name="pageTitle" value="Lista Allegati Utenti"/>
     </definition>
     <definition extends="default" name="post.attachments">
         <put-attribute name="body" value="/WEB-INF/views/attachments/postAttachments.jsp"/>

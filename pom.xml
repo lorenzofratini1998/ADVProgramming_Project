@@ -230,6 +230,13 @@
                             <goal>redeploy</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>tomcat-undeploy</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>undeploy</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

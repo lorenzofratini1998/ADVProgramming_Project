@@ -9,7 +9,7 @@
     </definition>
     <definition extends="default" name="comments.listforAdmin">
         <put-attribute name="body" value="/WEB-INF/views/comments/listForAdmin.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Commenti Autori"/>
+        <put-attribute name="pageTitle" value="Lista Commenti Utenti"/>
     </definition>
         <definition extends="default" name="comments.editComment">
         <put-attribute name="body" value="/WEB-INF/views/comments/editComment.jsp"/>

@@ -9,7 +9,7 @@
     </definition>
     <definition extends="default" name="posts.listForAdmin">
         <put-attribute name="body" value="/WEB-INF/views/posts/listForAdmin.jsp"/>
-        <put-attribute name="pageTitle" value="Lista Post Autori"/>
+        <put-attribute name="pageTitle" value="Lista Post Utenti"/>
     </definition>
     <definition extends="default" name="posts.new">
         <put-attribute name="body" value="/WEB-INF/views/posts/form.jsp"/>

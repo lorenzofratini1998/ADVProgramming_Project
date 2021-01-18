@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -306,13 +307,13 @@ public class TestPostDao {
 			Tag tag1 = tagDao.create("Office 2021");
 			postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
 			s.getTransaction().commit();
-			
-			try {
-				postDao.create("Installazione Office 2021", user2, SHORTDESCRIPTION, LONGDESCRIPTION, tag1, archive1);
-				fail("Exception expected when creating two posts with same title");
-			} catch(Exception e) {
-				assertTrue(true);
-			}
+
+			// ECCEZIONE! Non si possono creare due post con lo stesso titolo
+			assertThrows(ConstraintViolationException.class, ()->
+			{
+				postDao.create("Installazione Office 2021", user2, SHORTDESCRIPTION, LONGDESCRIPTION, tag1,
+						archive1);
+			});
 			
    		}
 	}
