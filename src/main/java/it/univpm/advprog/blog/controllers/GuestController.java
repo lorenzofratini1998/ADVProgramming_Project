@@ -443,20 +443,18 @@ public class GuestController {
      */
     private void postsPagination(@RequestParam(required = false) Integer page, Model uiModel, List<Post>
             posts) {
+
         PagedListHolder<Post> pagedListHolder = new PagedListHolder<>(posts);
         pagedListHolder.setPageSize(2);
-        uiModel.addAttribute("maxPages",pagedListHolder.getPageCount());
 
-        if(page==null || page < 1 || page > pagedListHolder.getPageCount())page=1;
+        if(page == null || page < 1 || page > pagedListHolder.getPageCount()) page = 1;
 
-        uiModel.addAttribute("page",page);
-        if(page == null || page < 1 || page > pagedListHolder.getPageCount()){
-            pagedListHolder.setPage(0);
+        if(page <= pagedListHolder.getPageCount()) {
+            pagedListHolder.setPage(page - 1);
             uiModel.addAttribute("posts", pagedListHolder.getPageList());
         }
-        else if(page <= pagedListHolder.getPageCount()) {
-            pagedListHolder.setPage(page-1);
-            uiModel.addAttribute("posts", pagedListHolder.getPageList());
-        }
+
+        uiModel.addAttribute("page", page);
+        uiModel.addAttribute("maxPages", pagedListHolder.getPageCount());
     }
 }

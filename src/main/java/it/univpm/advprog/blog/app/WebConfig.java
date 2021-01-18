@@ -54,6 +54,8 @@ public class WebConfig implements WebMvcConfigurer {
 		.setCachePeriod(31556926);
 		registry.addResourceHandler("/files/post_attachments/**")
 				.addResourceLocations("/WEB-INF/files/post_attachments/").setCachePeriod(31556926);
+		registry.addResourceHandler("/files/profile_pictures/**")
+				.addResourceLocations("/WEB-INF/files/profile_pictures/").setCachePeriod(31556926);
 		registry.addResourceHandler("/immagini/**").addResourceLocations("/WEB-INF/immagini/")
 				.setCachePeriod(31556926);
 	}

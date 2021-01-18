@@ -43,7 +43,7 @@
         <div class="md-form mt-4 mb-4">
             <h5 class="font-weight-normal"> Immagine del profilo attualmente caricata sul server: </h5>
             <div class="text-center">
-                <img src="<c:url value="files/profile_pictures/${user.imageProfile}"/>" alt="Immagine profilo" class="img-thumbnail mx-auto w-50">
+                <img src="<c:url value="/files/profile_pictures/${user.imageProfile}"/>" alt="Immagine profilo" class="img-thumbnail mx-auto w-50">
             </div>
         </div>
     </c:if>
