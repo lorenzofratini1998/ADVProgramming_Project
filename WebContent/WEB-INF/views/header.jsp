@@ -6,6 +6,8 @@
 <sec:authorize access="hasRole('admin')" var="isAdmin"/>
 <sec:authorize access="hasRole('user')" var="isUser"/>
 <sec:authorize access="!isAuthenticated()" var="isNoAuth"/>
+<sec:authorize access="isAuthenticated()" var="isAuth"/>
+
 
 <c:url value="/" var="home_url"/>
 <c:url value="/about" var="about_us_url"/>
@@ -99,7 +101,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${profile_url}">User</a>
+                        <a class="nav-link" href="${profile_url}"><sec:authentication property="principal.username"/></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${logout_url}">Logout</a>

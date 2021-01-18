@@ -92,17 +92,17 @@
 
         <!-- Form -->
         <h4>Scrivi un commento</h4>
-        <form:form class="form-signin" action="${new_comment_url}" method="POST" modelAttribute="comment">
+        <form:form name="modulo" class="form-signin" action="${new_comment_url}" method="POST" modelAttribute="comment" onsubmit="return false">
             <form:label path="title">Titolo</form:label>
-            <form:input path="title" class="form-control mt-2" placeholder="Inserisci titolo commento"/><br>
+            <form:input id="titolo" path="title" class="form-control mt-2" placeholder="Inserisci titolo commento"/><br>
 
             <form:label path="description">Descrizione</form:label>
-            <form:textarea path="description" class="form-control mt-2"
+            <form:textarea id="testo" path="description" class="form-control mt-2"
                            placeholder="Inserisci descrizione commento"/><br>
 
             <div>
                 <ul class="list-unstyled">
-                    <li><input type="submit" value="Inserisci" class="mt-3 btn btn-lg btn-primary btn-block"/></li>
+                    <li><input type="submit" value="Inserisci" class="mt-3 btn btn-lg btn-primary btn-block" onclick="controlloCommento()"/></li>
                     <li><input type="reset" value="Cancella" class="mt-3 btn btn-lg btn-primary btn-block"/></li>
                 </ul>
             </div>
@@ -111,3 +111,23 @@
         </form:form>
     </c:if>
 </div>
+
+<script type="text/javascript">
+
+
+//Se vengono superati i controlli abilita l'inoltro del form (di default disabilitato)
+function controlloCommento() {
+	
+	var title = document.getElementById("titolo").value;
+	var text = document.getElementById("testo").value;
+	if (title.length === 0 || text.length ===0) {
+		
+		alert("Commento non valido!");
+		
+		
+	}
+	else document.modulo.submit();
+}
+
+
+</script> 

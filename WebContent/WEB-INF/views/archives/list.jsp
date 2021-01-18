@@ -44,7 +44,7 @@
                             </div>
                         </td>
                     </c:if>
-                    <td>${archive.name}</td>
+                    <td><a href="<c:url value="/archive/${archive.name}"/>">${archive.name}</a></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -43,7 +43,7 @@
                             </div>
                         </td>
                     </c:if>
-                    <td>${tag.name}</td>
+                    <td><a href="<c:url value="/tag/${tag.name}"/>">${tag.name}</a></td>
                 </tr>
             </c:forEach>
             </tbody>
