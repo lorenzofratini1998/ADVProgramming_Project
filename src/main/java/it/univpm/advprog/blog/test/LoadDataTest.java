@@ -87,11 +87,11 @@ public class LoadDataTest {
                 // INSERIMENTO TAG
                 session.beginTransaction();
 
-                Tag tag1 = tagDao.create("Office 2021");
-                Tag tag2 = tagDao.create("Teams");
-                Tag tag3 = tagDao.create("GitHub");
-                Tag tag4 = tagDao.create("Google Calendar");
-                Tag tag5 = tagDao.create("Google Photos");
+                Tag tag1 = tagDao.create("Microsoft Teams");
+                Tag tag2 = tagDao.create("Microsoft Office");
+                Tag tag3 = tagDao.create("Windows");
+                Tag tag4 = tagDao.create("Microsoft Edge");
+                Tag tag5 = tagDao.create("Outlook.com");
 
                 session.getTransaction().commit();
 
@@ -101,25 +101,67 @@ public class LoadDataTest {
                 // INSERIMENTO POST
                 session.beginTransaction();
 
-                Post post1 = postDao.create("Installazione Office 2021", user1, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post1 = postDao.create("File su Teams", user1, "Non trovo i file su Teams", "dopo aver preso la versione di prova di 365 business basics adesso non vedo più tutti i file di lavoro che avevo su Teams",
                         tag1, archive1);
-                Post post2 = postDao.create("titoloPost2", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post2 = postDao.create("Account microsoft università", user2, "Sono uno studente universitario, mi sono iscritto ad un master in una nuova università ma ho ancora l'account microsoft collegato alla precedente",
+                		"Buongiorno, \r\n"
+                		+ "\r\n"
+                		+ "sono uno studente universitario, mi sono iscritto ad un master in una nuova università ma ho ancora l'account microsoft collegato alla precedente. In tal modo non riesco ad accedere al team del master (mi fa accedere automaticamente a teams con la mail dell'università precedente) e non so se devo creare un nuovo account o sostituire il precedente. Non voglio assolutamente perdere i documenti e le app che ho utilizzato questi tre anni. Mi può aiutare?",
                         tag2, archive2);
-                Post post3 = postDao.create("titoloPost3", user3, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post3 = postDao.create("Mouse e tastiera USB non funzionano", user3, "Mouse e tastiera USB non funzionano dopo reinstallazione Windows 10 in pulito", 
+                		"Nel mio vecchio PC ho fatto una reinstallazione WIN10 pulito.\r\n"
+                		+ "Terminato l'aggiornamento, la tastiera e il maus collegati a USB non funzionano.\r\n"
+                		+ "Cordiali saluti",
                         tag3, archive3);
-                Post post4 = postDao.create("titoloPost4", user4, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post4 = postDao.create("Avviso di Microsoft Edge: Sito non sicuro", user4, "Accedendo a certi siti, anche molto comuni e noti, appare la scritta Sito non sicuro", 
+                		"Buongiorno a tutti. Volevo chiedere come mai accedendo a certi siti, anche molto comuni e noti, appare la scritta Sito non sicuro.\r\n"
+                		+ "\r\n"
+                		+ "E' un problema legato all'antivirus o è effettivamente un problema di sicurezza? Nonostante  il sito abbia in indirizzo  https ://ecc.\r\n"
+                		+ "\r\n"
+                		+ "Il mio antivirus e' windows defender con windows 10.",
                         tag4, archive4);
-                Post post5 = postDao.create("titoloPost5", user5, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post5 = postDao.create("Hanno clonato il mio indirizzo", user5, "Ricevo mail da un indirizzo clonato", 
+                		"Ho problemi perche ricevo mail da mio indirizzo clonato\r\n"
+                		+ "\r\n"
+                		+ "posso ricevere vostro supporto?\r\n"
+                		+ "\r\n"
+                		+ "grazie",
                         tag5, archive5);
-                Post post6 = postDao.create("titoloPost6", user1, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post6 = postDao.create("Teams non salva registrazione", user1, "Registrazione non salvata dopo averla avviata durante una riunione a cui ho partecipato", 
+                		"Buongiorno, ieri ho partecipato ad una riunione ed ho fatto partire la registrazione.  Poi a fine riunione ho interrotto la registrazione e mi è apparsa una scritta che diceva \"la registrazione è stata salvata, sarà disponibile sulla cronologia della chat\". però nella cronologia della chat non vedo assolutamente niente.\r\n"
+                		+ "\r\n"
+                		+ "ad oggi ( dopo quasi 24 ore)  della registrazione nessuna traccia. come può essere possibile? dove trovo la mia registrazione? grazie",
                         tag1, archive1);
-                Post post7 = postDao.create("titoloPost7", user2, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post7 = postDao.create("File danneggiati su OneDrive", user2, "Molti file salvati nei mesi passati risultano illeggibili da qualsiasi dispositivo si tenta di aprirli", 
+                		"Ciao a tutti, ho un grosso problema!\r\n"
+                		+ "\r\n"
+                		+ "ci siamo accorti da alcuni giorni che molti file salvati nei mesi passati risultano illeggibili da qualsiasi dispositivo si tenta di aprirli.\r\n"
+                		+ "\r\n"
+                		+ "Mio figlio prima di natale a fatto backup delle foto del suo telefono e ora risultano tutte illeggibili.\r\n"
+                		+ "\r\n"
+                		+ "Stessa cosa per parecchi documenti word di scuola....che posso fare?",
                         tag2, archive2);
-                Post post8 = postDao.create("titoloPost8", user3, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post8 = postDao.create("Sfarfallio schermo Windows 10", user3, "Quando vado in Impostazioni inizia lo sfarfallio dello schermo appena chiudo la finestra impostazioni lo sfarfallo termina", 
+                		"Salve,\r\n"
+                		+ "\r\n"
+                		+ "ho un computer da 2GB di ram a 32 bit e sono passato da win 7 a win 10 l'aggiornamento è andato bene. Poi però mi sono accorto che quando vado in Impostazioni inizia lo sfarfallio dello schermo appena chiudo la finestra impostazioni lo sfarfallo termina. Ho capito che a causare questo problema è la scheda grafica infatti appena disabilito il driver grafico tutto torna a posto ma con una risoluzione pessima. La scheda grafica è la Nvidia il driver è: Nvdia Gforce 6100 Nforce 430  Win 10 ha installato: Nvidia Geforce 6150 Se nforce 430.\r\n"
+                		+ "\r\n"
+                		+ "Chiedo, cortesemente, se avete qualche suggerimento da darmi per risolvere questo sfarfallio che si manifesta solo quando apro la finestra impostazioni.\r\n"
+                		+ "\r\n"
+                		+ "Grazie n anticipo e saluti.",
                         tag3, archive3);
-                Post post9 = postDao.create("titoloPost9", user4, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post9 = postDao.create("Microfono non funziona con Edge", user4, "Non riesco a far funzionare il microfono per la ricerca vocale", 
+                		"Buongiorno, con l'aggiornamento di edge, non riesco a far funzionare il microfono per la ricerca vocale in google.\r\n"
+                		+ "\r\n"
+                		+ "Funziona invece con chrome.\r\n"
+                		+ "\r\n"
+                		+ "Grazie",
                         tag4, archive4);
-                Post post10 = postDao.create("titoloPost10", user5, SHORTDESCRIPTION, LONGDESCRIPTION,
+                Post post10 = postDao.create("Invio Virus da Mail", user5, "Alcuni miei contatti ricevono delle mail con virus", 
+                		"Buongiorno ho una mail con outlook che non utilizzo mai.\r\n"
+                		+ "Purtroppo alcuni miei contatti ricevono delle mail (con virus) dal mio indirizzo senza che io le abbia mai mandate.\r\n"
+                		+ "\r\n"
+                		+ "Come posso risolvere il problema?",
                         tag5, archive5);
 
                 session.getTransaction().commit();
@@ -130,16 +172,16 @@ public class LoadDataTest {
                 // INSERIMENTO COMMENTI
                 session.beginTransaction();
 
-                commentDao.create(user1, post5, TITLE, DESCRIPTION);
-                commentDao.create(user2, post4, TITLE, DESCRIPTION);
-                commentDao.create(user3, post3, TITLE, DESCRIPTION);
-                commentDao.create(user4, post2, TITLE, DESCRIPTION);
-                commentDao.create(user5, post1, TITLE, DESCRIPTION);
-                commentDao.create(user1, post3, TITLE, DESCRIPTION);
-                commentDao.create(user2, post1, TITLE, DESCRIPTION);
-                commentDao.create(user3, post2, TITLE, DESCRIPTION);
-                commentDao.create(user4, post5, TITLE, DESCRIPTION);
-                commentDao.create(user5, post4, TITLE, DESCRIPTION);
+                commentDao.create(user1, post5, "Finto mittente", "Ciao, potrebbe essere qualcuno che finge di usare il tuo stesso account, ma il vero mittente è un altro. Fammi sapere.");
+                commentDao.create(user2, post4, "Falso allarme!", "Se sono siti che conosci, si può accedere tranquillamente, è solo un avviso.");
+                commentDao.create(user3, post3, "Installazione in modalità avanzata", "Devi reinstallare pulito in modalità avanzata se vuoi uscire da questo problema.");
+                commentDao.create(user4, post2, "Procedura guidata", "Potresti selezionare l’immagine del tuo account nell’applicazione di Teams > selezionare Esci > accedere nuovamente a Teams tramite le credenziali del nuovo account. In qualsiasi momento potresti connettere l’altro account a Teams e accedere ai tuoi documenti.");
+                commentDao.create(user5, post1, "Da vecchio a nuovo account", "In precedenza quale versione avevi? Microsoft 365 Business associa un nuovo tenant all'utente con dominio onmicrosoft.com Se in precedenza usavi un altro account per accedere a Teams, dovresti accedere con tale account e copiare i dati sul nuovo");
+                commentDao.create(user1, post3, "Stesso problema", "Nel mio vechio PC ho fatto un riinstallazione WIN10 pulito. Terminato l'aggiornamento, la tastiera e il maus collegati a USB non funzionano. Cordiali saluti");
+                commentDao.create(user2, post1, "Risoluzione problema", "Potresti avere la versione precedente con un altro username");
+                commentDao.create(user3, post2, "Consiglio legato alla procedura guidata", "È importante sapere che se non frequenti più un istituto d’istruzione, la tua licenza può essere disabilitata in qualsiasi momento. Per questo motivo suggerirei di eseguire un backup dei tuoi documenti archiviati con il tuo account precedente.");
+                commentDao.create(user4, post5, "Segnalazione assistenza", "Prova a segnalare quanto avvenuto all'assistenza");
+                commentDao.create(user5, post4, "Rischio esposizione attacco hacker", "Se appare in sfondo tutto rosso il blocco di Edge è un problema di sicurezza del sito, che magari ha subito un attacco hacker.");
 
                 session.getTransaction().commit();
 
