@@ -28,18 +28,18 @@
         <b> E-mail:</b>
         </div>
         <div>
-        <i> blogadvprog@gmail.com</i>
+        <i> advprogcommunity@gmail.com</i>
         </div>
         <div style='margin-top:20px'>
         <b>Seguici anche sui nostri social</b>
         </div>
         <div style='margin-top:5px'>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/facebook.png"/>" width="33" height="33" style="float:left;margin:5px" >
-        <p>BlogAdvprog</p>
+        <p>AdvProgCommunity</p>
         </div>
         <div>
         <img class="img-fluid rounded mb-4 mb-lg-0" src="<c:url value="/immagini/instagram.jpg"/>" width="40" height="40" style="float:left;margin:3px" >
-        <p>BlogAdvprog</p>
+        <p>AdvProgCommunity</p>
         </div>
         </div>
       </div>

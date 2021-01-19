@@ -30,7 +30,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="${home_url}">Start Bootstrap</a>
+            <a class="navbar-brand" href="${home_url}">AdvProgCommunity</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive1"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="${home_url}">Start Bootstrap</a>
+            <a class="navbar-brand" href="${home_url}">AdvProgCommunity</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive2"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -117,7 +117,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="${home_url}">Start Bootstrap</a>
+            <a class="navbar-brand" href="${home_url}">AdvProgCommunity</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive3"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

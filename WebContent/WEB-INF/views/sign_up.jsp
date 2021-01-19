@@ -23,9 +23,7 @@
 
 <div class="col">
     <form name="modulo" class="form-signin" action="${action_url}"method="POST" modelAttribute="newUser" enctype="multipart/form-data" onsubmit="return false" >
-        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
-             height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Inserisci i tuoi dati</h1>
+        <h1 class="h3 mb-3 font-weight-normal"> <b>Inserisci i tuoi dati</b></h1>
         <p>(* Campo obbligatorio)</p>
 
         <label>Nome Utente*</label>
