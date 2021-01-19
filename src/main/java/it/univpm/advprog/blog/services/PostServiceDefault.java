@@ -73,7 +73,7 @@ public class PostServiceDefault implements PostService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<Post> getByTags(Set<Tag> tags) { //TODO: spostare sul DAO
+    public List<Post> getByTags(Set<Tag> tags) { 
         List<Post> posts = this.postRepository.getAll();
         for (Post post : posts) {
             Set<Tag> tagsPost = post.getTags();
