@@ -163,6 +163,13 @@
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.0-alpha1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.sun.activation/jakarta.activation -->
+        <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>jakarta.activation</artifactId>
+            <version>2.0.0</version>
+        </dependency>
     </dependencies>
 
 
@@ -239,16 +246,19 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Plugin per l'automatizzazione dell'esecuzione della classe Java LoadDataTest (per il popolamento dati) -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
                     <mainClass>it.univpm.advprog.blog.test.LoadDataTest</mainClass>
+                    <cleanupDaemonThreads>false</cleanupDaemonThreads>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>tomcat-deploy</id>
+                        <id>exec-maven-plugin</id>
                         <phase>install</phase>
                         <goals>
                             <goal>java</goal>
@@ -256,6 +266,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
         <finalName>${project.artifactId}</finalName>
     </build>

@@ -700,7 +700,7 @@ public class UserController {
 	 */
 	@PostMapping(value = "/profile/edit/save", consumes = "multipart/form-data")
 	public String saveProfile(@ModelAttribute("userToEdit") User profile, BindingResult br, Model uiModel,
-							  @RequestParam("imageProfile") MultipartFile file) {
+							  @RequestParam("image") MultipartFile file) {
 		logger.info("Saving the edited profile...");
 		if (!file.isEmpty()) {
 			String nameOfFile = null;

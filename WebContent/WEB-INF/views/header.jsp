@@ -169,7 +169,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${profile_url}">Admin</a>
+                        <a class="nav-link" href="${profile_url}"><sec:authentication property="principal.username"/></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${logout_url}">Logout</a>

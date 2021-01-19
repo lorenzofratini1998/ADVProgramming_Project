@@ -91,7 +91,7 @@ public class LoadDataTest {
                 Tag tag2 = tagDao.create("Microsoft Office");
                 Tag tag3 = tagDao.create("Windows");
                 Tag tag4 = tagDao.create("Microsoft Edge");
-                Tag tag5 = tagDao.create("Outlook.com");
+                Tag tag5 = tagDao.create("Outlook");
 
                 session.getTransaction().commit();
 
