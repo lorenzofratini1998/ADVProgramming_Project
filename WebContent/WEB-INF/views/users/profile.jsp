@@ -15,37 +15,50 @@
     </c:if>
 </div>
 
-<div class = "col">
-	
-        <h1 class="h3 mb-3 font-weight-normal">Profilo utente di ${user.username}</h1>
-
-        <label>Nome Utente</label>
-        <input type="text" name="username" class="form-control mt-2" placeholder="${user.username}" disabled="disabled"><br>
-        
-
-        <label>Nome</label>
-        <input type="text" name="firstname" class="form-control mt-2" placeholder="${user.firstName}" disabled="disabled"><br>
-        
-        
-        <label>Cognome</label>
-        <input type="text" name="lastname" class="form-control mt-2" placeholder="${user.lastName}" disabled="disabled"><br>
-        
-        
-         <label>Immagine Profilo</label>
-         <input type="text" name="image" class="form-control mt-2" placeholder="${user.imageProfile}" disabled="disabled"><br>
-
-		<div class="row justify-content-between">
-	        <a href="${url}" class="btn btn-primary col-6" role="button">Modifica</a>
-	        <a href="${delete_url}" class="btn btn-danger col-2" role="button" onclick='return confirm("Sei sicuro di eliminare il tuo account?");'>Elimina</a>
+<div class="card mb-5">
+	<div class="card-header">
+		<h1 class="h3 mb-3 font-weight-normal text-center">Profilo utente di ${user.username}</h1>
+	</div>
+	<div class="card-body">
+	<div class="row">
+		<div class="col-4 d-flex align-items-center">
+			<c:if test="${not empty user.imageProfile}">
+						<img
+							src="<c:url value="/files/profile_pictures/${user.imageProfile}"/>"
+							alt="Immagine profilo" class="img-thumbnail mx-auto">
+			</c:if>
+			<c:if test="${empty user.imageProfile}">
+						<img
+							src="<c:url value="/files/profile_pictures/default.jpg"/>"
+							alt="Immagine profilo" class="img-thumbnail mx-auto">
+			</c:if>
 		</div>
-		
-    <c:if test="${not empty user.imageProfile}">
-        <div class="md-form mt-4 mb-4">
-            <h5 class="font-weight-normal"> Immagine del profilo attualmente caricata sul server: </h5>
-            <div class="text-center">
-                <img src="<c:url value="/files/profile_pictures/${user.imageProfile}"/>" alt="Immagine profilo" class="img-thumbnail mx-auto w-50">
-            </div>
-        </div>
-    </c:if>
+		<div class="col-8">
+			<div class="form-group">
+				<label>Nome Utente</label>
+	        	<input type="text" name="username" class="form-control mt-2" placeholder="${user.username}" disabled="disabled">
+        	</div>
 
+			<div class="form-group">
+		        <label>Nome</label>
+		        <input type="text" name="firstname" class="form-control mt-2" placeholder="${user.firstName}" disabled="disabled">
+	        </div>
+	        
+	        <div class="form-group">
+		        <label>Cognome</label>
+		        <input type="text" name="lastname" class="form-control mt-2" placeholder="${user.lastName}" disabled="disabled">
+	        </div>
+	        
+	        <div class="form-group">
+		         <label>Immagine Profilo</label>
+		         <input type="text" name="image" class="form-control mt-2" placeholder="${user.imageProfile}" disabled="disabled"><br>
+	        </div>
+	        
+	         <div class="d-flex justify-content-between">
+	        	<a href="${url}" class="btn btn-primary col-6" role="button">Modifica</a>
+	        	<a href="${delete_url}" class="btn btn-danger col-2" role="button" onclick='return confirm("Sei sicuro di eliminare il tuo account?");'>Elimina</a>
+			</div>
+		</div>
+	</div>
+	</div>
 </div>

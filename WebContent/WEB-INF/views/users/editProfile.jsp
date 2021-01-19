@@ -3,35 +3,47 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:url value="/profile/edit/save" var="action_url"/>
-<div class="col">
-   
+<div class="card mb-5">
     <form:form name="modulo" class="form-signin" action="${action_url}" method="POST" modelAttribute="userToEdit" enctype="multipart/form-data" onsubmit="return false">
-        <h1 class="h3 mb-3 font-weight-normal">Modifica i tuoi Dati</h1>
-
-        <label>Nome Utente</label>
-        <input type="text" name="username" value="${userToEdit.username}" readonly="readonly" class="form-control mt-2" /><br>
+       	<div class="card-header">
+       		<h1 class="h3 mb-3 font-weight-normal">Modifica i tuoi Dati</h1>
+       	</div>
         
-        <input type="hidden" name="password" value="${userToEdit.password}">
-
-        <label>Nome*</label>
-        <input type="text" name="firstName" class="form-control mt-2" value="${userToEdit.firstName}" onblur = "controlloNome()" autofocus/><br>
-		<p id=name_err></p>
+        <div class="card-body">
+        	<p class="text-danger">* Campo obbligatorio.</p>
+	        <div class="form-group">
+	        	<label>Nome Utente</label>
+	        	<input type="text" name="username" value="${userToEdit.username}" readonly="readonly" class="form-control mt-2" />
+	        </div>
+	       
+	        <input type="hidden" name="password" value="${userToEdit.password}">
+	
+			<div class="form-group">
+				<label>Nome*</label>
+		        <input type="text" name="firstName" class="form-control mt-2" value="${userToEdit.firstName}" onblur = "controlloNome()" autofocus/>
+				<p id=name_err></p>
+			</div>
+	        
+			<div class="form-group">
+		        <label>Cognome*</label>
+		        <input type="text" name="lastName"  class="form-control mt-2" value="${userToEdit.lastName}" onblur = "controlloCognome()"/>
+				<p id=lastname_err></p>
+			</div>
+			
+			<div class="form-group">
+		        <label>Immagine Profilo</label>
+		        <input type="file" name="image" class="form-control mt-2"/>
+		        <small><b>NOTA</b>: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server.</small>
+			</div>	
 		
-        <label>Cognome*</label>
-        <input type="text" name="lastName"  class="form-control mt-2" value="${userToEdit.lastName}" onblur = "controlloCognome()"/><br>
-		<p id=lastname_err></p>
-		
-        <label>Immagine Profilo</label>
-        <input type="file" name="image" class="form-control mt-2"/><br>
-        <p>NOTA: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server.</p>
-        <p>* Campo obbligatorio.</p>
-
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!" onclick="controlloForm()"/><br><br>
-
-        <form:hidden path="imageProfile"/>
-        <form:hidden path="disabled"/>
-        <form:hidden path="admin"/>
-        <form:hidden path="posts"/>
+			<div class="d-flex justify-content-center">
+				<input class="btn btn-primary col-3" type="submit" value="Applica" onclick="controlloForm()"/>
+			</div>
+	        <form:hidden path="imageProfile"/>
+	        <form:hidden path="disabled"/>
+	        <form:hidden path="admin"/>
+	        <form:hidden path="posts"/>
+        </div>
     </form:form>
 </div>
 

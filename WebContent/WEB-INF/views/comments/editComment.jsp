@@ -21,7 +21,7 @@
         </div>
        	<div class="form-group">
 	        <label style="display: block;">Descrizione Commento
-	            <textarea name="description" class="form-control mt-2" rows="3" autofocus>${comment.description}</textarea>
+	            <textarea name="description" class="form-control mt-2" rows="4" autofocus style="resize:none">${comment.description}</textarea>
             </label>
         </div>
 
