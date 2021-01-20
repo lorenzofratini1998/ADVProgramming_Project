@@ -236,7 +236,12 @@ public class UserController {
 	public String editPost(Authentication authentication, @PathVariable("postId") long postId, Model uiModel) {
 		logger.info("Modifying a post");
 
-		Post post = this.postService.getById(postId);
+		Post post = postService.getById(postId);
+		if(post == null || !post.getAuthor().getUsername().equals(authentication.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/posts?errorMessage=" + message;
+		}
+
 		String authorUsername = authentication.getName();
 
 		if (post.getAuthor().getUsername().equals(authorUsername)) {
@@ -267,15 +272,21 @@ public class UserController {
 	 * Metodo per la richiesta GET di eliminazione post
 	 *
 	 * @param id		id del commento da rimuovere
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/posts/delete/{postId}")
-	public String deletePost (@PathVariable("postId") long id) {
+	public String deletePost (@PathVariable("postId") long id, Authentication auth) {
 		logger.info("Deleting a post...");
 
-		Post p = this.postService.getById(id);
-		this.postService.delete(p);
-		String message = "Post \"" + p.getTitle() + "\" eliminato correttamente!";
+		Post post = postService.getById(id);
+		if(post == null || !post.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/posts?errorMessage=" + message;
+		}
+
+		this.postService.delete(post);
+		String message = "Post \"" + post.getTitle() + "\" eliminato correttamente!";
 		return "redirect:" + "/posts/?successMessage=" + message;
 	}
 
@@ -284,11 +295,17 @@ public class UserController {
 	 *
 	 * @param id ID del post
 	 * @param uiModel modello associato alla vista
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value="/posts/{postId}/attachments")
-	public String postAttachments(@PathVariable("postId") long id, Model uiModel) {
+	public String postAttachments(@PathVariable("postId") long id, Model uiModel, Authentication auth) {
+
 		Post post = postService.getById(id);
+		if(post == null || !post.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/posts?errorMessage=" + message;
+		}
 
 		// get all file attachments
 		List<it.univpm.advprog.blog.model.entities.File> filesPost = new ArrayList<>();
@@ -320,10 +337,17 @@ public class UserController {
 	 *
 	 * @param postId ID del post
 	 * @param uiModel modello associato alla vista
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value="/posts/edit/{postID}/attachments/link/new")
-	public String newLink(@PathVariable("postID") long postId, Model uiModel) {
+	public String newLink(@PathVariable("postID") long postId, Model uiModel, Authentication auth) {
+
+		Post post = postService.getById(postId);
+		if(post == null || !post.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/attachments?errorMessage=" + message;
+		}
 
 		uiModel.addAttribute("link", new Link());
 		uiModel.addAttribute("postID", postId);
@@ -338,10 +362,17 @@ public class UserController {
 	 *
 	 * @param postId ID del post
 	 * @param uiModel modello associato alla vista
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value="/posts/edit/{postID}/attachments/file/new")
-	public String newFile(@PathVariable("postID") long postId, Model uiModel) {
+	public String newFile(@PathVariable("postID") long postId, Model uiModel, Authentication auth) {
+
+		Post post = postService.getById(postId);
+		if(post == null || !post.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/attachments?errorMessage=" + message;
+		}
 
 		uiModel.addAttribute("file", new it.univpm.advprog.blog.model.entities.File());
 		uiModel.addAttribute("postID", postId);
@@ -356,10 +387,20 @@ public class UserController {
 	 * @param postId ID del post
 	 * @param linkId ID del link da modificare
 	 * @param uiModel modello associato alla vista
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value="/posts/edit/{postID}/attachments/link/{linkID}/edit")
-	public String editLink(@PathVariable("postID") long postId, @PathVariable("linkID") long linkId, Model uiModel) {
+	public String editLink(@PathVariable("postID") long postId, @PathVariable("linkID") long linkId, Model uiModel,
+						   Authentication auth) {
+
+		Post post = postService.getById(postId);
+		Attachment attachment = attachmentService.getById(linkId);
+		if(post == null || attachment == null || !post.getAuthor().getUsername().equals(auth.getName()) ||
+				!attachment.getPost().getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/attachments?errorMessage=" + message;
+		}
 
 		uiModel.addAttribute("link", linkService.getById(linkId));
 		uiModel.addAttribute("postID", postId);
@@ -373,10 +414,20 @@ public class UserController {
 	 * @param postId ID del post
 	 * @param fileId ID del file da modificare
 	 * @param uiModel modello associato alla vista
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value="/posts/edit/{postID}/attachments/file/{fileID}/edit")
-	public String editFile(@PathVariable("postID") long postId, @PathVariable("fileID") long fileId, Model uiModel) {
+	public String editFile(@PathVariable("postID") long postId, @PathVariable("fileID") long fileId, Model uiModel,
+						   Authentication auth) {
+
+		Post post = postService.getById(postId);
+		Attachment attachment = attachmentService.getById(fileId);
+		if(post == null || attachment == null || !post.getAuthor().getUsername().equals(auth.getName()) ||
+				!attachment.getPost().getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/attachments?errorMessage=" + message;
+		}
 
 		uiModel.addAttribute("file", fileService.getById(fileId));
 		uiModel.addAttribute("postID", postId);
@@ -475,7 +526,6 @@ public class UserController {
 	public String saveEditedFile (@ModelAttribute("file") it.univpm.advprog.blog.model.entities.File file,
 								  @PathVariable("postID") long postId) {
 		logger.info("Saving the edited file...");
-
 		try {
 			file.setPost(this.postService.getById(postId));
 			this.fileService.update(file);
@@ -491,14 +541,20 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di eliminazione di un allegato.
 	 *
+	 * @param auth informazioni dell'autenticazione corrente
 	 * @param id ID dell'allegato da eliminare
 	 * @return nome della vista da visualizzare
 	 */
 	@GetMapping(value = "/attachments/{attachmentId}/delete")
-	public String deleteAttachment (@PathVariable("attachmentId") long id) {
+	public String deleteAttachment (Authentication auth, @PathVariable("attachmentId") long id) {
 		logger.info("Deleting an attachment...");
 
 		Attachment attachment = attachmentService.getById(id);
+		if(attachment == null || !attachment.getPost().getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/attachments?errorMessage=" + message;
+		}
+
 		this.attachmentService.delete(attachment);
 		String message = "L'allegato \"" + attachment.getDescription() + "\" %C3%A8 stato eliminato correttamente!";
 		return "redirect:" + "/posts/?successMessage=" + message;
@@ -576,20 +632,15 @@ public class UserController {
 	public String editComment(@PathVariable("commentId") long commId, Authentication auth, Model uiModel) {
 		logger.info(auth.getName() + " :Editing a comment...");
 
-		Comment c = this.commentService.findCommentById(commId);
-		User u = this.userService.findUserByUsername(auth.getName());
+		Comment comment = this.commentService.findCommentById(commId);
+		if(comment == null || !comment.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/comments?errorMessage=" + message;
+		}
 
-		//TODO verificare se il controllo seguente può essere evolto con le funzioni di sicurezza
-
-		if (c.getAuthor().getUsername().equals(u.getUsername())) {
-			uiModel.addAttribute("comment", c);
-
-			return "comments.editComment";}
-
-		else {
-			String strMessage = "Non abilitato";
-			return "redirect:/" + u + "/comments/?errorMessage=" + strMessage;
-		}}
+		uiModel.addAttribute("comment", comment);
+		return "comments.editComment";
+	}
 
 
 	/**
@@ -628,8 +679,13 @@ public class UserController {
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
 	@GetMapping(value = "/comments/delete/{commentId}")
-	public String deleteComment (@PathVariable("commentId") long id) {
-		//logger.info(username + "Deleting a comment...");
+	public String deleteComment (Authentication auth, @PathVariable("commentId") long id) {
+
+		Comment comment = commentService.findCommentById(id);
+		if(comment == null || !comment.getAuthor().getUsername().equals(auth.getName())) {
+			String message = "Non sei abilitato!";
+			return "redirect:/comments?errorMessage=" + message;
+		}
 
 		Comment c = this.commentService.findCommentById(id);
 		this.commentService.delete(c);

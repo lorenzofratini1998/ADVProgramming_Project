@@ -92,7 +92,7 @@ public class PostServiceDefault implements PostService {
      */
     @Transactional(readOnly = true)
     @Override
-    public List<Post> getByAttachments(Set<Attachment> attachments) {//TODO: spostare sul DAO
+    public List<Post> getByAttachments(Set<Attachment> attachments) {
         List<Post> posts = this.postRepository.getAll();
         for (Post post : posts) {
             Set<Attachment> attachmentsPost = post.getAttachments();

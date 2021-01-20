@@ -11,10 +11,18 @@
 <div class="inner">
     <div class="row">
         <c:if test="${fn:length(successMessage) > 0}">
-            <div class="alert alert-success mx-auto" role="alert">${successMessage}</div>
+            <div class="alert alert-success mx-auto" role="alert">${successMessage}
+                <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="font-size: 1.4rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </c:if>
         <c:if test="${fn:length(errorMessage) > 0}">
-            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}</div>
+            <div class="alert alert-danger mx-auto" role="alert">${errorMessage}
+                <button type="button" class="close ml-3" data-dismiss="alert" aria-label="Close" style="font-size: 1.4rem;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </c:if>
     </div>
 

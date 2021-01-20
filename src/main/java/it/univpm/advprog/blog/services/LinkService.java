@@ -12,7 +12,7 @@ public interface LinkService {
 	
 	Link getById(long id);
 	
-	List<Link> getLinkByPost(Post post); //TODO: lasciare (prendo solo la lista dei link e non di tutti gli allegati)... magari spostarlo sul DAO
+	List<Link> getLinkByPost(Post post);
 
 	Link create(String description, boolean hide, Post post, String link);
 	

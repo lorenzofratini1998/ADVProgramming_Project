@@ -5,14 +5,12 @@ import it.univpm.advprog.blog.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -326,16 +324,17 @@ public class AdminController {
                                Model uiModel) {
 		logger.info("Showing all comments...");
 
-		List<Comment> allComments = new ArrayList<>();
-		List<User> allAuthor= this.userService.findAll();
-		
-		for(User author: allAuthor) {
-			if(!author.isAdmin()) {
-				allComments.addAll(author.getComments());
-			}
-		}
-		uiModel.addAttribute("comments", allComments);
-		uiModel.addAttribute("numComments", allComments.size());
+		List<Comment> allComments = commentService.getAll();
+        List<Comment> selectedComments = new ArrayList<>();
+
+        for(Comment comment : allComments) {
+            if(!comment.getAuthor().isAdmin()) {
+                selectedComments.add(comment);
+            }
+        }
+
+		uiModel.addAttribute("comments", selectedComments);
+		uiModel.addAttribute("numComments", selectedComments.size());
 		uiModel.addAttribute("successMessage", successMessage);
 		uiModel.addAttribute("errorMessage", errorMessage);
 	
@@ -393,22 +392,23 @@ public class AdminController {
                               Model uiModel) {
 		logger.info("Showing all posts...");
 
-		List<Post> allPosts = new ArrayList<>();
-		List<User> allAuthor= this.userService.findAll();
-		
-		for(User author: allAuthor) {
-			if(!author.isAdmin()) {
-				allPosts.addAll(author.getPosts());
-			}
-		}
-		
-		if(allPosts.isEmpty()) {
+		List<Post> allPosts = postService.getAll();
+        List<Post> selectedPosts = new ArrayList<>();
+
+
+        for(Post post: allPosts) {
+            if(!post.getAuthor().isAdmin()) {
+                selectedPosts.add(post);
+            }
+        }
+
+		if(selectedPosts.isEmpty()) {
 			String strMessage = "Non ci sono post scritti dagli utenti!";
 			return "redirect:/?errorMessage=" + strMessage ;
 		}
 			
-		uiModel.addAttribute("posts", allPosts);
-		uiModel.addAttribute("numPosts", allPosts.size());
+		uiModel.addAttribute("posts", selectedPosts);
+		uiModel.addAttribute("numPosts", selectedPosts.size());
 		uiModel.addAttribute("successMessage", successMessage);
 		uiModel.addAttribute("errorMessage", errorMessage);
 

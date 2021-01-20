@@ -59,11 +59,6 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/immagini/**").addResourceLocations("/WEB-INF/immagini/")
 				.setCachePeriod(31556926);
 	}
-	
-//	@Bean
-//	StandardServletMultipartResolver multipartResolver() {
-//		return new StandardServletMultipartResolver();
-//	}
 
 	@Bean
 	public MultipartResolver multipartResolver() {
@@ -127,15 +122,14 @@ public class WebConfig implements WebMvcConfigurer {
 				return cookieLocaleResolver;
 			}
 			
-	
-	//TODO da completare eventualmente la parte sulla risoluzione dei temi
+
 
 	@Bean ResourceBundleThemeSource themeSource() {
 		return new ResourceBundleThemeSource();
 	}
 
-	
-		
+
+
 		 
 		@Bean
 		WebContentInterceptor webChangeInterceptor() {
@@ -146,16 +140,10 @@ public class WebConfig implements WebMvcConfigurer {
 			return webContentInterceptor;
 		}
 
-		
 
-		
-		//TODO da decidere se inserirli all'occorrenza quando verranno fatte le viste
 
-//		// <=> <mvc:default-servlet-handler/>
-//		@Override
-//		public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//			configurer.enable();
-//		}
+
+
 
 		// <=> <mvc:view-controller .../>
 		@Override

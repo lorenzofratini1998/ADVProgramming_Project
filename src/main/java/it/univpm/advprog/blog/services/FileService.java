@@ -17,7 +17,7 @@ public interface FileService {
 	
 	List<File> getByNoDownloadable(boolean noDownloadable);
 
-	List<File> getFileByPost(Post post); //TODO: lasciare (prendo solo la lista dei file e non di tutti gli allegati)... magari spostarlo sul DAO
+	List<File> getFileByPost(Post post);
 
 	File create(String description, boolean hide, Post post, String name, boolean noDownloadable);
 	
