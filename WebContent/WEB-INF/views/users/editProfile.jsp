@@ -33,7 +33,7 @@
 			<div class="form-group">
 		        <label>Immagine Profilo</label>
 		        <input type="file" name="image" class="form-control mt-2"/>
-		        <small><b>NOTA</b>: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server.</small>
+		        <small><b>NOTA</b>: Se non viene caricata alcuna immagine del profilo rimarrà quella attualmente presente nel server. <b>MAX 1MB</b></small>
 			</div>	
 		
 			<div class="d-flex justify-content-center">

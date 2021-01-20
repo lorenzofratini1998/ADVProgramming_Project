@@ -13,7 +13,8 @@
     </div>
 
     <label for="fileAttachment">Seleziona il file</label>
-    <input type="file" name="fileAttachment" id="fileAttachment" class="form-control mt-2"/><br>
+    <input type="file" name="fileAttachment" id="fileAttachment" class="form-control mt-2"/>
+    <small><b>MAX 1MB</b></small><br>
 
     <form:label path="description">Descrizione</form:label>
     <form:input path="description" class="form-control mt-2"/><br>
