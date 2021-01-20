@@ -35,8 +35,13 @@ public class UserController {
 	@Autowired
 	private HttpServletRequest request;
 
+	/**
+	 * Setter per la proprietà riferita al Service dell'entità Attachment.
+	 *
+	 * @param attachmentService Service dell'entità Attachment da settare
+	 */
 	@Autowired
-	public void setLogger(AttachmentService attachmentService) {
+	public void setAttachmentService(AttachmentService attachmentService) {
 		this.attachmentService = attachmentService;
 	}
 	/**
@@ -104,6 +109,7 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di mosrare tutti i post scritti dall'utente
 	 *
+	 * @param authentication informazioni dell'autenticazione
 	 * @param errorMessage eventuale messaggio di errore
 	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
@@ -445,7 +451,6 @@ public class UserController {
 	@PostMapping(value = "/posts/edit/{postID}/attachments/link/save")
 	public String saveLink (@ModelAttribute("link") Link link, @PathVariable("postID") long postId) {
 		logger.info("Saving a link attachment...");
-
 		try {
 			link.setPost(this.postService.getById(postId));
 			this.linkService.update(link);
@@ -563,6 +568,7 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dei commenti
 	 *
+	 * @param authentication informazioni dell'autenticazione
 	 * @param errorMessage eventuale messaggio di errore
 	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione di modello da passare alla vista
@@ -597,6 +603,7 @@ public class UserController {
 	 *
 	 * @param comment	commento da rendere persistente
 	 * @param authentication informazioni dell'autenticazione corrente
+	 * @param postId ID del post
 	 * @return			nome della vista da visualizzare
 	 */
 	@PostMapping(value = "/post/{postID}/comment/new/save")
@@ -625,6 +632,7 @@ public class UserController {
 	 * Metodo per la richiesta GET di modifica ad un commento
 	 *
 	 * @param commId	id del commento da modificare
+	 * @param auth informazioni dell'autenticazione
 	 * @param uiModel	porzione del modello da passare alla vista
 	 * @return			nome della vista da ritornare
 	 */
@@ -675,6 +683,7 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di eliminazione commento
 	 *
+	 * @param auth informazioni dell'autenticazione
 	 * @param id		id del commento da rimuovere
 	 * @return			redirect all'indirizzo cui fare richiesta
 	 */
@@ -697,6 +706,7 @@ public class UserController {
 	/**
 	 * Metodo per la richiesta GET di visualizzazione dettagli profilo
 	 *
+	 * @param auth informazioni dell'autenticazione
 	 * @param errorMessage eventuale messaggio di errore
 	 * @param successMessage eventuale messaggio di successo
 	 * @param uiModel	porzione del modello da passare alla vista
