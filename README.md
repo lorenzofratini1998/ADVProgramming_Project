@@ -1,14 +1,18 @@
 ﻿## Progetto Programmazione Avanzata
 
-This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
-
 ## Introduzione
 
 L'obiettivo di questo progetto è sviluppare un'applicazione WEB che gestisca un ***blog***.
 
 L'idea di blog che abbiamo è quella di una ***community*** (ad esempio la community Microsoft) in cui gli utenti, una volta essersi registrati ed autenticati, possono scrivere dei **post** e/o dei **commenti** a post già presenti nel blog.
 
-Quindi tutti gli utenti che si sono registrati ad autenticati possono scrivere post e/o commenti. Ci sarà poi un utente ***admin*** che avrà la funzione di moderatore. 
+I post presenti nel blog verranno associati ad un **archivio** ed a specifici **tag**.
+
+Gli utenti avranno anche la possibilità di **inserire degli allegati** ai propri post, specificando se potranno essere scaricati o meno dagli altri utenti.
+
+In ogni momento un utente autenticato ha la possibilità di **modificare i dati del proprio profilo** e il **proprio contenuto all'interno del blog** (post, commenti e allegati).
+
+Ci sarà poi un utente ***admin*** che, oltre alle funzioni degli altri utenti, avrà la **funzione di moderatore**. 
 
 ## *Installazione*
 1. Installare Tomcat, MySQL, Maven e JDK;
@@ -20,14 +24,16 @@ Quindi tutti gli utenti che si sono registrati ad autenticati possono scrivere p
 7. Fine.
 
 **NOTE**: 
-- Le fasi di building del progetto sono state **automatizzate**, è sufficiente quindi eseguire la configurazione descritta precedentemente ed il comando `mvn install`.
+- Le fasi di building del progetto sono state **automatizzate**, per l'installazione è quindi sufficiente eseguire i passi descritti precedentemente ed il comando `mvn install`;
+- Con il comando `mvn install` si ottiene il **redeploy** automatico sull'application server Tomcat e **l'esecuzione** automatica della **classe Java LoadDataTest**, i questo modo il blog risulta in parte già popolato;
+- Con il comando `mvn clean` si ottiene, oltre alla pulizia dei file compilati, **l'undeploy** dell'applicazione dal server Tomcat;
 - L'installazione precedente è stata testata con le seguenti **versioni**:
 	1. Tomcat 9.0.41
 	2. MySQL 8.0.18
 	3. Maven 3.6.3
 	4. JDK 15.0.1
 
-## Funzioni per tipologia di utenti
+## Funzioni per Tipologia di Utenti
 
 ### Utenti non autenticati al sito, possono:
 
@@ -39,22 +45,28 @@ Quindi tutti gli utenti che si sono registrati ad autenticati possono scrivere p
 6. **Visualizzare tutti gli archivi** presenti nel blog;
 7. **Visualizzare la lista di tutti i post** appartenenti ad un **particolare archivio**;
 8. **Visualizzare la lista di tutti i post** appartenenti ad un **particolare tag**;
-9. **Visualizzare la lista di tutti i post** scritti da un **particolare autore** (cliccando sull'autore nei dettagli di un post);
+9. **Visualizzare la lista di tutti i post** scritti da un **particolare autore**;
 10. **Autenticarsi**;
 
 
 ### Utenti autenticati al sito, possono:
 
  1. **Effettuare tutte le operazioni dell'utente precedente** (ad eccezione della registrazione e dell'autenticazione);
- 2. **Scrivere un** nuovo **post** + **caricamento** di eventuali **allegati** del post;
- 3. **Scrivere un commento** in un post specifico;
+ 2. **Scrivere un** nuovo **post**;
+ 3. **Scrivere un nuovo commento** in un post specifico;
  4. **Visualizzare** la pagina con le **informazioni del proprio profilo** (nome, cognome, immagine profilo, ...);
  5. **Modificare le informazioni del proprio profilo** (NON si ha la possibilità di modificare l'username);
- 6. Visualizzare la **pagina di gestione dei propri post**:
-	 1. Possibilità di **modificare/eliminare un post**;
-	 2. Possibilità di **aggiungere/modificare/eliminare un allegato** di un post.
-7. Visualizzare la **pagina di gestione dei propri commenti**:
-	1. Possibilità di **modificare/eliminare un commento**.
+ 6. **Eliminare il proprio profilo**;
+ 7. Visualizzare la **pagina di gestione dei propri post**:
+	 1. Possibilità di **modificare un post**;
+	 2. Possibilità di **eliminare un post**.
+8. Visualizzare la **pagina di gestione degli allegati** dei propri post:
+	1. Possibilità di **aggiungere un allegato** di un post;
+	2. Possibilità di **modificare un allegato** di un post;
+	3. Possibilità di **eliminare un allegato** di un post.
+9. Visualizzare la **pagina di gestione dei propri commenti**:
+	1. Possibilità di **modificare un commento**;
+	2. Possibilità di **eliminare un commento**.
 
 ### Utente admin, possono:
 
@@ -74,11 +86,20 @@ Quindi tutti gli utenti che si sono registrati ad autenticati possono scrivere p
 	1. Possibilità di **mostrare/nascondere un commento**.
 
 
+## Mappa Pagine Blog per Tipologia di Utenti
 
+La **mappa delle pagine del blog** divisa per tipologia di utenti può essere trovata a [questa pagina](https://gitlab.com/FedeMiscia/advprogproject/-/wikis/Mappa-Pagine-Blog) della Wiki di questa Repository.
+
+## Link Blog per Tipologia di Utenti
+
+La **lista delle URL del blog** divisa per tipologia di utenti può essere trovata a [questa pagina](https://gitlab.com/FedeMiscia/advprogproject/-/wikis/Link-Blog) della Wiki di questa Repository.
 
 ## ASSUNZIONI:
-- **Non si è prevista** la possibilità di **modificare un tag e/o un archivio**, possono soltanto essere eventualmente eliminati se non contengono post (in quanto non è una funzione di interessa per come è stata pensata l'applicazione WEB);
-- **Non si è prevista** la possibilità di **inserire un nuovo archivio**, in quanto verrà fatto automaticamente all'inserimento del primo post del mese;
+- **Non si è prevista** la possibilità di **modificare un tag e/o un archivio**, possono soltanto essere eventualmente eliminati se non contengono post (in quanto non è una funzione di interessa per come è stato implementato il nostro blog);
+- **Non si è prevista** la possibilità di **inserire un nuovo archivio**, in quanto verrà fatto automaticamente all'inserimento del primo post di ogni mese;
 - **L'utente admin non può modificare/eliminare post e/o commenti e/o utenti**, in quanto può nasconderli/disabilitarli. Sarà poi l'utente che l'ha creati a doverli modificare se vuole che vengano riabilitati od a doverli eliminarli;
 - Il **campo “username” di User è PK**, in quanto abbiamo assunto che non si ha la possibilità di modificarlo (si possono invece aggiornare le altre informazioni dell'utente);
 
+
+
+This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
