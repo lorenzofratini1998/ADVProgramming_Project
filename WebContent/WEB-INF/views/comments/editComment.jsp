@@ -6,7 +6,7 @@
 <c:url value="/comments/edit/${comment.id }/save" var="action_url"/>
 <div class="col">
 
-    <form:form action="${action_url}" method="POST" modelAttribute="comment">
+    <form:form name="modulo" action="${action_url}" method="POST" modelAttribute="comment" onsubmit="return false">
         <h1 class="h3 mb-3 font-weight-normals">Modifica il tuo commento</h1>
 
 		<div class="form-group">
@@ -16,19 +16,34 @@
         </div>
         <div class="form-group">
             <label style="display: block;">Titolo Commento
-                <input name="title" class="form-control mt-2" value="${comment.title}">
+                <input id="titleField" name="title" class="form-control mt-2" value="${comment.title}">
             </label>
         </div>
        	<div class="form-group">
 	        <label style="display: block;">Descrizione Commento
-	            <textarea name="description" class="form-control mt-2" rows="4" autofocus style="resize:none">${comment.description}</textarea>
+	            <textarea id="descriptionField" name="description" class="form-control mt-2" rows="4" autofocus style="resize:none">${comment.description}</textarea>
             </label>
         </div>
 
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!"/>
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Applica Modifiche!" onclick="controlloCampi()"/>
         <form:hidden path="id"/>
         <form:hidden path="hide"/>
         <form:hidden path="post.id"/>
         <form:hidden path="author.username"/>
     </form:form>
 </div>
+
+
+<script type="text/javascript">
+    //Se vengono superati i controlli abilita l'inoltro del form (di default disabilitato)
+    function controlloCampi() {
+
+        var title = document.getElementById("titleField").value;
+        var description = document.getElementById("descriptionField").value;
+
+        if (title === "" || description === "") {
+            alert("Inserisci i campi richiesti!");
+        }
+        else document.modulo.submit();
+    }
+</script>
