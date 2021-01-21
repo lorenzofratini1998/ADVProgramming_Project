@@ -24,6 +24,7 @@ Ci sarà poi un utente ***admin*** che, oltre alle funzioni degli altri utenti, 
 7. Fine.
 
 **NOTE**: 
+- La **prima volta** che viene lanciato il comando `mvn install` è normale che impieghi **dai 3 ai 4 minuti** per terminare (considerando il download delle dipendenze e i vari test). Le volte successive lo stesso comando impiegherà **dai 2 ai 3 minuti**. Impiega questo tempo in quanto ogni unit test è stato effettuato in modo che sia **indipendente** dagli altri, avviene il ***drop* di tutte le tabelle** del database per poi essere create nuovamente;
 - Le fasi di building del progetto sono state **automatizzate**, per l'installazione è quindi sufficiente eseguire i passi descritti precedentemente ed il comando `mvn install`;
 - Con il comando `mvn install` si ottiene il **redeploy** automatico sull'application server Tomcat e **l'esecuzione** automatica della **classe Java LoadDataTest**, i questo modo il blog risulta in parte già popolato;
 - Con il comando `mvn clean` si ottiene, oltre alla pulizia dei file compilati, **l'undeploy** dell'applicazione dal server Tomcat;
@@ -32,6 +33,15 @@ Ci sarà poi un utente ***admin*** che, oltre alle funzioni degli altri utenti, 
 	2. MySQL 8.0.18
 	3. Maven 3.6.3
 	4. JDK 15.0.1
+
+## Accesso al Blog
+
+Per **effettuare l'accesso al blog** si può utilizzare i seguenti utenti predefiniti o se ne possono creare dei nuovi tramite la pagina di registrazione del blog.
+
+- Utente 1: `username: mario98 password: 12345678` (**admin**)
+- Utente 2: `username: matteoVerdi password: 12345678`
+- Utente 3: `username: giov_bian password: 12345678`
+- Utente 4: `username: anto88 password: 12345678`
 
 ## Funzioni per Tipologia di Utenti
 
@@ -93,6 +103,10 @@ La **mappa delle pagine del blog** divisa per tipologia di utenti può essere tr
 ## Link Blog per Tipologia di Utenti
 
 La **lista delle URL del blog** divisa per tipologia di utenti può essere trovata a [questa pagina](https://gitlab.com/FedeMiscia/advprogproject/-/wikis/Link-Blog) della Wiki di questa Repository.
+
+## Javadoc
+
+La **Javadoc** realizzata può essere visualizzata aprendo dal browser la pagina  [index.html](https://gitlab.com/FedeMiscia/advprogproject/-/blob/master/doc/index.html) nella cartella [doc](https://gitlab.com/FedeMiscia/advprogproject/-/tree/master/doc) che si trova in questa repository.
 
 ## ASSUNZIONI:
 - **Non si è prevista** la possibilità di **modificare un tag e/o un archivio**, possono soltanto essere eventualmente eliminati se non contengono post (in quanto non è una funzione di interessa per come è stato implementato il nostro blog);
